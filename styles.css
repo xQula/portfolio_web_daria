@@ -201,11 +201,6 @@ h1, h2, h3, h4 {
 
 .logo-main .circle-char {
   color: var(--color-accent);
-  text-shadow: 
-    -1.5px -1.5px 0 var(--color-text-primary),  
-     1.5px -1.5px 0 var(--color-text-primary),
-    -1.5px  1.5px 0 var(--color-text-primary),
-     1.5px  1.5px 0 var(--color-text-primary);
   margin-right: 3px;
   font-family: var(--font-sans);
   font-weight: 900;
@@ -810,13 +805,6 @@ h1, h2, h3, h4 {
   color: var(--color-text-primary);
 }
 
-.logo-footer .logo-main .circle-char {
-  text-shadow: 
-    -1.5px -1.5px 0 var(--color-text-primary),  
-     1.5px -1.5px 0 var(--color-text-primary),
-    -1.5px  1.5px 0 var(--color-text-primary),
-     1.5px  1.5px 0 var(--color-text-primary);
-}
 
 .logo-footer .logo-tagline {
   color: var(--color-text-primary);
