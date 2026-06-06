@@ -1,129 +1,26 @@
 /* ----------------------------------------------------
-   БАЗА ДАННЫХ ПРОЕКТОВ (ПОРТФОЛИО ДАРЬИ ЕВСТИГНЕЕВОЙ)
+   ДИНАМИЧЕСКАЯ БАЗА ДАННЫХ ПРОЕКТОВ
    ---------------------------------------------------- */
-const projects = [
-  {
-    id: 1,
-    type: "video",
-    title: "VELVET & LIGHT",
-    duration: "2:15",
-    category: "commercial",
-    subCategory: "Fashion film",
-    client: "NINA RICCI",
-    // Демонстрационное видео высокой четкости с YouTube
-    videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", 
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop",
-    soft: "Adobe Premiere Pro · DaVinci Resolve",
-    desc: "Fashion-ролик с акцентом на мягкую игру света и текстур одежды. Использован динамический ритмичный монтаж и глубокая цветокоррекция в соответствии с брендбуком."
-  },
-  {
-    id: 2,
-    type: "video",
-    title: "MODERN MOVEMENT",
-    duration: "3:01",
-    category: "music",
-    subCategory: "Dance film",
-    client: "NYFW Showcase",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", 
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600&auto=format&fit=crop",
-    soft: "Adobe Premiere Pro · After Effects",
-    desc: "Динамичный монтаж танцевального перформанса. Ключевая фишка — использование эффектов speed ramp (замедление/ускорение) и точная синхронизация движений под ритм саундтрека."
-  },
-  {
-    id: 3,
-    type: "video",
-    title: "URBAN GEOMETRY",
-    duration: "1:58",
-    category: "commercial",
-    subCategory: "Architectural film",
-    client: "KEFN",
-    videoUrl: "https://www.youtube.com/embed/tgbNymZ7vqY",
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop",
-    soft: "DaVinci Resolve · Audition",
-    desc: "Коммерческий презентационный ролик архитектурных решений. Строгая композиция кадра, выверенные переходы и атмосферный саунд-дизайн, подчеркивающий монументальность."
-  },
-  {
-    id: 4,
-    type: "art", // Арт-вставка в сетку (шахматный эффект из брендбука)
-    title: "CAN BE DIFFERENT",
-    subtitle: "SENCE OF FORM",
-    category: "all"
-  },
-  {
-    id: 5,
-    type: "video",
-    title: "CYBERPUNK RUNWAY",
-    duration: "0:45",
-    category: "vertical",
-    subCategory: "Instagram Reels / TikTok",
-    client: "SOF Studio",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Имитация вертикального Shorts
-    aspect: "vertical",
-    preview: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop",
-    soft: "Adobe Premiere Pro · CapCut Pro",
-    desc: "Трендовый вертикальный ролик для соцсетей. Применены эффекты неонового свечения, глитчи и зум-переходы под трендовый аудиозвук."
-  },
-  {
-    id: 6,
-    type: "video",
-    title: "THE COLLECTION",
-    duration: "4:30",
-    category: "commercial",
-    subCategory: "Runway highlights",
-    client: "NYFW 2026",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600&auto=format&fit=crop",
-    soft: "Premiere Pro · DaVinci Resolve",
-    desc: "Сборный отчетный ролик с показов недели моды в Нью-Йорке. Сочетание репортажной динамики и плавных фэшн-склеек."
-  },
-  {
-    id: 7,
-    type: "video",
-    title: "COUTURE STORY",
-    duration: "2:45",
-    category: "music",
-    subCategory: "Editorial MV",
-    client: "EDITORIAL",
-    videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g",
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
-    soft: "Adobe Premiere Pro · Audition",
-    desc: "Музыкальный клип с упором на сторителлинг через образы. Мягкая склейка по движению, контрастные переходы."
-  },
-  {
-    id: 8,
-    type: "video",
-    title: "STREET CULTURE",
-    duration: "0:30",
-    category: "vertical",
-    subCategory: "Shorts / Reels",
-    client: "Streetwear Brand",
-    videoUrl: "https://www.youtube.com/embed/tgbNymZ7vqY", // Вертикальный плеер
-    aspect: "vertical",
-    preview: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop",
-    soft: "Adobe Premiere Pro · After Effects",
-    desc: "Промо-ролик уличного бренда одежды в вертикальном формате. Высокая плотность монтажных склеек, стилизованные глитч-переходы."
-  },
-  {
-    id: 9,
-    type: "video",
-    title: "THE ESSENCE ROAD",
-    duration: "3:40",
-    category: "trailers",
-    subCategory: "Teaser / Trailer",
-    client: "LEOKBOO Production",
-    // Демонстрация интеграции с RuTube (пример embed-ссылки)
-    videoUrl: "https://rutube.ru/play/embed/b53b817e07a6a42217c91ca7c9082260", 
-    aspect: "horizontal",
-    preview: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&auto=format&fit=crop",
-    soft: "DaVinci Resolve · Audition",
-    desc: "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube."
+let projects = [];
+
+// Функция для динамической загрузки всех проектов
+async function loadProjects() {
+  const response = await fetch("projects/index.json");
+  if (!response.ok) {
+    throw new Error("Не удалось загрузить projects/index.json");
   }
-];
+  const filenames = await response.json();
+  
+  const fetchPromises = filenames.map(async (filename) => {
+    const res = await fetch(`projects/${filename}`);
+    if (!res.ok) {
+      throw new Error(`Не удалось загрузить projects/${filename}`);
+    }
+    return res.json();
+  });
+  
+  projects = await Promise.all(fetchPromises);
+}
 
 /* ----------------------------------------------------
    ИНИЦИАЛИЗАЦИЯ И РЕНДЕРИНГ
@@ -138,9 +35,16 @@ let showingAll = false;
 const INITIAL_ITEMS_COUNT = 6;
 
 // Функция инициализации страницы
-function init() {
+async function init() {
   // Настройка темы
   initTheme();
+  
+  // Загружаем проекты из файлов
+  try {
+    await loadProjects();
+  } catch (err) {
+    console.error("Ошибка при загрузке проектов:", err);
+  }
   
   // Рендеринг сетки
   renderGrid();
@@ -166,14 +70,18 @@ function init() {
   initContactModal();
 }
 
+
 // Рендеринг карточек проектов
 function renderGrid() {
   projectGrid.innerHTML = "";
   
+  // Фильтруем скрытые из сетки проекты
+  const gridProjects = projects.filter(p => !p.hideFromGrid);
+  
   // Фильтрация проектов
-  let filtered = projects;
+  let filtered = gridProjects;
   if (currentFilter !== "all") {
-    filtered = projects.filter(p => p.category === currentFilter || p.type === "art");
+    filtered = gridProjects.filter(p => p.category === currentFilter || p.type === "art");
   }
   
   // Ограничение по количеству
@@ -183,7 +91,8 @@ function renderGrid() {
     const card = document.createElement("div");
     
     if (project.type === "art") {
-      card.className = "project-card art-block horizontal";
+      const aspect = project.aspect === "vertical" ? "vertical" : "horizontal";
+      card.className = `project-card art-block ${aspect}`;
       card.innerHTML = `
         <div class="art-title serif-text">${project.title}</div>
         <div class="art-subtitle">${project.subtitle}</div>
@@ -327,17 +236,41 @@ function closeLightbox() {
 // Настройка клика на Featured Project (Главное промо на Hero)
 function setupFeaturedVideo() {
   const featuredCard = document.getElementById("featured-card-element");
-  featuredCard.addEventListener("click", () => {
-    openLightbox({
-      title: "SHOWREEL 2026 | EDITING SHOWCASE",
-      subCategory: "Editing Showreel",
-      client: "Daria Evstigneeva Portfolio",
-      videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", // Ссылка на шоурил
-      aspect: "horizontal",
-      soft: "Premiere Pro · After Effects · DaVinci Resolve",
-      desc: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики."
+  if (!featuredCard) return;
+
+  // Находим проект с флагом featured
+  const featuredProject = projects.find(p => p.featured);
+  
+  if (featuredProject) {
+    // Заполняем HTML карточки данными из файла
+    const img = featuredCard.querySelector(".featured-thumbnail-img");
+    const titleSpan = featuredCard.querySelector(".featured-title");
+    
+    if (img) {
+      img.src = featuredProject.preview;
+      img.alt = featuredProject.title;
+    }
+    if (titleSpan) {
+      titleSpan.textContent = featuredProject.title;
+    }
+    
+    featuredCard.addEventListener("click", () => {
+      openLightbox(featuredProject);
     });
-  });
+  } else {
+    // Дефолтный фолбек
+    featuredCard.addEventListener("click", () => {
+      openLightbox({
+        title: "SHOWREEL 2026 | EDITING SHOWCASE",
+        subCategory: "Editing Showreel",
+        client: "Daria Evstigneeva Portfolio",
+        videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", // Ссылка на шоурил
+        aspect: "horizontal",
+        soft: "Premiere Pro · After Effects · DaVinci Resolve",
+        desc: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики."
+      });
+    });
+  }
 }
 
 /* ----------------------------------------------------

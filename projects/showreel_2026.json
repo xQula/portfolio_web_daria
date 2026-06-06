@@ -1,0 +1,16 @@
+{
+  "id": "showreel",
+  "type": "video",
+  "title": "SHOWREEL 2026 | EDITING SHOWCASE",
+  "duration": "1:30",
+  "category": "commercial",
+  "subCategory": "Editing Showreel",
+  "client": "Daria Evstigneeva Portfolio",
+  "videoUrl": "https://www.youtube.com/embed/n9xhJrPXy4g",
+  "aspect": "horizontal",
+  "preview": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop",
+  "soft": "Premiere Pro · After Effects · DaVinci Resolve",
+  "desc": "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики.",
+  "featured": true,
+  "hideFromGrid": true
+}

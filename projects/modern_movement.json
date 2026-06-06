@@ -1,0 +1,14 @@
+{
+  "id": 2,
+  "type": "video",
+  "title": "MODERN MOVEMENT",
+  "duration": "3:01",
+  "category": "music",
+  "subCategory": "Dance film",
+  "client": "NYFW Showcase",
+  "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+  "aspect": "horizontal",
+  "preview": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=600&auto=format&fit=crop",
+  "soft": "Adobe Premiere Pro · After Effects",
+  "desc": "Динамичный монтаж танцевального перформанса. Ключевая фишка — использование эффектов speed ramp (замедление/ускорение) и точная синхронизация движений под ритм саундтрека."
+}

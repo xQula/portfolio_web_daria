@@ -1,0 +1,14 @@
+{
+  "id": 3,
+  "type": "video",
+  "title": "URBAN GEOMETRY",
+  "duration": "1:58",
+  "category": "commercial",
+  "subCategory": "Architectural film",
+  "client": "KEFN",
+  "videoUrl": "https://www.youtube.com/embed/tgbNymZ7vqY",
+  "aspect": "horizontal",
+  "preview": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop",
+  "soft": "DaVinci Resolve · Audition",
+  "desc": "Коммерческий презентационный ролик архитектурных решений. Строгая композиция кадра, выверенные переходы и атмосферный саунд-дизайн, подчеркивающий монументальность."
+}
