@@ -87,6 +87,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scroll-padding-top: 84px; /* Высота липкого хедера */
 }
 
 body {
@@ -369,16 +370,21 @@ h1, h2, h3, h4 {
    HERO SECTION STYLING
    ---------------------------------------------------- */
 .hero-section {
-  padding: 6rem 2rem;
+  min-height: calc(100vh - 84px); /* Высота во весь экран минус хедер */
+  display: flex;
+  align-items: center;
+  padding: 4rem 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
 }
 
 .hero-text-block {
@@ -439,9 +445,14 @@ h1, h2, h3, h4 {
 .hero-featured-block {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .featured-card {
+  width: 100%;
+  max-width: 580px;
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
@@ -1125,4 +1136,98 @@ h1, h2, h3, h4 {
   .footer-right {
     grid-column: span 1;
   }
+}
+
+/* ----------------------------------------------------
+   CONTACT MODAL STYLING
+   ---------------------------------------------------- */
+.contact-modal-content {
+  background-color: var(--color-lightbox-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 3rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: var(--color-text-primary);
+  text-align: center;
+  position: relative;
+  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.contact-modal-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.contact-modal-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-modal-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  text-align: left;
+  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.contact-modal-item:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 15px var(--shadow-accent);
+  transform: translateY(-2px);
+}
+
+.contact-icon-wrapper {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.contact-modal-item:hover .contact-icon-wrapper {
+  background-color: var(--color-accent);
+  color: #122024;
+}
+
+.contact-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.contact-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
 }

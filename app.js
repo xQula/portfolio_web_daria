@@ -161,6 +161,9 @@ function init() {
   
   // Настройка лайтбокса
   initLightbox();
+  
+  // Настройка модального окна контактов
+  initContactModal();
 }
 
 // Рендеринг карточек проектов
@@ -394,6 +397,50 @@ function toggleTheme(e) {
       }
     );
   });
+}
+
+/* ----------------------------------------------------
+   УПРАВЛЕНИЕ МОДАЛЬНЫМ ОКНОМ КОНТАКТОВ
+   ---------------------------------------------------- */
+const contactModal = document.getElementById("contact-modal");
+const contactLink = document.getElementById("contact-link");
+const contactClose = document.getElementById("contact-close");
+
+function initContactModal() {
+  if (!contactLink || !contactModal || !contactClose) return;
+
+  contactLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    openContactModal();
+  });
+
+  contactClose.addEventListener("click", closeContactModal);
+
+  // Закрытие по клику вне контента
+  contactModal.addEventListener("click", (e) => {
+    if (e.target === contactModal) {
+      closeContactModal();
+    }
+  });
+
+  // Закрытие по ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && contactModal.classList.contains("active")) {
+      closeContactModal();
+    }
+  });
+}
+
+function openContactModal() {
+  contactModal.classList.add("active");
+  contactModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeContactModal() {
+  contactModal.classList.remove("active");
+  contactModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 }
 
 // Запуск инициализации при загрузке DOM
