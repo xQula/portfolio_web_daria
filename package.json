@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-web-daria",
+  "version": "1.0.0",
+  "description": "Portfolio website for video editor Daria Evstigneeva",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y live-server --no-browser"
+  },
+  "keywords": [
+    "portfolio",
+    "video-editor",
+    "sof",
+    "website"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}
