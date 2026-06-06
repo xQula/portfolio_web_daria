@@ -42,6 +42,7 @@
   --color-text-secondary: #6B7280;   /* Серый - Второстепенный текст */
   --color-text-light: #FFFFFF;       /* White - Светлый текст */
   --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
+  --color-accent-text: #4A6B00;      /* Deep Lime - Читаемый акцентный текст на бежевом */
   --color-border: rgba(18, 32, 36, 0.12);
   --shadow-accent: rgba(204, 255, 0, 0.4);
   --shadow-general: rgba(18, 32, 36, 0.08);
@@ -68,6 +69,7 @@
   --color-text-secondary: #9CA3AF;   /* Светло-серый - Второстепенный текст */
   --color-text-light: #122024;       /* Slate Dark - Темный текст */
   --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
+  --color-accent-text: #CCFF00;      /* Lime Green - Яркий акцентный текст на темном */
   --color-border: rgba(239, 239, 239, 0.12);
   --shadow-accent: rgba(204, 255, 0, 0.6);
   --shadow-general: rgba(0, 0, 0, 0.3);
@@ -769,7 +771,7 @@ h1, h2, h3, h4 {
 }
 
 [data-theme="dark"] .project-card.art-block .art-subtitle {
-  color: var(--color-text-light); /* Темно-сланцевый цвет для идеального контраста на светлом фоне */
+  color: #4A6B00; /* Глубокий оливково-лаймовый цвет для высокой читаемости на бежевом фоне */
 }
 
 .portfolio-more-container {
@@ -1024,16 +1026,11 @@ h1, h2, h3, h4 {
 }
 
 .lightbox-category {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--color-accent);
-  background-color: #122024; /* Темно-сланцевый цвет для высокой контрастности */
-  padding: 0.4rem 1rem;
-  border-radius: 100px;
-  letter-spacing: 0.08em;
-  align-self: flex-start;
-  display: inline-flex;
+  color: var(--color-accent-text);
+  letter-spacing: 0.05em;
 }
 
 .lightbox-details {
