@@ -35,8 +35,8 @@
 :root {
   /* Светлая тема (По умолчанию, как на референсе) */
   --color-bg-primary: #E0DBC6;       /* Warm Sand - Основной бежевый фон */
-  --color-bg-secondary: #FFFFFF;     /* White - Фон хедера, футера, кнопок, лайтбокса */
-  --color-card-bg: #EBE7D5;          /* Warm Sand Light (Beige) - Только для карточек проектов */
+  --color-bg-secondary: #FFFFFF;     /* White - Фон хедера, футера, кнопок, закрытых карточек */
+  --color-lightbox-bg: #EBE7D5;      /* Warm Sand Light (Beige) - Только для открытого лайтбокса/модального окна */
   --color-bg-contrast: #122024;      /* Slate Dark - Темные блоки */
   --color-text-primary: #122024;     /* Slate Dark - Основной текст */
   --color-text-secondary: #6B7280;   /* Серый - Второстепенный текст */
@@ -62,7 +62,7 @@
   /* Темная тема */
   --color-bg-primary: #122024;       /* Slate Dark - Основной темный фон */
   --color-bg-secondary: #1C2E33;     /* Более светлый сланец */
-  --color-card-bg: #1C2E33;          /* Более светлый сланец для карточек */
+  --color-lightbox-bg: #1C2E33;      /* Более светлый сланец для открытого лайтбокса */
   --color-bg-contrast: #EBE7D5;      /* Beige - Контрастные светлые блоки */
   --color-text-primary: #EFEFEF;     /* Off-White - Основной текст */
   --color-text-secondary: #9CA3AF;   /* Светло-серый - Второстепенный текст */
@@ -445,7 +445,7 @@ h1, h2, h3, h4 {
 }
 
 .featured-card {
-  background-color: var(--color-card-bg);
+  background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
   overflow: hidden;
@@ -522,7 +522,7 @@ h1, h2, h3, h4 {
 
 .featured-meta {
   padding: 1.2rem;
-  background-color: var(--color-card-bg);
+  background-color: var(--color-bg-secondary);
   transition: background-color var(--transition-speed) ease;
 }
 
@@ -598,7 +598,7 @@ h1, h2, h3, h4 {
   flex-direction: column;
   border-radius: var(--border-radius-md);
   overflow: hidden;
-  background-color: var(--color-card-bg);
+  background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   box-shadow: 0 4px 15px var(--shadow-general);
   cursor: pointer;
@@ -702,7 +702,7 @@ h1, h2, h3, h4 {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  background-color: var(--color-card-bg);
+  background-color: var(--color-bg-secondary);
   flex-grow: 1;
 }
 
@@ -943,7 +943,7 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.4fr);
   gap: 2rem;
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-lightbox-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
   overflow: hidden;
