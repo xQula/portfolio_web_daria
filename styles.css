@@ -1024,11 +1024,16 @@ h1, h2, h3, h4 {
 }
 
 .lightbox-category {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-accent);
-  letter-spacing: 0.05em;
+  background-color: #122024; /* Темно-сланцевый цвет для высокой контрастности */
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  letter-spacing: 0.08em;
+  align-self: flex-start;
+  display: inline-flex;
 }
 
 .lightbox-details {
