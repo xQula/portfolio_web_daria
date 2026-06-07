@@ -102,7 +102,13 @@ export function renderGrid() {
   // Фильтрация проектов по категориям
   let filteredVideos = gridProjects;
   if (currentFilter !== "all") {
-    filteredVideos = gridProjects.filter(p => p.category === currentFilter);
+    filteredVideos = gridProjects.filter(p => {
+      if (!p.category) return false;
+      if (Array.isArray(p.category)) {
+        return p.category.includes(currentFilter) || p.category.includes("all");
+      }
+      return p.category === currentFilter || p.category === "all";
+    });
   }
   
   // Ограничение по количеству
