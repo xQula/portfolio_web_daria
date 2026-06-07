@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 9,
   "type": "video",
   "title": "THE ESSENCE ROAD",
@@ -12,3 +12,4 @@
   "soft": "DaVinci Resolve · Audition",
   "desc": "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube."
 }
+;

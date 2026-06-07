@@ -3,8 +3,8 @@
    ---------------------------------------------------- */
 @font-face {
   font-family: 'MAK';
-  src: url('../../res/font/Mak/Mak font/Web/MAK.woff') format('woff'),
-       url('../../res/font/Mak/Mak font/MAK.otf') format('opentype');
+  src: url('/font/Mak/Mak font/Web/MAK.woff') format('woff'),
+       url('/font/Mak/Mak font/MAK.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -12,8 +12,8 @@
 
 @font-face {
   font-family: 'MAK';
-  src: url('../../res/font/Mak/Mak font/Web/MAK-bold.woff') format('woff'),
-       url('../../res/font/Mak/Mak font/MAK-bold.otf') format('opentype');
+  src: url('/font/Mak/Mak font/Web/MAK-bold.woff') format('woff'),
+       url('/font/Mak/Mak font/MAK-bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -21,9 +21,9 @@
 
 @font-face {
   font-family: 'Dirtyline';
-  src: url('../../res/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff2') format('woff2'),
-       url('../../res/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff') format('woff'),
-       url('../../res/font/dirtyline36daysoftype2022/Dirtyline 36daysoftype 2022.otf') format('opentype');
+  src: url('/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff2') format('woff2'),
+       url('/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff') format('woff'),
+       url('/font/dirtyline36daysoftype2022/Dirtyline 36daysoftype 2022.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

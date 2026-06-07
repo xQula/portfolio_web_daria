@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 1,
   "type": "video",
   "title": "VELVET & LIGHT",
@@ -11,3 +11,4 @@
   "soft": "Adobe Premiere Pro · DaVinci Resolve",
   "desc": "Fashion-ролик с акцентом на мягкую игру света и текстур одежды. Использован динамический ритмичный монтаж и глубокая цветокоррекция в соответствии с брендбуком."
 }
+;

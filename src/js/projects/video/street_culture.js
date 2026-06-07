@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 8,
   "type": "video",
   "title": "STREET CULTURE",
@@ -11,3 +11,4 @@
   "soft": "Adobe Premiere Pro · After Effects",
   "desc": "Промо-ролик уличного бренда одежды в вертикальном формате. Высокая плотность монтажных склеек, стилизованные глитч-переходы."
 }
+;

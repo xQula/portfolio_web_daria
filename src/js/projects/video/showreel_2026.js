@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": "showreel",
   "type": "video",
   "title": "SHOWREEL 2026 | EDITING SHOWCASE",
@@ -13,3 +13,4 @@
   "featured": true,
   "hideFromGrid": true
 }
+;

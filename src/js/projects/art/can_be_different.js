@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 4,
   "type": "art",
   "title": "CAN BE DIFFERENT",
@@ -6,3 +6,4 @@
   "category": "all",
   "aspect": "horizontal"
 }
+;

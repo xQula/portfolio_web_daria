@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 6,
   "type": "video",
   "title": "THE COLLECTION",
@@ -11,3 +11,4 @@
   "soft": "Premiere Pro · DaVinci Resolve",
   "desc": "Сборный отчетный ролик с показов недели моды в Нью-Йорке. Сочетание репортажной динамики и плавных фэшн-склеек."
 }
+;

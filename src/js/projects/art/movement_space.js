@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": "art-movement-space",
   "type": "art",
   "title": "MOVEMENT & SPACE",
@@ -6,3 +6,4 @@
   "category": "all",
   "aspect": "vertical"
 }
+;

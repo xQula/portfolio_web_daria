@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 5,
   "type": "video",
   "title": "CYBERPUNK RUNWAY",
@@ -11,3 +11,4 @@
   "soft": "Adobe Premiere Pro · CapCut Pro",
   "desc": "Трендовый вертикальный ролик для соцсетей. Применены эффекты неонового свечения, глитчи и зум-переходы под трендовый аудиозвук."
 }
+;

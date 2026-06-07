@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": "art-elevating-stories",
   "type": "art",
   "title": "ELEVATING STORIES",
@@ -6,3 +6,4 @@
   "category": "all",
   "aspect": "horizontal"
 }
+;

@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": 7,
   "type": "video",
   "title": "COUTURE STORY",
@@ -11,3 +11,4 @@
   "soft": "Adobe Premiere Pro · Audition",
   "desc": "Музыкальный клип с упором на сторителлинг через образы. Мягкая склейка по движению, контрастные переходы."
 }
+;

@@ -1,4 +1,4 @@
-{
+﻿export default {
   "id": "art-editing",
   "type": "art",
   "title": "THE ART OF EDITING",
@@ -6,3 +6,4 @@
   "category": "all",
   "aspect": "horizontal"
 }
+;
