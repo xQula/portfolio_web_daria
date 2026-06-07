@@ -62,7 +62,14 @@ export function createCard(project) {
       </div>
     `;
     
+    card.setAttribute("tabindex", "0");
     card.addEventListener("click", () => openLightbox(project));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(project);
+      }
+    });
   }
   
   return card;

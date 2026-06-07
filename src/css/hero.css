@@ -172,3 +172,34 @@
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
+
+@media (max-width: 992px) {
+  .hero-section {
+    min-height: auto;
+    padding: 3rem 1.5rem;
+  }
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero-text-block {
+    text-align: center;
+    align-items: center;
+  }
+  .hero-bio {
+    border-left: none;
+    border-top: 2px solid var(--color-accent);
+    padding-left: 0;
+    padding-top: 1rem;
+    align-items: center;
+  }
+  .bio-categories {
+    justify-content: center;
+  }
+  .hero-cta {
+    align-self: center;
+  }
+  .featured-card {
+    margin: 0 auto;
+  }
+}
