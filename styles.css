@@ -594,10 +594,63 @@ h1, h2, h3, h4 {
 
 /* Сетка портфолио */
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
+  display: block;
   transition: all 0.4s ease;
+}
+
+/* Группы портфолио */
+.portfolio-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.portfolio-group.wide-group {
+  display: block;
+}
+
+/* Группа: вертикальный слева, два горизонтальных справа */
+.portfolio-group.left-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.left-vertical .project-card.vertical {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+.portfolio-group.left-vertical .project-card.horizontal {
+  grid-column: 2;
+  grid-row: span 1;
+}
+
+/* Группа: два горизонтальных слева, вертикальный справа */
+.portfolio-group.right-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.right-vertical .project-card.horizontal {
+  grid-column: 1;
+  grid-row: span 1;
+}
+.portfolio-group.right-vertical .project-card.vertical {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* Фолбек-группа для остатков */
+.portfolio-group.fallback-group {
+  grid-auto-flow: dense;
+}
+.portfolio-group.fallback-group .project-card.horizontal {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.portfolio-group.fallback-group .project-card.vertical {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.portfolio-group.fallback-group .project-card.wide {
+  grid-column: span 2;
+  grid-row: span 1;
 }
 
 /* Карточка проекта */
@@ -625,17 +678,6 @@ h1, h2, h3, h4 {
   border-color: var(--color-accent);
 }
 
-/* Горизонтальный формат 16:9 */
-.project-card.horizontal {
-  grid-column: span 2;
-}
-
-/* Вертикальный формат 9:16 */
-.project-card.vertical {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
 .card-thumbnail-container {
   position: relative;
   width: 100%;
@@ -649,6 +691,10 @@ h1, h2, h3, h4 {
 
 .project-card.vertical .card-thumbnail-container {
   aspect-ratio: 9/16;
+}
+
+.project-card.wide .card-thumbnail-container {
+  aspect-ratio: 21/9;
 }
 
 .card-thumbnail-img {
@@ -1072,12 +1118,8 @@ h1, h2, h3, h4 {
     align-items: center;
   }
 
-  .project-grid {
+  .portfolio-group {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .project-card.horizontal {
-    grid-column: span 2;
   }
   
   .footer-container {
@@ -1117,13 +1159,19 @@ h1, h2, h3, h4 {
     display: none; /* В реальном продакшене добавили бы бургер-меню */
   }
 
-  .project-grid {
-    grid-template-columns: 1fr;
+  .portfolio-group {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    gap: 2.5rem;
   }
   
-  .project-card.horizontal,
-  .project-card.vertical {
-    grid-column: span 1;
+  .portfolio-group .project-card {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .project-card.wide .card-thumbnail-container {
+    aspect-ratio: 16/9;
   }
   
 

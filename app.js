@@ -3,23 +3,60 @@
    ---------------------------------------------------- */
 let projects = [];
 
+// Вспомогательная функция для получения ID видео с YouTube
+function getYoutubeId(url) {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
+// Вспомогательная функция для получения ID видео с RuTube
+function getRutubeId(url) {
+  if (!url) return null;
+  const match = url.match(/rutube\.ru\/(video|play\/embed)\/([a-zA-Z0-9]+)/);
+  return match ? match[2] : null;
+}
+
 // Функция для динамической загрузки всех проектов
 async function loadProjects() {
-  const response = await fetch("projects/index.json");
+  const response = await fetch("projects/index.json", { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Не удалось загрузить projects/index.json");
   }
   const filenames = await response.json();
   
   const fetchPromises = filenames.map(async (filename) => {
-    const res = await fetch(`projects/${filename}`);
+    const res = await fetch(`projects/${filename}`, { cache: "no-store" });
     if (!res.ok) {
       throw new Error(`Не удалось загрузить projects/${filename}`);
     }
     return res.json();
   });
   
-  projects = await Promise.all(fetchPromises);
+  const rawProjects = await Promise.all(fetchPromises);
+  
+  // Автоматическая обработка ссылок и превью
+  projects = rawProjects.map(project => {
+    if (project.type === "video" && project.videoUrl) {
+      const ytId = getYoutubeId(project.videoUrl);
+      if (ytId) {
+        // Превращаем любую ссылку YouTube во встроенную (embed)
+        project.videoUrl = `https://www.youtube.com/embed/${ytId}`;
+        // Если превью не задано вручную, генерируем ссылку на максимальное разрешение
+        if (!project.preview) {
+          project.preview = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+        }
+      } else {
+        const rtId = getRutubeId(project.videoUrl);
+        if (rtId) {
+          // Превращаем любую ссылку RuTube во встроенную (embed)
+          project.videoUrl = `https://rutube.ru/play/embed/${rtId}`;
+        }
+      }
+    }
+    return project;
+  });
 }
 
 /* ----------------------------------------------------
@@ -32,7 +69,7 @@ const themeToggleBtn = document.getElementById("theme-toggle");
 
 let currentFilter = "all";
 let showingAll = false;
-const INITIAL_ITEMS_COUNT = 6;
+const INITIAL_ITEMS_COUNT = 7;
 
 // Функция инициализации страницы
 async function init() {
@@ -72,6 +109,53 @@ async function init() {
 
 
 // Рендеринг карточек проектов
+// Вспомогательная функция создания карточки проекта
+function createCard(project) {
+  const card = document.createElement("div");
+  
+  if (project.type === "art") {
+    const aspect = project.aspect === "vertical" ? "vertical" : (project.aspect === "wide" ? "wide" : "horizontal");
+    card.className = `project-card art-block ${aspect}`;
+    card.innerHTML = `
+      <div class="art-title serif-text">${project.title}</div>
+      <div class="art-subtitle">${project.subtitle}</div>
+    `;
+  } else {
+    const aspect = project.aspect === "vertical" ? "vertical" : (project.aspect === "wide" ? "wide" : "horizontal");
+    card.className = `project-card ${aspect}`;
+    card.dataset.projectId = project.id;
+    
+    // Резервная ссылка на hqdefault для видео с YouTube (если maxresdefault вернет 404)
+    const ytId = getYoutubeId(project.videoUrl);
+    const onerrorAttr = ytId ? `onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';"` : '';
+    
+    card.innerHTML = `
+      <div class="card-thumbnail-container">
+        <div class="featured-noise-overlay"></div>
+        <img src="${project.preview}" alt="${project.title}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+        <button class="play-btn-small" aria-label="Смотреть видео">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </button>
+        <div class="card-duration-badge">${project.duration}</div>
+      </div>
+      <div class="card-info">
+        <div class="card-info-header">
+          <h3 class="card-title">${project.title}</h3>
+          <span class="card-time-label">${project.duration}</span>
+        </div>
+        <span class="card-meta">${project.subCategory} | ${project.client}</span>
+      </div>
+    `;
+    
+    card.addEventListener("click", () => openLightbox(project));
+  }
+  
+  return card;
+}
+
+// Рендеринг карточек проектов
 function renderGrid() {
   projectGrid.innerHTML = "";
   
@@ -87,47 +171,90 @@ function renderGrid() {
   // Ограничение по количеству
   const itemsToShow = showingAll ? filtered : filtered.slice(0, INITIAL_ITEMS_COUNT);
   
-  itemsToShow.forEach(project => {
-    const card = document.createElement("div");
-    
-    if (project.type === "art") {
-      const aspect = project.aspect === "vertical" ? "vertical" : "horizontal";
-      card.className = `project-card art-block ${aspect}`;
-      card.innerHTML = `
-        <div class="art-title serif-text">${project.title}</div>
-        <div class="art-subtitle">${project.subtitle}</div>
-      `;
-    } else {
-      card.className = `project-card ${project.aspect}`;
-      card.dataset.projectId = project.id;
-      
-      const playBtnSize = project.aspect === "vertical" ? "play-btn-small" : "play-btn-small";
-      
-      card.innerHTML = `
-        <div class="card-thumbnail-container">
-          <div class="featured-noise-overlay"></div>
-          <img src="${project.preview}" alt="${project.title}" class="card-thumbnail-img" loading="lazy">
-          <button class="${playBtnSize}" aria-label="Смотреть видео">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-          <div class="card-duration-badge">${project.duration}</div>
-        </div>
-        <div class="card-info">
-          <div class="card-info-header">
-            <h3 class="card-title">${project.title}</h3>
-            <span class="card-time-label">${project.duration}</span>
-          </div>
-          <span class="card-meta">${project.subCategory} | ${project.client}</span>
-        </div>
-      `;
-      
-      card.addEventListener("click", () => openLightbox(project));
+  // Копия пула проектов для группировки
+  const pool = [...itemsToShow];
+  let isLeftVertical = true;
+  
+  while (pool.length > 0) {
+    // 1. Если проект широкоформатный, выводим его отдельной строкой во всю ширину
+    if (pool[0].aspect === "wide") {
+      const project = pool.shift();
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "portfolio-group wide-group";
+      groupDiv.appendChild(createCard(project));
+      projectGrid.appendChild(groupDiv);
+      continue;
     }
     
-    projectGrid.appendChild(card);
-  });
+    // 2. Ищем 1 вертикальный и 2 горизонтальных проекта
+    const vIndex = pool.findIndex(p => p.aspect === "vertical");
+    const h1Index = pool.findIndex(p => p.aspect !== "vertical" && p.aspect !== "wide");
+    let h2Index = -1;
+    if (h1Index !== -1) {
+      h2Index = pool.findIndex((p, idx) => idx > h1Index && p.aspect !== "vertical" && p.aspect !== "wide");
+    }
+    
+    // Если нашли полный комплект для группы
+    if (vIndex !== -1 && h1Index !== -1 && h2Index !== -1) {
+      const vProject = pool[vIndex];
+      const h1Project = pool[h1Index];
+      const h2Project = pool[h2Index];
+      
+      // Удаляем из пула в порядке убывания индексов, чтобы избежать смещения
+      const indicesToRemove = [vIndex, h1Index, h2Index].sort((a, b) => b - a);
+      indicesToRemove.forEach(idx => pool.splice(idx, 1));
+      
+      const groupDiv = document.createElement("div");
+      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
+      
+      if (isLeftVertical) {
+        // Вертикальный слева, два горизонтальных справа
+        groupDiv.appendChild(createCard(vProject));
+        groupDiv.appendChild(createCard(h1Project));
+        groupDiv.appendChild(createCard(h2Project));
+      } else {
+        // Два горизонтальных слева, вертикальный справа
+        groupDiv.appendChild(createCard(h1Project));
+        groupDiv.appendChild(createCard(h2Project));
+        groupDiv.appendChild(createCard(vProject));
+      }
+      
+      projectGrid.appendChild(groupDiv);
+      isLeftVertical = !isLeftVertical; // Чередуем стороны для следующего блока
+    } else if (vIndex !== -1 && h1Index !== -1) {
+      // Блок из 2-х проектов: 1 вертикальный + 1 горизонтальный (сохраняем чередование)
+      const vProject = pool[vIndex];
+      const hProject = pool[h1Index];
+      
+      const indicesToRemove = [vIndex, h1Index].sort((a, b) => b - a);
+      indicesToRemove.forEach(idx => pool.splice(idx, 1));
+      
+      const groupDiv = document.createElement("div");
+      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
+      
+      if (isLeftVertical) {
+        groupDiv.appendChild(createCard(vProject));
+        groupDiv.appendChild(createCard(hProject));
+      } else {
+        groupDiv.appendChild(createCard(hProject));
+        groupDiv.appendChild(createCard(vProject));
+      }
+      
+      projectGrid.appendChild(groupDiv);
+      isLeftVertical = !isLeftVertical; // Чередуем стороны
+    } else {
+      // 3. Фолбек: если не получается собрать полную группу (1 вертикальный + 2 горизонтальных),
+      // просто выводим оставшиеся проекты в обычном 2-колоночном потоке
+      const remaining = pool.splice(0, pool.length);
+      const groupDiv = document.createElement("div");
+      groupDiv.className = "portfolio-group fallback-group";
+      
+      remaining.forEach(project => {
+        groupDiv.appendChild(createCard(project));
+      });
+      projectGrid.appendChild(groupDiv);
+    }
+  }
   
   // Скрытие/показ кнопки Show More
   if (filtered.length <= INITIAL_ITEMS_COUNT || showingAll) {
@@ -249,6 +376,14 @@ function setupFeaturedVideo() {
     if (img) {
       img.src = featuredProject.preview;
       img.alt = featuredProject.title;
+      
+      const ytId = getYoutubeId(featuredProject.videoUrl);
+      if (ytId) {
+        img.onerror = function() {
+          img.onerror = null;
+          img.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+        };
+      }
     }
     if (titleSpan) {
       titleSpan.textContent = featuredProject.title;
