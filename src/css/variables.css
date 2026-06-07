@@ -1,0 +1,93 @@
+/* ----------------------------------------------------
+   LOCAL BRAND FONTS
+   ---------------------------------------------------- */
+@font-face {
+  font-family: 'MAK';
+  src: url('../../res/font/Mak/Mak font/Web/MAK.woff') format('woff'),
+       url('../../res/font/Mak/Mak font/MAK.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MAK';
+  src: url('../../res/font/Mak/Mak font/Web/MAK-bold.woff') format('woff'),
+       url('../../res/font/Mak/Mak font/MAK-bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dirtyline';
+  src: url('../../res/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff2') format('woff2'),
+       url('../../res/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff') format('woff'),
+       url('../../res/font/dirtyline36daysoftype2022/Dirtyline 36daysoftype 2022.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----------------------------------------------------
+   DESIGN SYSTEM & VARIABLES (SOF BRAND IDENTITY)
+   ---------------------------------------------------- */
+:root {
+  /* Светлая тема (По умолчанию, как на референсе) */
+  --color-bg-primary: #E0DBC6;       /* Warm Sand - Основной бежевый фон */
+  --color-bg-secondary: #FFFFFF;     /* White - Фон хедера, футера, кнопок, закрытых карточек */
+  --color-lightbox-bg: #EBE7D5;      /* Warm Sand Light (Beige) - Только для открытого лайтбокса/модального окна */
+  --color-bg-contrast: #122024;      /* Slate Dark - Темные блоки */
+  --color-text-primary: #122024;     /* Slate Dark - Основной текст */
+  --color-text-secondary: #6B7280;   /* Серый - Второстепенный текст */
+  --color-text-light: #FFFFFF;       /* White - Светлый текст */
+  --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
+  --color-accent-text: #4A6B00;      /* Deep Lime - Читаемый акцентный текст на бежевом */
+  --color-border: rgba(18, 32, 36, 0.12);
+  --shadow-accent: rgba(204, 255, 0, 0.4);
+  --shadow-general: rgba(18, 32, 36, 0.08);
+  
+  /* Шрифты */
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'MAK', serif;
+  --font-gothic: 'Dirtyline', sans-serif;
+  
+  /* Размеры и переходы */
+  --transition-speed: 0.35s;
+  --border-radius-sm: 4px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 24px;
+}
+
+[data-theme="dark"] {
+  /* Темная тема */
+  --color-bg-primary: #122024;       /* Slate Dark - Основной темный фон */
+  --color-bg-secondary: #1C2E33;     /* Более светлый сланец */
+  --color-lightbox-bg: #1C2E33;      /* Более светлый сланец для открытого лайтбокса */
+  --color-bg-contrast: #EBE7D5;      /* Beige - Контрастные светлые блоки */
+  --color-text-primary: #EFEFEF;     /* Off-White - Основной текст */
+  --color-text-secondary: #9CA3AF;   /* Светло-серый - Второстепенный текст */
+  --color-text-light: #122024;       /* Slate Dark - Темный текст */
+  --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
+  --color-accent-text: #CCFF00;      /* Lime Green - Яркий акцентный текст на темном */
+  --color-border: rgba(239, 239, 239, 0.12);
+  --shadow-accent: rgba(204, 255, 0, 0.6);
+  --shadow-general: rgba(0, 0, 0, 0.3);
+}
+
+/* ----------------------------------------------------
+   VIEW TRANSITIONS (THEME CIRCULAR RIPPLE REVEAL)
+   ---------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}

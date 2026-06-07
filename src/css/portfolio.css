@@ -1,0 +1,290 @@
+/* ----------------------------------------------------
+   PORTFOLIO SECTION STYLING
+   ---------------------------------------------------- */
+.portfolio-section {
+  padding: 6rem 2rem;
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  transition: background-color var(--transition-speed) ease;
+}
+
+.portfolio-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.03em;
+}
+
+.portfolio-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.filter-btn {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 0.6rem 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-secondary);
+  border-color: var(--color-text-primary);
+}
+
+/* Сетка портфолио */
+.project-grid {
+  display: block;
+  transition: all 0.4s ease;
+}
+
+/* Группы портфолио */
+.portfolio-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.portfolio-group.wide-group {
+  display: block;
+}
+
+/* Группа: вертикальный слева, два горизонтальных справа */
+.portfolio-group.left-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.left-vertical .project-card.vertical {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+.portfolio-group.left-vertical .project-card.horizontal {
+  grid-column: 2;
+  grid-row: span 1;
+}
+
+/* Группа: два горизонтальных слева, вертикальный справа */
+.portfolio-group.right-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.right-vertical .project-card.horizontal {
+  grid-column: 1;
+  grid-row: span 1;
+}
+.portfolio-group.right-vertical .project-card.vertical {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* Фолбек-группа для остатков */
+.portfolio-group.fallback-group {
+  grid-auto-flow: dense;
+}
+.portfolio-group.fallback-group .project-card.horizontal {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.portfolio-group.fallback-group .project-card.vertical {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.portfolio-group.fallback-group .project-card.wide {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+/* Карточка проекта */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 15px var(--shadow-general);
+  cursor: pointer;
+  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card.hide {
+  display: none;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px var(--shadow-general), 0 0 20px var(--shadow-accent);
+  border-color: var(--color-accent);
+}
+
+.card-thumbnail-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.project-card.horizontal .card-thumbnail-container {
+  aspect-ratio: 16/9;
+}
+
+.project-card.vertical .card-thumbnail-container {
+  aspect-ratio: 9/16;
+}
+
+.project-card.wide .card-thumbnail-container {
+  aspect-ratio: 21/9;
+}
+
+.card-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-speed) ease;
+}
+
+.project-card:hover .card-thumbnail-img {
+  transform: scale(1.05);
+}
+
+.play-btn-small {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  color: #122024;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.project-card:hover .play-btn-small {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 20px var(--color-accent);
+}
+
+.play-btn-small svg {
+  margin-left: 3px;
+}
+
+.card-duration-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(18, 32, 36, 0.75);
+  color: #EFEFEF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
+/* Информация о проекте под превью */
+.card-info {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background-color: var(--color-bg-secondary);
+  flex-grow: 1;
+}
+
+.card-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.card-time-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+/* Арт-вставки (Шахматный эффект) */
+.project-card.art-block {
+  cursor: default;
+  background-color: var(--color-bg-contrast);
+  color: var(--color-text-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+  border-color: var(--color-border);
+}
+
+.project-card.art-block:hover {
+  transform: none;
+  box-shadow: 0 4px 15px var(--shadow-general);
+  border-color: var(--color-border);
+}
+
+.art-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.art-subtitle {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  transition: color var(--transition-speed) ease;
+}
+
+[data-theme="dark"] .project-card.art-block .art-subtitle {
+  color: #4A6B00; /* Глубокий оливково-лаймовый цвет для высокой читаемости на бежевом фоне */
+}
+
+.portfolio-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
