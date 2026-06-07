@@ -97,3 +97,22 @@ h1, h2, h3, h4 {
   color: var(--color-bg-secondary);
   transform: translateY(-2px);
 }
+
+/* ----------------------------------------------------
+   GLOBAL ACCESSIBILITY & FOCUS STATES
+   ---------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE BASE STYLES
+   ---------------------------------------------------- */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}

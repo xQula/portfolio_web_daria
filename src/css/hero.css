@@ -173,7 +173,7 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .hero-section {
     min-height: auto;
     padding: 3rem 1.5rem;
@@ -190,7 +190,7 @@
     border-left: none;
     border-top: 2px solid var(--color-accent);
     padding-left: 0;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
     align-items: center;
   }
   .bio-categories {

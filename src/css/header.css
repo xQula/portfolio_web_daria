@@ -178,6 +178,9 @@
     gap: 1rem;
     padding: 1rem;
   }
+  .main-nav {
+    display: none;
+  }
   .logo-main {
     font-size: 1.8rem;
   }

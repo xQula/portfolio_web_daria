@@ -155,41 +155,9 @@
 }
 
 /* ----------------------------------------------------
-   RESPONSIVE DESIGN (MODALS & GENERAL INTERACTIVE)
+   RESPONSIVE DESIGN (MODALS ONLY)
    ---------------------------------------------------- */
 @media (max-width: 1024px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
-  }
-  
-  .hero-cta {
-    align-self: center;
-  }
-  
-  .hero-bio {
-    border-left: none;
-    border-top: 2px solid var(--color-accent);
-    padding-left: 0;
-    padding-top: 1.5rem;
-    align-items: center;
-  }
-
-  .portfolio-group {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-  
-  .footer-right {
-    grid-column: span 2;
-    align-items: center;
-  }
-
   .lightbox-content {
     display: flex;
     flex-direction: column;
@@ -201,44 +169,6 @@
     flex: 1;
     min-height: 0;
     padding: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-  
-  .header-container {
-    padding: 1rem;
-  }
-  
-  .main-nav {
-    display: none; /* В реальном продакшене добавили бы бургер-меню */
-  }
-
-  .portfolio-group {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    gap: 2.5rem;
-  }
-  
-  .portfolio-group .project-card {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
-
-  .project-card.wide .card-thumbnail-container {
-    aspect-ratio: 16/9;
-  }
-  
-  .footer-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .footer-right {
-    grid-column: span 1;
   }
 }
 
