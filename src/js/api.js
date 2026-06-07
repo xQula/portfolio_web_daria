@@ -1,4 +1,5 @@
 export let projects = [];
+export let artTemplates = [];
 
 // Вспомогательная функция для получения ID видео с YouTube
 export function getYoutubeId(url) {
@@ -15,15 +16,24 @@ export function getRutubeId(url) {
   return match ? match[2] : null;
 }
 
-// Функция для динамической загрузки всех проектов
+// Функция для динамической загрузки всех проектов и шаблонов
 export async function loadProjects() {
-  const response = await fetch("../../projects/index.json", { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error("Не удалось загрузить projects/index.json");
-  }
-  const filenames = await response.json();
+  const [videoIndexRes, artIndexRes] = await Promise.all([
+    fetch("../../projects/index.json", { cache: "no-store" }),
+    fetch("../../projects/art/index.json", { cache: "no-store" })
+  ]);
   
-  const fetchPromises = filenames.map(async (filename) => {
+  if (!videoIndexRes.ok || !artIndexRes.ok) {
+    throw new Error("Не удалось загрузить индексные файлы проектов");
+  }
+  
+  const [videoFilenames, artFilenames] = await Promise.all([
+    videoIndexRes.json(),
+    artIndexRes.json()
+  ]);
+  
+  // Загрузка видео-проектов
+  const videoFetchPromises = videoFilenames.map(async (filename) => {
     const res = await fetch(`../../projects/${filename}`, { cache: "no-store" });
     if (!res.ok) {
       throw new Error(`Не удалось загрузить projects/${filename}`);
@@ -31,10 +41,25 @@ export async function loadProjects() {
     return res.json();
   });
   
-  const rawProjects = await Promise.all(fetchPromises);
+  // Загрузка арт-шаблонов
+  const artFetchPromises = artFilenames.map(async (filename) => {
+    const res = await fetch(`../../projects/art/${filename}`, { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error(`Не удалось загрузить projects/art/${filename}`);
+    }
+    return res.json();
+  });
   
-  // Автоматическая обработка ссылок и превью
-  projects = rawProjects.map(project => {
+  const [rawVideos, rawArts] = await Promise.all([
+    Promise.all(videoFetchPromises),
+    Promise.all(artFetchPromises)
+  ]);
+  
+  // Сохраняем загруженные шаблоны
+  artTemplates = rawArts;
+  
+  // Автоматическая обработка ссылок и превью для видео
+  projects = rawVideos.map(project => {
     if (project.type === "video" && project.videoUrl) {
       const ytId = getYoutubeId(project.videoUrl);
       if (ytId) {

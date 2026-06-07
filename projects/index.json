@@ -1,12 +1,11 @@
 [
-  "showreel_2026.json",
-  "velvet_light.json",
-  "modern_movement.json",
-  "urban_geometry.json",
-  "can_be_different.json",
-  "cyberpunk_runway.json",
-  "the_collection.json",
-  "couture_story.json",
-  "street_culture.json",
-  "the_essence_road.json"
+  "video/showreel_2026.json",
+  "video/velvet_light.json",
+  "video/modern_movement.json",
+  "video/urban_geometry.json",
+  "video/cyberpunk_runway.json",
+  "video/the_collection.json",
+  "video/couture_story.json",
+  "video/street_culture.json",
+  "video/the_essence_road.json"
 ]

@@ -1,4 +1,4 @@
-import { projects, getYoutubeId } from "./api.js";
+import { projects, getYoutubeId, artTemplates } from "./api.js";
 import { openLightbox } from "./lightbox.js";
 import { INITIAL_ITEMS_COUNT } from "./config.js";
 
@@ -72,27 +72,54 @@ export function createCard(project) {
 export function renderGrid() {
   if (!projectGrid || !showMoreBtn) return;
   projectGrid.innerHTML = "";
+  let artCardIndex = 0;
+  
+  // Функция для динамического получения очередной арт-плашки нужного формата
+  function getNextArtCard(aspect) {
+    if (!artTemplates || artTemplates.length === 0) {
+      return {
+        id: `art-filler-${artCardIndex++}`,
+        type: "art",
+        title: "CAN BE DIFFERENT",
+        subtitle: "SENCE OF FORM",
+        aspect: aspect
+      };
+    }
+    const template = artTemplates[artCardIndex % artTemplates.length];
+    artCardIndex++;
+    return {
+      id: `art-filler-${template.id || artCardIndex}`,
+      type: "art",
+      title: template.title,
+      subtitle: template.subtitle,
+      aspect: aspect
+    };
+  }
   
   // Фильтруем скрытые из сетки проекты
   const gridProjects = projects.filter(p => !p.hideFromGrid);
   
-  // Фильтрация проектов
-  let filtered = gridProjects;
+  // Фильтрация проектов по категориям
+  let filteredVideos = gridProjects;
   if (currentFilter !== "all") {
-    filtered = gridProjects.filter(p => p.category === currentFilter || p.type === "art");
+    filteredVideos = gridProjects.filter(p => p.category === currentFilter);
   }
   
   // Ограничение по количеству
-  const itemsToShow = showingAll ? filtered : filtered.slice(0, INITIAL_ITEMS_COUNT);
+  const videosToShow = showingAll ? filteredVideos : filteredVideos.slice(0, INITIAL_ITEMS_COUNT);
   
-  // Копия пула проектов для группировки
-  const pool = [...itemsToShow];
+  // Разделяем проекты по форматам
+  const wideVideos = videosToShow.filter(p => p.aspect === "wide");
+  const verticalVideos = videosToShow.filter(p => p.aspect === "vertical");
+  const horizontalVideos = videosToShow.filter(p => p.aspect !== "vertical" && p.aspect !== "wide");
+  
   let isLeftVertical = true;
   
-  while (pool.length > 0) {
-    // 1. Если проект широкоформатный, выводим его отдельной строкой во всю ширину
-    if (pool[0].aspect === "wide") {
-      const project = pool.shift();
+  // Группируем проекты в идеальные строки/блоки без пустот
+  while (wideVideos.length > 0 || verticalVideos.length > 0 || horizontalVideos.length > 0) {
+    // 1. Широкоформатные видео (Wide)
+    if (wideVideos.length > 0) {
+      const project = wideVideos.shift();
       const groupDiv = document.createElement("div");
       groupDiv.className = "portfolio-group wide-group";
       groupDiv.appendChild(createCard(project));
@@ -100,78 +127,77 @@ export function renderGrid() {
       continue;
     }
     
-    // 2. Ищем 1 вертикальный и 2 горизонтальных проекта
-    const vIndex = pool.findIndex(p => p.aspect === "vertical");
-    const h1Index = pool.findIndex(p => p.aspect !== "vertical" && p.aspect !== "wide");
-    let h2Index = -1;
-    if (h1Index !== -1) {
-      h2Index = pool.findIndex((p, idx) => idx > h1Index && p.aspect !== "vertical" && p.aspect !== "wide");
+    // 2. Асимметричное трио (1V + 2H), если есть горизонтальное видео для пары
+    if (verticalVideos.length > 0 && horizontalVideos.length > 0) {
+      const vProject = verticalVideos.shift();
+      const h1Project = horizontalVideos.shift();
+      let h2Project = null;
+      
+      if (horizontalVideos.length > 0) {
+        h2Project = horizontalVideos.shift();
+      } else {
+        h2Project = getNextArtCard("horizontal");
+      }
+      
+      const groupDiv = document.createElement("div");
+      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
+      
+      if (isLeftVertical) {
+        groupDiv.appendChild(createCard(vProject));
+        groupDiv.appendChild(createCard(h1Project));
+        groupDiv.appendChild(createCard(h2Project));
+      } else {
+        groupDiv.appendChild(createCard(h1Project));
+        groupDiv.appendChild(createCard(h2Project));
+        groupDiv.appendChild(createCard(vProject));
+      }
+      
+      projectGrid.appendChild(groupDiv);
+      isLeftVertical = !isLeftVertical;
+      continue;
     }
     
-    // Если нашли полный комплект для группы
-    if (vIndex !== -1 && h1Index !== -1 && h2Index !== -1) {
-      const vProject = pool[vIndex];
-      const h1Project = pool[h1Index];
-      const h2Project = pool[h2Index];
+    // 3. Если остались вертикальные видео, но горизонтальных видео больше нет -> группируем по парам (2V)
+    if (verticalVideos.length > 0 && horizontalVideos.length === 0) {
+      const v1Project = verticalVideos.shift();
+      let v2Project = null;
       
-      // Удаляем из пула в порядке убывания индексов, чтобы избежать смещения
-      const indicesToRemove = [vIndex, h1Index, h2Index].sort((a, b) => b - a);
-      indicesToRemove.forEach(idx => pool.splice(idx, 1));
-      
-      const groupDiv = document.createElement("div");
-      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
-      
-      if (isLeftVertical) {
-        // Вертикальный слева, два горизонтальных справа
-        groupDiv.appendChild(createCard(vProject));
-        groupDiv.appendChild(createCard(h1Project));
-        groupDiv.appendChild(createCard(h2Project));
+      if (verticalVideos.length > 0) {
+        v2Project = verticalVideos.shift();
       } else {
-        // Два горизонтальных слева, вертикальный справа
-        groupDiv.appendChild(createCard(h1Project));
-        groupDiv.appendChild(createCard(h2Project));
-        groupDiv.appendChild(createCard(vProject));
+        v2Project = getNextArtCard("vertical");
       }
       
-      projectGrid.appendChild(groupDiv);
-      isLeftVertical = !isLeftVertical; // Чередуем стороны для следующего блока
-    } else if (vIndex !== -1 && h1Index !== -1) {
-      // Блок из 2-х проектов: 1 вертикальный + 1 горизонтальный (сохраняем чередование)
-      const vProject = pool[vIndex];
-      const hProject = pool[h1Index];
-      
-      const indicesToRemove = [vIndex, h1Index].sort((a, b) => b - a);
-      indicesToRemove.forEach(idx => pool.splice(idx, 1));
-      
       const groupDiv = document.createElement("div");
-      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
+      groupDiv.className = "portfolio-group";
+      groupDiv.appendChild(createCard(v1Project));
+      groupDiv.appendChild(createCard(v2Project));
+      projectGrid.appendChild(groupDiv);
+      continue;
+    }
+    
+    // 4. Если остались только горизонтальные видео -> группируем по парам (2H)
+    if (horizontalVideos.length > 0) {
+      const h1Project = horizontalVideos.shift();
+      let h2Project = null;
       
-      if (isLeftVertical) {
-        groupDiv.appendChild(createCard(vProject));
-        groupDiv.appendChild(createCard(hProject));
+      if (horizontalVideos.length > 0) {
+        h2Project = horizontalVideos.shift();
       } else {
-        groupDiv.appendChild(createCard(hProject));
-        groupDiv.appendChild(createCard(vProject));
+        h2Project = getNextArtCard("horizontal");
       }
       
-      projectGrid.appendChild(groupDiv);
-      isLeftVertical = !isLeftVertical; // Чередуем стороны
-    } else {
-      // 3. Фолбек: если не получается собрать полную группу (1 вертикальный + 2 горизонтальных),
-      // просто выводим оставшиеся проекты в обычном 2-колоночном потоке
-      const remaining = pool.splice(0, pool.length);
       const groupDiv = document.createElement("div");
-      groupDiv.className = "portfolio-group fallback-group";
-      
-      remaining.forEach(project => {
-        groupDiv.appendChild(createCard(project));
-      });
+      groupDiv.className = "portfolio-group";
+      groupDiv.appendChild(createCard(h1Project));
+      groupDiv.appendChild(createCard(h2Project));
       projectGrid.appendChild(groupDiv);
+      continue;
     }
   }
   
   // Скрытие/показ кнопки Show More
-  if (filtered.length <= INITIAL_ITEMS_COUNT || showingAll) {
+  if (filteredVideos.length <= INITIAL_ITEMS_COUNT || showingAll) {
     showMoreBtn.style.display = "none";
   } else {
     showMoreBtn.style.display = "inline-flex";
