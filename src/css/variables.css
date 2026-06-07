@@ -39,7 +39,7 @@
   --color-lightbox-bg: #EBE7D5;      /* Warm Sand Light (Beige) - Только для открытого лайтбокса/модального окна */
   --color-bg-contrast: #122024;      /* Slate Dark - Темные блоки */
   --color-text-primary: #122024;     /* Slate Dark - Основной текст */
-  --color-text-secondary: #6B7280;   /* Серый - Второстепенный текст */
+  --color-text-secondary: #4B5563;   /* Темно-серый - Второстепенный текст для соответствия WCAG AA */
   --color-text-light: #FFFFFF;       /* White - Светлый текст */
   --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
   --color-accent-text: #4A6B00;      /* Deep Lime - Читаемый акцентный текст на бежевом */

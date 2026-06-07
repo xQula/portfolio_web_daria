@@ -26,6 +26,29 @@ export function initLightbox() {
       closeLightbox();
     }
   });
+
+  // Ловушка фокуса (Focus Trap)
+  lightbox.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "Tab") {
+      const focusable = lightbox.querySelectorAll('a, button, iframe, [tabindex="0"]');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  });
 }
 
 export function openLightbox(project) {
