@@ -82,4 +82,4 @@ npm run dev
 
 ## 📝 Добавление новых проектов
 Подробные инструкции по полям проектов, спецификации категорий и форматам сетки находятся в файле:
-👉 **[projects/README.md](file:///d:/repo/source/portfolio_web_daria/projects/README.md)**
+👉 **[projects/README.md](./projects/README.md)**
