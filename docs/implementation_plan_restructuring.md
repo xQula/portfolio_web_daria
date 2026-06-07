@@ -1,60 +1,44 @@
-# План рефакторинга: Продвинутая доступность (a11y Focus Management & Keyboard Nav)
+# План рефакторинга: Исправление опечаток и стандартизация ссылок (Spelling & URL Normalization)
 
-Этот план решает проблемы с потерей фокуса (focus management) при открытии модальных окон и неполной поддержкой клавиатурной навигации для главного промо-видео (Showreel) на первом экране.
+Этот план описывает технические этапы по исправлению систематической опечатки в названии бренда (замена `Sence of Form` на правильное `Sense of Form` в HTML, JS и БД проектов) и приведению домена социальной сети ВКонтакте к стандартному `vk.com` вместо `vk.ru`.
 
 ## User Review Required
 
 > [!NOTE]
-> Доработка полностью соответствует спецификации W3C WAI-ARIA по реализации доступных модальных окон (Modal Dialogs). Это улучшает UX для пользователей, использующих вспомогательные технологии и управление клавиатурой.
+> Это чисто стилистический и текстовый рефакторинг, который сделает сайт более профессиональным для международной аудитории и исправит ошибки в брендинге.
 
 ## Proposed Changes
 
-Мы внесем изменения в разметку первого экрана и логику работы модальных окон (лайтбокс и контакты).
+Мы исправим опечатки во всех текстовых файлах и обновим ссылки на социальные сети.
 
 ---
 
-### [1] Навигация клавиатурой на Hero
+### [1] Исправление опечатки Sence -> Sense
 
 #### [MODIFY] [index.html](file:///d:/repo/source/portfolio_web_daria/index.html)
-* Добавим атрибут `tabindex="0"` для интерактивной видео-карточки промо-видео:
-  ```html
-  <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
-  ```
+* Исправим опечатку в ключевых словах (строка 7): `SOF Sence of Form` -> `SOF Sense of Form`.
+* Исправим опечатку в логотипе шапки (строка 65): `SENCE OF FORM` -> `SENSE OF FORM`.
+* Исправим опечатку в логотипе подвала (строка 178): `SENCE OF FORM` -> `SENSE OF FORM`.
+* Исправим опечатку в копирайте (строка 224): `2026 Sence of Form` -> `2026 Sense of Form`.
 
 #### [MODIFY] [grid.js](file:///d:/repo/source/portfolio_web_daria/src/js/grid.js)
-* В функции `setupFeaturedVideo()` добавим обработчик нажатия клавиш `Enter` / `Space` на карточку `#featured-card-element`:
-  ```javascript
-  featuredCard.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      openLightbox(featuredProject || { ...дефолтный_проект... });
-    }
-  });
-  ```
+* Исправим дефолтный подзаголовок карточки в функции `getNextArtCard` (строка 91): `SENCE OF FORM` -> `SENSE OF FORM`.
+
+#### [MODIFY] [movement_space.js](file:///d:/repo/source/portfolio_web_daria/src/js/projects/art/movement_space.js)
+* Исправим значение subtitle: `"SENCE OF FORM"` -> `"SENSE OF FORM"`.
+
+#### [MODIFY] [elevating_stories.js](file:///d:/repo/source/portfolio_web_daria/src/js/projects/art/elevating_stories.js)
+* Исправим значение subtitle: `"SENCE OF FORM"` -> `"SENSE OF FORM"`.
+
+#### [MODIFY] [can_be_different.js](file:///d:/repo/source/portfolio_web_daria/src/js/projects/art/can_be_different.js)
+* Исправим значение subtitle: `"SENCE OF FORM"` -> `"SENSE OF FORM"`.
 
 ---
 
-### [2] Управление фокусом в Lightbox (Видео-плеер)
+### [2] Стандартизация домена VK (vk.ru -> vk.com)
 
-#### [MODIFY] [lightbox.js](file:///d:/repo/source/portfolio_web_daria/src/js/lightbox.js)
-* Добавим переменную `lastActiveElement` для сохранения фокуса.
-* В `openLightbox(project)`:
-  * Сохраним элемент, который вызвал открытие плеера: `lastActiveElement = document.activeElement;`.
-  * Переместим фокус на кнопку закрытия плеера после отрисовки: `setTimeout(() => lightboxClose.focus(), 50);`.
-* В `closeLightbox()`:
-  * После скрытия окна вернем фокус на сохраненный элемент: `if (lastActiveElement) lastActiveElement.focus();`.
-
----
-
-### [3] Управление фокусом в Модальном окне контактов
-
-#### [MODIFY] [contact.js](file:///d:/repo/source/portfolio_web_daria/src/js/contact.js)
-* Добавим переменную `lastActiveElement` для сохранения фокуса.
-* В `openContactModal()`:
-  * Сохраним активный элемент: `lastActiveElement = document.activeElement;`.
-  * Переместим фокус на кнопку закрытия: `setTimeout(() => contactClose.focus(), 50);`.
-* В `closeContactModal()`:
-  * Вернем фокус: `if (lastActiveElement) lastActiveElement.focus();`.
+#### [MODIFY] [index.html](file:///d:/repo/source/portfolio_web_daria/index.html)
+* Обновим ссылки на профиль ВКонтакте в соцсетях подвала (строка 162), модальном окне контактов (строка 234) и в разметке JSON-LD (строка 48): `https://vk.ru/dariaevst` -> `https://vk.com/dariaevst`.
 
 ---
 
@@ -64,7 +48,5 @@
 * Проверим сборку: `npm run build`
 
 ### Manual Verification
-1. Откроем сайт и переместим фокус клавишей `Tab` на карточку шоурила в Hero. Убедимся, что она подсвечивается. Нажмем `Enter` — плеер должен открыться.
-2. После открытия плеера фокус должен автоматически перейти на кнопку закрытия (`×`). 
-3. Нажмем `Escape` или `Enter` (для кнопки `×`) — плеер должен закрыться, а фокус вернуться ровно на ту карточку в Hero, с которой мы его открыли.
-4. Повторим процедуру с любой карточкой в сетке проектов и ссылкой `CONTACT` в шапке сайта.
+1. Откроем сайт и проверим правильность написания бренда в шапке сайта, подвале, арт-плашках и копирайте.
+2. Проверим, что ссылки на ВКонтакте корректно ведут на `vk.com`.

@@ -1,8 +1,8 @@
-﻿export default {
+export default {
   "id": "art-movement-space",
   "type": "art",
   "title": "MOVEMENT & SPACE",
-  "subtitle": "SENCE OF FORM",
+  "subtitle": "SENSE OF FORM",
   "category": "all",
   "aspect": "vertical"
 }

@@ -88,7 +88,7 @@ export function renderGrid() {
         id: `art-filler-${artCardIndex++}`,
         type: "art",
         title: "CAN BE DIFFERENT",
-        subtitle: "SENCE OF FORM",
+        subtitle: "SENSE OF FORM",
         aspect: aspect
       };
     }
