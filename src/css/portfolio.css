@@ -59,7 +59,8 @@
 .portfolio-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
+  column-gap: 2.5rem;
+  row-gap: 1.25rem;
   margin-bottom: 2.5rem;
 }
 
@@ -147,7 +148,7 @@
 }
 
 .project-card.vertical .card-thumbnail-container {
-  aspect-ratio: 9/16;
+  aspect-ratio: 3/4;
 }
 
 .project-card.wide .card-thumbnail-container {
