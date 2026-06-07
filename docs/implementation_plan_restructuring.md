@@ -1,108 +1,70 @@
-# План рефакторинга (CSS Architecture Cleanup & Accessibility Refactoring)
+# План рефакторинга: Продвинутая доступность (a11y Focus Management & Keyboard Nav)
 
-Этот план решает проблему плохой архитектурной организации стилей. В текущей кодовой базе адаптивные стили для всего сайта (шапка, первый экран, сетка проектов, подвал) были ошибочно описаны внутри `modals.css` (начиная с 157 строки). Мы очистим `modals.css`, перенесем правила в соответствующие компоненты и добавим глобальные стили доступности (`:focus-visible`).
+Этот план решает проблемы с потерей фокуса (focus management) при открытии модальных окон и неполной поддержкой клавиатурной навигации для главного промо-видео (Showreel) на первом экране.
 
 ## User Review Required
 
-> [!WARNING]
-> Данный рефакторинг не меняет визуального поведения сайта на мобильных и десктопных версиях. Его цель — наведение порядка в архитектуре стилей (CSS Maintainability) и исправление доступности элементов.
+> [!NOTE]
+> Доработка полностью соответствует спецификации W3C WAI-ARIA по реализации доступных модальных окон (Modal Dialogs). Это улучшает UX для пользователей, использующих вспомогательные технологии и управление клавиатурой.
 
 ## Proposed Changes
 
-Мы распределим медиа-запросы по их законным CSS-файлам и удалим лишний код из `modals.css`.
+Мы внесем изменения в разметку первого экрана и логику работы модальных окон (лайтбокс и контакты).
 
 ---
 
-### [1] Глобальные стили (Base & Global a11y)
+### [1] Навигация клавиатурой на Hero
 
-#### [MODIFY] [base.css](file:///d:/repo/source/portfolio_web_daria/src/css/base.css)
-* Перенесем адаптивный размер шрифта из `modals.css`:
-  ```css
-  @media (max-width: 768px) {
-    html {
-      font-size: 14px;
-    }
-  }
-  ```
-* Добавим глобальную подсветку фокуса для всех интерактивных элементов (ссылок и кнопок):
-  ```css
-  a:focus-visible,
-  button:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 4px;
-  }
+#### [MODIFY] [index.html](file:///d:/repo/source/portfolio_web_daria/index.html)
+* Добавим атрибут `tabindex="0"` для интерактивной видео-карточки промо-видео:
+  ```html
+  <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
   ```
 
----
-
-### [2] Компонентные стили (Header & Hero Component Queries)
-
-#### [MODIFY] [header.css](file:///d:/repo/source/portfolio_web_daria/src/css/header.css)
-* Перенесем логику скрытия навигационного меню на мобильных устройствах из `modals.css` в `@media (max-width: 768px)` внутри `header.css`:
-  ```css
-  .main-nav {
-    display: none;
-  }
-  ```
-
-#### [MODIFY] [hero.css](file:///d:/repo/source/portfolio_web_daria/src/css/hero.css)
-* Перенесем стили `.hero-container`, `.hero-cta` и `.hero-bio` из `modals.css` во внутренние медиа-запросы `hero.css` для разрешений `@media (max-width: 1024px)`.
-
----
-
-### [3] Сетка проектов (Portfolio Component Queries)
-
-#### [MODIFY] [portfolio.css](file:///d:/repo/source/portfolio_web_daria/src/css/portfolio.css)
-* Объединим и очистим медиа-запросы:
-  * Для `@media (max-width: 1024px)` перенесем настройки `.portfolio-group { grid-template-columns: repeat(2, 1fr); }`.
-  * Для `@media (max-width: 768px)` перенесем настройки сброса колонок и строк:
-    ```css
-    .portfolio-group {
-      grid-template-columns: 1fr !important;
-      grid-template-rows: auto !important;
-      gap: 2.5rem;
+#### [MODIFY] [grid.js](file:///d:/repo/source/portfolio_web_daria/src/js/grid.js)
+* В функции `setupFeaturedVideo()` добавим обработчик нажатия клавиш `Enter` / `Space` на карточку `#featured-card-element`:
+  ```javascript
+  featuredCard.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openLightbox(featuredProject || { ...дефолтный_проект... });
     }
-    .portfolio-group .project-card {
-      grid-column: span 1 !important;
-      grid-row: span 1 !important;
-    }
-    .project-card.wide .card-thumbnail-container {
-      aspect-ratio: 16/9;
-    }
-    ```
-
----
-
-### [4] Подвал сайта (Footer Component Queries)
-
-#### [MODIFY] [footer.css](file:///d:/repo/source/portfolio_web_daria/src/css/footer.css)
-* Перенесем двухколоночную адаптивность футера из `modals.css` во внутренний медиа-запрос в `footer.css` для разрешения `@media (max-width: 1024px)`:
-  ```css
-  .footer-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-  .footer-right {
-    grid-column: span 2;
-    align-items: center;
-  }
+  });
   ```
 
 ---
 
-### [5] Очистка Modals CSS
+### [2] Управление фокусом в Lightbox (Видео-плеер)
 
-#### [MODIFY] [modals.css](file:///d:/repo/source/portfolio_web_daria/src/css/modals.css)
-* **Удалим все внешние селекторы и правила** из блока `RESPONSIVE DESIGN` (строки 157–243), которые относятся к другим секциям сайта, оставив в файле только адаптивность для модальных окон `.lightbox` и `.contact-modal`.
+#### [MODIFY] [lightbox.js](file:///d:/repo/source/portfolio_web_daria/src/js/lightbox.js)
+* Добавим переменную `lastActiveElement` для сохранения фокуса.
+* В `openLightbox(project)`:
+  * Сохраним элемент, который вызвал открытие плеера: `lastActiveElement = document.activeElement;`.
+  * Переместим фокус на кнопку закрытия плеера после отрисовки: `setTimeout(() => lightboxClose.focus(), 50);`.
+* В `closeLightbox()`:
+  * После скрытия окна вернем фокус на сохраненный элемент: `if (lastActiveElement) lastActiveElement.focus();`.
+
+---
+
+### [3] Управление фокусом в Модальном окне контактов
+
+#### [MODIFY] [contact.js](file:///d:/repo/source/portfolio_web_daria/src/js/contact.js)
+* Добавим переменную `lastActiveElement` для сохранения фокуса.
+* В `openContactModal()`:
+  * Сохраним активный элемент: `lastActiveElement = document.activeElement;`.
+  * Переместим фокус на кнопку закрытия: `setTimeout(() => contactClose.focus(), 50);`.
+* В `closeContactModal()`:
+  * Вернем фокус: `if (lastActiveElement) lastActiveElement.focus();`.
 
 ---
 
 ## Verification Plan
 
 ### Automated Tests
-* Проверим отсутствие ошибок в сборщике:
-  `npm run build`
+* Проверим сборку: `npm run build`
 
 ### Manual Verification
-1. Откроем сайт локально и проверим работу на разрешениях 1024px, 768px и мобильных версиях. Убедимся, что адаптивная сетка, первый экран и шапка выглядят идентично тому, что было до рефакторинга.
-2. Проверим сфокусированные состояния ссылок меню, переключателя тем и социальных иконок в подвале клавишей `Tab`.
+1. Откроем сайт и переместим фокус клавишей `Tab` на карточку шоурила в Hero. Убедимся, что она подсвечивается. Нажмем `Enter` — плеер должен открыться.
+2. После открытия плеера фокус должен автоматически перейти на кнопку закрытия (`×`). 
+3. Нажмем `Escape` или `Enter` (для кнопки `×`) — плеер должен закрыться, а фокус вернуться ровно на ту карточку в Hero, с которой мы его открыли.
+4. Повторим процедуру с любой карточкой в сетке проектов и ссылкой `CONTACT` в шапке сайта.

@@ -1,4 +1,4 @@
-let contactModal, contactLink, contactClose;
+let contactModal, contactLink, contactClose, lastActiveElement;
 
 export function initContactModal() {
   contactModal = document.getElementById("contact-modal");
@@ -34,6 +34,12 @@ export function openContactModal() {
   contactModal.classList.add("active");
   contactModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  
+  // Сохраняем активный элемент и переносим фокус на кнопку закрытия
+  lastActiveElement = document.activeElement;
+  setTimeout(() => {
+    if (contactClose) contactClose.focus();
+  }, 50);
 }
 
 export function closeContactModal() {
@@ -41,4 +47,9 @@ export function closeContactModal() {
   contactModal.classList.remove("active");
   contactModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
+  
+  // Возвращаем фокус на прежнее место
+  if (lastActiveElement) {
+    lastActiveElement.focus();
+  }
 }

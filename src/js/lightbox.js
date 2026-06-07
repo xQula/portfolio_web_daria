@@ -1,4 +1,4 @@
-let lightbox, lightboxClose, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription;
+let lightbox, lightboxClose, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription, lastActiveElement;
 
 export function initLightbox() {
   lightbox = document.getElementById("video-lightbox");
@@ -64,6 +64,12 @@ export function openLightbox(project) {
   lightbox.classList.add("active");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden"; // Блокировка скролла сайта
+  
+  // Сохраняем элемент, вызвавший модалку, и переносим фокус на кнопку закрытия
+  lastActiveElement = document.activeElement;
+  setTimeout(() => {
+    if (lightboxClose) lightboxClose.focus();
+  }, 50);
 }
 
 export function closeLightbox() {
@@ -75,4 +81,9 @@ export function closeLightbox() {
   
   // Удаляем iframe, чтобы остановить воспроизведение видео
   videoWrapper.innerHTML = "";
+  
+  // Возвращаем фокус на прежнее место
+  if (lastActiveElement) {
+    lastActiveElement.focus();
+  }
 }

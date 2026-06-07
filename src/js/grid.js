@@ -268,21 +268,32 @@ export function setupFeaturedVideo() {
       titleSpan.textContent = featuredProject.title;
     }
     
-    featuredCard.addEventListener("click", () => {
-      openLightbox(featuredProject);
+    const openFeatured = () => openLightbox(featuredProject);
+    featuredCard.addEventListener("click", openFeatured);
+    featuredCard.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openFeatured();
+      }
     });
   } else {
     // Дефолтный фолбек
-    featuredCard.addEventListener("click", () => {
-      openLightbox({
-        title: "SHOWREEL 2026 | EDITING SHOWCASE",
-        subCategory: "Editing Showreel",
-        client: "Daria Evstigneeva Portfolio",
-        videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", // Ссылка на шоурил
-        aspect: "horizontal",
-        soft: "Premiere Pro · After Effects · DaVinci Resolve",
-        desc: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики."
-      });
+    const fallbackProject = {
+      title: "SHOWREEL 2026 | EDITING SHOWCASE",
+      subCategory: "Editing Showreel",
+      client: "Daria Evstigneeva Portfolio",
+      videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", // Ссылка на шоурил
+      aspect: "horizontal",
+      soft: "Premiere Pro · After Effects · DaVinci Resolve",
+      desc: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики."
+    };
+    const openFallback = () => openLightbox(fallbackProject);
+    featuredCard.addEventListener("click", openFallback);
+    featuredCard.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openFallback();
+      }
     });
   }
 }
