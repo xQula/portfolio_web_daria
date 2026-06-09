@@ -5,7 +5,7 @@
   min-height: calc(100vh - 84px); /* Высота во весь экран минус хедер */
   display: flex;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 3.4rem 2rem; /* Ритм Фибоначчи (55px) */
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 
 .hero-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr; /* Асимметричное золотое деление колонок (56.5% на 43.5%) */
   gap: 4rem;
   align-items: center;
   width: 100%;
