@@ -35,7 +35,7 @@
 :root {
   /* Светлая тема (По умолчанию, как на референсе) */
   --color-bg-primary: #E0DBC6;       /* Warm Sand - Основной бежевый фон */
-  --color-bg-secondary: #FFFFFF;     /* White - Фон хедера, футера, кнопок, закрытых карточек */
+  --color-bg-secondary: #EBE7D5;     /* Warm Sand Light - Более интегрированные карточки и элементы */
   --color-lightbox-bg: #EBE7D5;      /* Warm Sand Light (Beige) - Только для открытого лайтбокса/модального окна */
   --color-bg-contrast: #122024;      /* Slate Dark - Темные блоки */
   --color-text-primary: #122024;     /* Slate Dark - Основной текст */
@@ -47,6 +47,16 @@
   --shadow-accent: rgba(204, 255, 0, 0.4);
   --shadow-general: rgba(18, 32, 36, 0.08);
   
+  /* Тематические токены кнопок (для предотвращения плохой читаемости) */
+  --color-btn-accent-bg: #122024;       /* Темный сланец в светлой теме для отличного контраста */
+  --color-btn-accent-text: #EBE7D5;     /* Бежевый текст */
+  --color-btn-accent-hover-bg: #CCFF00;  /* Фирменный лаймовый при наведении */
+  --color-btn-accent-hover-text: #122024;
+  --color-btn-border: rgba(18, 32, 36, 0.15);
+
+  /* Токен хедера */
+  --color-header-bg: rgba(224, 219, 198, 0.75); /* Полупрозрачный бежевый для стеклянного эффекта */
+  
   /* Шрифты */
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'MAK', serif;
@@ -57,6 +67,7 @@
   --border-radius-sm: 4px;
   --border-radius-md: 12px;
   --border-radius-lg: 24px;
+  --border-radius-btn: 6px;           /* Геометричные премиум-кнопки вместо капсул */
 }
 
 [data-theme="dark"] {
@@ -73,6 +84,16 @@
   --color-border: rgba(239, 239, 239, 0.12);
   --shadow-accent: rgba(204, 255, 0, 0.6);
   --shadow-general: rgba(0, 0, 0, 0.3);
+
+  /* Кнопки в темной теме остаются яркими неоново-лаймовыми */
+  --color-btn-accent-bg: #CCFF00;
+  --color-btn-accent-text: #122024;
+  --color-btn-accent-hover-bg: #FFFFFF;
+  --color-btn-accent-hover-text: #122024;
+  --color-btn-border: transparent;
+
+  /* Токен хедера */
+  --color-header-bg: rgba(28, 46, 51, 0.75);   /* Полупрозрачный темный для стеклянного эффекта */
 }
 
 /* ----------------------------------------------------

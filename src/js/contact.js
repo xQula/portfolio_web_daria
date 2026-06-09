@@ -1,15 +1,38 @@
-let contactModal, contactLink, contactClose, lastActiveElement;
+let contactModal, contactClose, lastActiveElement;
 
 export function initContactModal() {
   contactModal = document.getElementById("contact-modal");
-  contactLink = document.getElementById("contact-link");
   contactClose = document.getElementById("contact-close");
 
-  if (!contactLink || !contactModal || !contactClose) return;
+  if (!contactModal || !contactClose) return;
 
-  contactLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    openContactModal();
+  // Ищем все триггеры контактов на странице
+  const triggers = [
+    document.getElementById("contact-link"),
+    document.getElementById("footer-contact-link"),
+    document.getElementById("mobile-contact-link")
+  ].filter(Boolean);
+
+  const closeMobileDrawer = () => {
+    const drawer = document.getElementById("mobile-drawer");
+    const burger = document.getElementById("mobile-menu-trigger");
+    if (drawer && drawer.classList.contains("active")) {
+      drawer.classList.remove("active");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    if (burger && burger.classList.contains("active")) {
+      burger.classList.remove("active");
+      burger.setAttribute("aria-label", "Открыть меню");
+    }
+  };
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMobileDrawer(); // Закрываем мобильное меню, если открыто
+      openContactModal();
+    });
   });
 
   contactClose.addEventListener("click", closeContactModal);

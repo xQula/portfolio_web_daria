@@ -1,3 +1,5 @@
+import { t, getLocalized } from "./i18n.js";
+
 let lightbox, lightboxClose, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription, lastActiveElement;
 
 export function initLightbox() {
@@ -49,20 +51,37 @@ export function initLightbox() {
       }
     }
   });
+
+  // Слушатель смены языка для обновления информации в открытом лайтбоксе (если он активен)
+  document.addEventListener("languagechanged", () => {
+    if (lightbox.classList.contains("active") && window.currentOpenProject) {
+      updateLightboxContent(window.currentOpenProject);
+    }
+  });
+}
+
+function updateLightboxContent(project) {
+  if (!lbTitle || !lbCategory || !lbDescription || !lbDetails) return;
+
+  lbTitle.textContent = getLocalized(project.title);
+  lbCategory.textContent = `${getLocalized(project.subCategory)} | ${project.client}`;
+  lbDescription.textContent = getLocalized(project.desc);
+  
+  // Детали софта
+  lbDetails.innerHTML = `
+    <div><strong>${t("lightbox_label_soft")}:</strong> ${project.soft}</div>
+    <div><strong>${t("lightbox_label_format")}:</strong> ${project.aspect === "vertical" ? t("lightbox_format_vertical") : t("lightbox_format_horizontal")}</div>
+  `;
 }
 
 export function openLightbox(project) {
   if (!lbTitle || !lbCategory || !lbDescription || !lbDetails || !videoWrapper || !lightbox) return;
 
-  lbTitle.textContent = project.title;
-  lbCategory.textContent = `${project.subCategory} | ${project.client}`;
-  lbDescription.textContent = project.desc;
-  
-  // Детали софта
-  lbDetails.innerHTML = `
-    <div><strong>Софт:</strong> ${project.soft}</div>
-    <div><strong>Формат:</strong> ${project.aspect === "vertical" ? "Вертикальный (9:16)" : "Горизонтальный (16:9)"}</div>
-  `;
+  // Сохраняем ссылку на текущий открытый проект в глобальной переменной для смены языка на лету
+  window.currentOpenProject = project;
+
+  // Обновляем текстовый контент
+  updateLightboxContent(project);
   
   // Очистка предыдущего плеера
   videoWrapper.innerHTML = "";
@@ -104,6 +123,7 @@ export function closeLightbox() {
   
   // Удаляем iframe, чтобы остановить воспроизведение видео
   videoWrapper.innerHTML = "";
+  window.currentOpenProject = null;
   
   // Возвращаем фокус на прежнее место
   if (lastActiveElement) {

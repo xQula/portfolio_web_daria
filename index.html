@@ -67,14 +67,18 @@
 
       <nav class="main-nav" id="main-nav">
         <ul>
-          <li><a href="#hero" class="nav-link">HOME</a></li>
-          <li><a href="#portfolio" class="nav-link">PORTFOLIO</a></li>
-          <li><a href="#" class="nav-link" id="contact-link">CONTACT</a></li>
+          <li><a href="#hero" class="nav-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
+          <li><a href="#portfolio" class="nav-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
+          <li><a href="#" class="nav-link" id="contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему">
+        <!-- Кнопка переключателя языка -->
+        <button id="lang-toggle" class="lang-toggle-btn" aria-label="Сменить язык" data-i18n-aria="aria_toggle_lang">RU</button>
+
+        <!-- Кнопка переключателя темы -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему" data-i18n-aria="aria_toggle_theme">
           <!-- Иконка Луны -->
           <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" vector-effect="non-scaling-stroke"></path>
@@ -94,12 +98,41 @@
         </button>
 
         <!-- Кнопка действия -->
-        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill btn-start" id="start-project-btn">
-          START A PROJECT
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill btn-start" id="start-project-btn" data-i18n="nav_start_project">
+          НАЧАТЬ ПРОЕКТ
         </a>
+
+        <!-- Кнопка бургер-меню -->
+        <button id="mobile-menu-trigger" class="mobile-menu-btn" aria-label="Открыть меню">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Мобильное меню (Drawer Overlay) -->
+  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-content">
+      <nav class="drawer-nav">
+        <ul>
+          <li><a href="#hero" class="drawer-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
+          <li><a href="#portfolio" class="drawer-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
+          <li><a href="#" class="drawer-link" id="mobile-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
+        </ul>
+      </nav>
+      
+      <div class="drawer-actions">
+        <div class="drawer-toggles">
+          <button id="mobile-lang-toggle" class="lang-toggle-btn" aria-label="Сменить язык" data-i18n-aria="aria_toggle_lang">RU</button>
+        </div>
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill drawer-btn" data-i18n="nav_start_project">
+          НАЧАТЬ ПРОЕКТ
+        </a>
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- Главный экран (Hero Section) -->
@@ -107,16 +140,16 @@
       <div class="hero-container">
         <!-- Левая часть: текст и описание -->
         <div class="hero-text-block">
-          <h1 class="hero-title">ELEVATING STORIES THROUGH FORM & MOVEMENT</h1>
-          <p class="hero-subtitle">High-fashion video production brand.</p>
+          <h1 class="hero-title" data-i18n="hero_title">РАСКРЫВАЯ ИСТОРИИ ЧЕРЕЗ ФОРМУ И ДВИЖЕНИЕ</h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">Высококлассный бренд видеопроизводства.</p>
           <div class="hero-bio">
-            <p><strong>Евстигнеева Дарья</strong> — режиссер монтажа и контент-мейкер.</p>
-            <p class="bio-tagline">Готова к работе с любыми медиаплощадками.</p>
+            <p data-i18n="hero_bio_name">Евстигнеева Дарья — режиссер монтажа и контент-мейкер.</p>
+            <p class="bio-tagline" data-i18n="hero_bio_tagline">Готова к работе с любыми медиаплощадками.</p>
             <div class="bio-categories">
-              <span>кинопродвижение</span> · <span>реклама и бренды</span> · <span>музыкальное видео</span> · <span>digital-контент</span>
+              <span data-i18n="hero_cat_cinema">кинопродвижение</span> · <span data-i18n="hero_cat_brands">реклама и бренды</span> · <span data-i18n="hero_cat_music">музыкальное видео</span> · <span data-i18n="hero_cat_digital">digital-контент</span>
             </div>
           </div>
-          <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta">Смотреть работы</a>
+          <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta" data-i18n="hero_cta">Смотреть работы</a>
         </div>
 
         <!-- Правая часть: главный проект (Featured Video) -->
@@ -125,7 +158,7 @@
           <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
             <div class="featured-thumbnail-container">
               <div class="featured-noise-overlay"></div>
-              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img">
+              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
               <button class="play-btn-large" aria-label="Смотреть шоурил">
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -133,7 +166,7 @@
               </button>
             </div>
             <div class="featured-meta">
-              <span class="featured-title">SHOWREEL 2026 | EDITING SHOWCASE</span>
+              <span class="featured-title" data-i18n="hero_showreel_title">ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА</span>
             </div>
           </div>
         </div>
@@ -143,15 +176,15 @@
     <!-- Секция Портфолио (Portfolio Section) -->
     <section class="portfolio-section" id="portfolio">
       <div class="portfolio-container">
-        <h2 class="section-title">PORTFOLIO</h2>
+        <h2 class="section-title" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
 
         <!-- Фильтры проектов -->
         <div class="portfolio-filters" id="portfolio-filters">
-          <button class="filter-btn active" data-filter="all">Все проекты</button>
-          <button class="filter-btn" data-filter="trailers">Кинопродвижение</button>
-          <button class="filter-btn" data-filter="commercial">Реклама</button>
-          <button class="filter-btn" data-filter="music">Клипы</button>
-          <button class="filter-btn" data-filter="vertical">Shorts / Reels</button>
+          <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Все проекты</button>
+          <button class="filter-btn" data-filter="trailers" data-i18n="filter_cinema">Кинопродвижение</button>
+          <button class="filter-btn" data-filter="commercial" data-i18n="filter_commercial">Реклама</button>
+          <button class="filter-btn" data-filter="music" data-i18n="filter_music">Клипы</button>
+          <button class="filter-btn" data-filter="vertical" data-i18n="filter_vertical">Shorts / Reels</button>
         </div>
 
         <!-- Сетка проектов (Grid) -->
@@ -161,7 +194,7 @@
 
         <!-- Кнопка "Показать еще" -->
         <div class="portfolio-more-container">
-          <button id="show-more-btn" class="btn btn-accent btn-pill">SHOW MORE</button>
+          <button id="show-more-btn" class="btn btn-accent btn-pill" data-i18n="portfolio_show_more">ПОКАЗАТЬ ЕЩЕ</button>
         </div>
       </div>
     </section>
@@ -177,14 +210,14 @@
           </div>
           <div class="logo-tagline">SENSE OF FORM</div>
         </a>
-        <p class="footer-author-text">Евстигнеева Дарья — Режиссер монтажа</p>
+        <p class="footer-author-text" data-i18n="footer_tagline">Евстигнеева Дарья — Режиссер монтажа</p>
       </div>
 
       <nav class="footer-nav">
         <ul>
-          <li><a href="#hero" class="footer-link">HOME</a></li>
-          <li><a href="#portfolio" class="footer-link">PORTFOLIO</a></li>
-          <li><a href="mailto:evst.daria@yandex.ru" class="footer-link">CONTACT</a></li>
+          <li><a href="#hero" class="footer-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
+          <li><a href="#portfolio" class="footer-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
+          <li><a href="#" class="footer-link" id="footer-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
       </nav>
 
@@ -229,7 +262,7 @@
 
   <!-- Модальное окно плеера (Lightbox) -->
   <div id="video-lightbox" class="lightbox" aria-hidden="true" role="dialog">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть плеер">&times;</button>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть плеер" data-i18n-aria="aria_close_player">&times;</button>
     <div class="lightbox-content">
       <!-- Контейнер для адаптивного iframe -->
       <div class="lightbox-video-wrapper" id="lightbox-video-wrapper">
@@ -238,22 +271,22 @@
       
       <!-- Боковая/Нижняя панель информации проекта -->
       <div class="lightbox-info-panel" id="lightbox-info-panel">
-        <h3 class="lightbox-title" id="lightbox-title">Название проекта</h3>
-        <p class="lightbox-category" id="lightbox-category">Категория</p>
+        <h3 class="lightbox-title" id="lightbox-title" data-i18n="lightbox_default_title">Название проекта</h3>
+        <p class="lightbox-category" id="lightbox-category" data-i18n="lightbox_default_category">Категория</p>
         <div class="lightbox-details" id="lightbox-details">
           <!-- Доп. детали проекта -->
         </div>
-        <p class="lightbox-description" id="lightbox-description">Описание процесса монтажа...</p>
+        <p class="lightbox-description" id="lightbox-description" data-i18n="lightbox_default_desc">Описание процесса монтажа...</p>
       </div>
     </div>
   </div>
 
   <!-- Модальное окно контактов -->
   <div id="contact-modal" class="lightbox" aria-hidden="true" role="dialog">
-    <button class="lightbox-close" id="contact-close" aria-label="Закрыть контакты">&times;</button>
+    <button class="lightbox-close" id="contact-close" aria-label="Закрыть контакты" data-i18n-aria="aria_close_contacts">&times;</button>
     <div class="contact-modal-content">
-      <h3 class="contact-modal-title">CONTACTS</h3>
-      <p class="contact-modal-subtitle">Ready to collaborate on your next project</p>
+      <h3 class="contact-modal-title" data-i18n="contact_title">КОНТАКТЫ</h3>
+      <p class="contact-modal-subtitle" data-i18n="contact_subtitle">Ready to collaborate on your next project</p>
       
       <div class="contact-modal-links">
         <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">

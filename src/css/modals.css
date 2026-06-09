@@ -101,7 +101,7 @@
   display: none; /* Chrome, Safari и Opera */
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1201px) {
   .lightbox-info-panel {
     position: absolute;
     top: 0;
@@ -157,7 +157,7 @@
 /* ----------------------------------------------------
    RESPONSIVE DESIGN (MODALS ONLY)
    ---------------------------------------------------- */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .lightbox-content {
     display: flex;
     flex-direction: column;
@@ -171,6 +171,19 @@
     padding: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .lightbox-video-wrapper.vertical {
+    aspect-ratio: 9/16;
+    max-height: 55vh;
+  }
+  .lightbox-video-wrapper.vertical iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 
 /* ----------------------------------------------------
    CONTACT MODAL STYLING
@@ -218,11 +231,15 @@
   align-items: center;
   gap: 1.2rem;
   padding: 1rem 1.5rem;
-  background-color: var(--color-bg-secondary);
+  background-color: rgba(255, 255, 255, 0.4); /* Белый полупрозрачный для светлой темы */
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
   text-align: left;
   transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+[data-theme="dark"] .contact-modal-item {
+  background-color: rgba(18, 32, 36, 0.4); /* Темный полупрозрачный для темной темы */
 }
 
 .contact-modal-item:hover {

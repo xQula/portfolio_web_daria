@@ -14,11 +14,13 @@
 }
 
 .section-title {
+  font-family: var(--font-sans);
   font-size: 2.8rem;
   font-weight: 800;
   text-align: center;
   margin-bottom: 2.5rem;
   letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
 
 .portfolio-filters {
@@ -37,7 +39,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
-  border-radius: 100px;
+  border-radius: var(--border-radius-btn);
   cursor: pointer;
   transition: all var(--transition-speed) ease;
 }

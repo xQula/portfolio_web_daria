@@ -1,6 +1,7 @@
 import { projects, getYoutubeId, artTemplates } from "./api.js";
 import { openLightbox } from "./lightbox.js";
 import { INITIAL_ITEMS_COUNT } from "./config.js";
+import { getLocalized } from "./i18n.js";
 
 let projectGrid, filterButtons, showMoreBtn;
 let currentFilter = "all";
@@ -20,6 +21,12 @@ export function initGrid() {
   
   // Кнопка "Show More"
   showMoreBtn.addEventListener("click", toggleShowMore);
+
+  // Слушатель смены языка для авто-обновления сетки
+  document.addEventListener("languagechanged", () => {
+    renderGrid();
+    setupFeaturedVideo();
+  });
 }
 
 // Вспомогательная функция создания карточки проекта
@@ -30,8 +37,8 @@ export function createCard(project) {
     const aspect = project.aspect === "vertical" ? "vertical" : (project.aspect === "wide" ? "wide" : "horizontal");
     card.className = `project-card art-block ${aspect}`;
     card.innerHTML = `
-      <div class="art-title serif-text">${project.title}</div>
-      <div class="art-subtitle">${project.subtitle}</div>
+      <div class="art-title serif-text">${getLocalized(project.title)}</div>
+      <div class="art-subtitle">${getLocalized(project.subtitle)}</div>
     `;
   } else {
     const aspect = project.aspect === "vertical" ? "vertical" : (project.aspect === "wide" ? "wide" : "horizontal");
@@ -45,7 +52,7 @@ export function createCard(project) {
     card.innerHTML = `
       <div class="card-thumbnail-container">
         <div class="featured-noise-overlay"></div>
-        <img src="${project.preview}" alt="${project.title}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+        <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
         <button class="play-btn-small" aria-label="Смотреть видео">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -55,10 +62,10 @@ export function createCard(project) {
       </div>
       <div class="card-info">
         <div class="card-info-header">
-          <h3 class="card-title">${project.title}</h3>
+          <h3 class="card-title">${getLocalized(project.title)}</h3>
           <span class="card-time-label">${project.duration}</span>
         </div>
-        <span class="card-meta">${project.subCategory} | ${project.client}</span>
+        <span class="card-meta">${getLocalized(project.subCategory)} | ${project.client}</span>
       </div>
     `;
     
@@ -87,7 +94,10 @@ export function renderGrid() {
       return {
         id: `art-filler-${artCardIndex++}`,
         type: "art",
-        title: "CAN BE DIFFERENT",
+        title: {
+          ru: "МОЖЕТ БЫТЬ ДРУГИМ",
+          en: "CAN BE DIFFERENT"
+        },
         subtitle: "SENSE OF FORM",
         aspect: aspect
       };
@@ -253,24 +263,31 @@ export function setupFeaturedVideo() {
     const titleSpan = featuredCard.querySelector(".featured-title");
     
     if (img) {
-      img.src = featuredProject.preview;
-      img.alt = featuredProject.title;
-      
       const ytId = getYoutubeId(featuredProject.videoUrl);
+      
+      // Устранение race condition: обработчик onerror устанавливаем ДО src
       if (ytId) {
         img.onerror = function() {
           img.onerror = null;
           img.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
         };
       }
+      
+      img.src = featuredProject.preview;
+      img.alt = getLocalized(featuredProject.title);
     }
     if (titleSpan) {
-      titleSpan.textContent = featuredProject.title;
+      titleSpan.textContent = getLocalized(featuredProject.title);
     }
     
     const openFeatured = () => openLightbox(featuredProject);
-    featuredCard.addEventListener("click", openFeatured);
-    featuredCard.addEventListener("keydown", (e) => {
+    
+    // Очищаем старые слушатели путем замены элемента (чтобы избежать дублирования)
+    const newFeaturedCard = featuredCard.cloneNode(true);
+    featuredCard.parentNode.replaceChild(newFeaturedCard, featuredCard);
+    
+    newFeaturedCard.addEventListener("click", openFeatured);
+    newFeaturedCard.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         openFeatured();
@@ -279,17 +296,31 @@ export function setupFeaturedVideo() {
   } else {
     // Дефолтный фолбек
     const fallbackProject = {
-      title: "SHOWREEL 2026 | EDITING SHOWCASE",
-      subCategory: "Editing Showreel",
+      title: {
+        ru: "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
+        en: "SHOWREEL 2026 | EDITING SHOWCASE"
+      },
+      subCategory: {
+        ru: "Шоурил монтажа",
+        en: "Editing Showreel"
+      },
       client: "Daria Evstigneeva Portfolio",
       videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g", // Ссылка на шоурил
       aspect: "horizontal",
       soft: "Premiere Pro · After Effects · DaVinci Resolve",
-      desc: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики."
+      desc: {
+        ru: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики.",
+        en: "Official video editing showreel of Daria Evstigneeva. Showcasing key techniques of dynamic cutting, sound design, color grading, and motion graphics."
+      }
     };
+    
     const openFallback = () => openLightbox(fallbackProject);
-    featuredCard.addEventListener("click", openFallback);
-    featuredCard.addEventListener("keydown", (e) => {
+    
+    const newFeaturedCard = featuredCard.cloneNode(true);
+    featuredCard.parentNode.replaceChild(newFeaturedCard, featuredCard);
+    
+    newFeaturedCard.addEventListener("click", openFallback);
+    newFeaturedCard.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         openFallback();

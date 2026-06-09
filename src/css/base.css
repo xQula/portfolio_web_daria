@@ -70,19 +70,23 @@ h1, h2, h3, h4 {
   cursor: pointer;
   transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
   text-transform: uppercase;
+  border-radius: var(--border-radius-btn);
 }
 
 .btn-pill {
-  border-radius: 100px;
+  border-radius: var(--border-radius-btn); /* Изменено с 100px на геометрический радиус для соответствия сетке */
 }
 
 .btn-accent {
-  background-color: var(--color-accent);
-  color: #122024; /* Всегда темный текст для лаймовой кнопки */
+  background-color: var(--color-btn-accent-bg);
+  color: var(--color-btn-accent-text);
+  border: 1px solid var(--color-btn-border);
 }
 
 .btn-accent:hover {
   transform: translateY(-2px);
+  background-color: var(--color-btn-accent-hover-bg);
+  color: var(--color-btn-accent-hover-text);
   box-shadow: 0 8px 20px var(--shadow-accent);
 }
 
@@ -94,7 +98,7 @@ h1, h2, h3, h4 {
 
 .btn-secondary:hover {
   background-color: var(--color-text-primary);
-  color: var(--color-bg-secondary);
+  color: var(--color-bg-primary);
   transform: translateY(-2px);
 }
 
