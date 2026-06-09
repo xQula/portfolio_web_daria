@@ -1,7 +1,7 @@
 import { projects, getYoutubeId, artTemplates } from "./api.js";
 import { openLightbox } from "./lightbox.js";
 import { INITIAL_ITEMS_COUNT } from "./config.js";
-import { getLocalized } from "./i18n.js";
+import { getLocalized, t } from "./i18n.js";
 
 let projectGrid, filterButtons, showMoreBtn;
 let currentFilter = "all";
@@ -53,7 +53,7 @@ export function createCard(project) {
       <div class="card-thumbnail-container">
         <div class="featured-noise-overlay"></div>
         <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
-        <button class="play-btn-small" aria-label="Смотреть видео">
+        <button class="play-btn-small" aria-label="${t("aria_play_video")}" data-i18n-aria="aria_play_video">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>

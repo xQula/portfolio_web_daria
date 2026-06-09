@@ -51,7 +51,10 @@ export const translations = {
     aria_close_player: "Закрыть плеер",
     aria_close_contacts: "Закрыть контакты",
     aria_toggle_theme: "Переключить тему",
-    aria_toggle_lang: "Сменить язык"
+    aria_toggle_lang: "Сменить язык",
+    aria_play_showreel: "Смотреть шоурил",
+    aria_play_video: "Смотреть видео",
+    aria_logo: "SOF — Sense of Form | На главную"
   },
   en: {
     site_title: "SOF — Video Editor Daria Evstigneeva | Portfolio",
@@ -104,7 +107,10 @@ export const translations = {
     aria_close_player: "Close player",
     aria_close_contacts: "Close contacts",
     aria_toggle_theme: "Toggle theme",
-    aria_toggle_lang: "Change language"
+    aria_toggle_lang: "Change language",
+    aria_play_showreel: "Watch showreel",
+    aria_play_video: "Watch video",
+    aria_logo: "SOF — Sense of Form | Home"
   }
 };
 

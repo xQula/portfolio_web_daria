@@ -6,6 +6,7 @@ import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 
 const themeToggleBtn = document.getElementById("theme-toggle");
+const mobileThemeToggleBtn = document.getElementById("mobile-theme-toggle");
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
 const burgerBtn = document.getElementById("mobile-menu-trigger");
@@ -36,6 +37,9 @@ async function init() {
   // Переключатель тем
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener("click", toggleTheme);
+  }
+  if (mobileThemeToggleBtn) {
+    mobileThemeToggleBtn.addEventListener("click", toggleTheme);
   }
 
   // Переключатели языков

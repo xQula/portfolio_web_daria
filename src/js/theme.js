@@ -21,8 +21,8 @@ export function toggleTheme(e) {
   }
   
   // Координаты клика для начала волны (или центр экрана, если клик без координат)
-  const x = e.clientX ?? window.innerWidth / 2;
-  const y = e.clientY ?? window.innerHeight / 2;
+  const x = e.clientX || window.innerWidth / 2;
+  const y = e.clientY || window.innerHeight / 2;
   
   // Расстояние до самого дальнего угла экрана
   const endRadius = Math.hypot(

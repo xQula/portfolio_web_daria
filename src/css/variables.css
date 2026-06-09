@@ -44,6 +44,7 @@
   --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
   --color-accent-text: #4A6B00;      /* Deep Lime - Читаемый акцентный текст на бежевом */
   --color-border: rgba(18, 32, 36, 0.12);
+  --color-border-hover: var(--color-accent-text); /* Контрастная рамка при наведении */
   --shadow-accent: rgba(204, 255, 0, 0.4);
   --shadow-general: rgba(18, 32, 36, 0.08);
   
@@ -82,6 +83,7 @@
   --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
   --color-accent-text: #CCFF00;      /* Lime Green - Яркий акцентный текст на темном */
   --color-border: rgba(239, 239, 239, 0.12);
+  --color-border-hover: var(--color-accent); /* Неоново-лаймовая рамка при наведении */
   --shadow-accent: rgba(204, 255, 0, 0.6);
   --shadow-general: rgba(0, 0, 0, 0.3);
 

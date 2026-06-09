@@ -7,6 +7,10 @@
   <meta name="keywords" content="режиссер монтажа, видеомонтаж, клипмейкер, трейлеры, тизеры, реклама, Reels, Shorts, Дарья Евстигнеева, SOF Sense of Form">
   <title>SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио</title>
   
+  <!-- Предзагрузка локальных бренд-шрифтов -->
+  <link rel="preload" href="/font/Mak/Mak font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- Подключение Google Fonts: Inter (Sans-serif) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,7 +62,7 @@
   <!-- Шапка сайта (Header) -->
   <header class="site-header" id="site-header">
     <div class="header-container">
-      <a href="#hero" class="logo-block" id="logo-link">
+      <a href="#hero" class="logo-block" id="logo-link" aria-label="SOF — Sense of Form | На главную" data-i18n-aria="aria_logo">
         <div class="logo-main">
           <span class="serif-char">S</span><span class="circle-char">O</span><span class="gothic-char">F</span>
         </div>
@@ -126,6 +130,26 @@
       <div class="drawer-actions">
         <div class="drawer-toggles">
           <button id="mobile-lang-toggle" class="lang-toggle-btn" aria-label="Сменить язык" data-i18n-aria="aria_toggle_lang">RU</button>
+          
+          <!-- Кнопка переключателя темы -->
+          <button id="mobile-theme-toggle" class="theme-toggle-btn" aria-label="Переключить тему" data-i18n-aria="aria_toggle_theme">
+            <!-- Иконка Луны -->
+            <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" vector-effect="non-scaling-stroke"></path>
+            </svg>
+            <!-- Иконка Солнца -->
+            <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
+              <circle cx="12" cy="12" r="5" vector-effect="non-scaling-stroke"></circle>
+              <line x1="12" y1="1" x2="12" y2="3" vector-effect="non-scaling-stroke"></line>
+              <line x1="12" y1="21" x2="12" y2="23" vector-effect="non-scaling-stroke"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" vector-effect="non-scaling-stroke"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" vector-effect="non-scaling-stroke"></line>
+              <line x1="1" y1="12" x2="3" y2="12" vector-effect="non-scaling-stroke"></line>
+              <line x1="21" y1="12" x2="23" y2="12" vector-effect="non-scaling-stroke"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" vector-effect="non-scaling-stroke"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" vector-effect="non-scaling-stroke"></line>
+            </svg>
+          </button>
         </div>
         <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill drawer-btn" data-i18n="nav_start_project">
           НАЧАТЬ ПРОЕКТ
@@ -159,7 +183,7 @@
             <div class="featured-thumbnail-container">
               <div class="featured-noise-overlay"></div>
               <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
-              <button class="play-btn-large" aria-label="Смотреть шоурил">
+              <button class="play-btn-large" aria-label="Смотреть шоурил" data-i18n-aria="aria_play_showreel">
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
@@ -204,7 +228,7 @@
   <footer class="site-footer" id="footer">
     <div class="footer-container">
       <div class="footer-left">
-        <a href="#hero" class="logo-block logo-footer">
+        <a href="#hero" class="logo-block logo-footer" aria-label="SOF — Sense of Form | На главную" data-i18n-aria="aria_logo">
           <div class="logo-main">
             <span class="serif-char">S</span><span class="circle-char">O</span><span class="gothic-char">F</span>
           </div>

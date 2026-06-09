@@ -135,7 +135,7 @@
 .project-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 30px var(--shadow-general), 0 0 20px var(--shadow-accent);
-  border-color: var(--color-accent);
+  border-color: var(--color-border-hover);
 }
 
 .card-thumbnail-container {
@@ -297,7 +297,7 @@
   outline-offset: 4px;
   transform: translateY(-8px);
   box-shadow: 0 15px 30px var(--shadow-general), 0 0 20px var(--shadow-accent);
-  border-color: var(--color-accent);
+  border-color: var(--color-border-hover);
 }
 
 @media (max-width: 1024px) {
