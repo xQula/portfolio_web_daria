@@ -86,43 +86,14 @@ export function createCard(project) {
 export function renderGrid() {
   if (!projectGrid || !showMoreBtn) return;
   projectGrid.innerHTML = "";
-  let artCardIndex = 0;
   
-  // Функция для динамического получения очередной арт-плашки нужного формата
-  function getNextArtCard(aspect) {
-    if (!artTemplates || artTemplates.length === 0) {
-      return {
-        id: `art-filler-${artCardIndex++}`,
-        type: "art",
-        title: {
-          ru: "МОЖЕТ БЫТЬ ДРУГИМ",
-          en: "CAN BE DIFFERENT"
-        },
-        subtitle: "SENSE OF FORM",
-        aspect: aspect
-      };
-    }
-    const template = artTemplates[artCardIndex % artTemplates.length];
-    artCardIndex++;
-    return {
-      id: `art-filler-${template.id || artCardIndex}`,
-      type: "art",
-      title: template.title,
-      subtitle: template.subtitle,
-      aspect: aspect
-    };
-  }
-  
-  // Фильтруем скрытые из сетки проекты и исключаем арт-блоки (они используются только как заполнители)
+  // Фильтруем скрытые из сетки проекты
   const gridProjects = projects.filter(p => !p.hideFromGrid && p.type !== "art");
   
   // Фильтрация проектов по категориям
   let filteredVideos = gridProjects;
   if (currentFilter !== "all") {
     filteredVideos = gridProjects.filter(p => {
-      // Исключаем статические арт-блоки из конкретных категорий видео
-      if (p.type === "art") return false;
-      
       if (!p.category) return false;
       if (Array.isArray(p.category)) {
         return p.category.includes(currentFilter);
@@ -131,121 +102,32 @@ export function renderGrid() {
     });
   }
   
-  // Ограничение по количеству
+  // Ограничение по количеству видео
   const videosToShow = showingAll ? filteredVideos : filteredVideos.slice(0, INITIAL_ITEMS_COUNT);
   
-  // Разделяем проекты по форматам
-  const wideVideos = videosToShow.filter(p => p.aspect === "wide");
-  const verticalVideos = videosToShow.filter(p => p.aspect === "vertical");
-  const horizontalVideos = videosToShow.filter(p => p.aspect !== "vertical" && p.aspect !== "wide");
+  // Массив для итогового рендеринга (подмешиваем арт-блоки каждые 3 видео, только во вкладке "Все проекты")
+  const itemsToRender = [];
+  let artCardIndex = 0;
   
-  let isLeftVertical = true;
-  let groupCount = 0;
-  const ART_INJECT_EVERY = 2; // Вставлять арт-карточку каждые N видео-групп
-  const MAX_ART_INJECTIONS = 2; // Максимум арт-вставок за весь грид
-  let artInjectionsUsed = 0;
+  videosToShow.forEach((video, index) => {
+    itemsToRender.push(video);
+    
+    // Вставляем арт-блок после каждых 3 видео (но не в самом конце и только во вкладке "Все проекты")
+    if (currentFilter === "all" && (index + 1) % 3 === 0 && index !== videosToShow.length - 1 && artTemplates && artTemplates.length > 0) {
+      const template = artTemplates[artCardIndex % artTemplates.length];
+      itemsToRender.push({
+        ...template,
+        id: `art-filler-${template.id || artCardIndex}`,
+        type: "art"
+      });
+      artCardIndex++;
+    }
+  });
   
-  // Вспомогательная функция: вставить арт-карточку между видео-группами
-  function maybeInjectArtCard() {
-    groupCount++;
-    if (
-      groupCount % ART_INJECT_EVERY === 0 &&
-      artInjectionsUsed < MAX_ART_INJECTIONS &&
-      artTemplates && artTemplates.length > 0
-    ) {
-      artInjectionsUsed++;
-      const artProject = getNextArtCard("horizontal");
-      const artGroupDiv = document.createElement("div");
-      artGroupDiv.className = "portfolio-group wide-group";
-      artGroupDiv.appendChild(createCard(artProject));
-      projectGrid.appendChild(artGroupDiv);
-    }
-  }
-  
-  // Группируем проекты в идеальные строки/блоки без пустот
-  while (wideVideos.length > 0 || verticalVideos.length > 0 || horizontalVideos.length > 0) {
-    // 1. Широкоформатные видео (Wide)
-    if (wideVideos.length > 0) {
-      const project = wideVideos.shift();
-      const groupDiv = document.createElement("div");
-      groupDiv.className = "portfolio-group wide-group";
-      groupDiv.appendChild(createCard(project));
-      projectGrid.appendChild(groupDiv);
-      maybeInjectArtCard();
-      continue;
-    }
-    
-    // 2. Асимметричное трио (1V + 2H), если есть горизонтальное видео для пары
-    if (verticalVideos.length > 0 && horizontalVideos.length > 0) {
-      const vProject = verticalVideos.shift();
-      const h1Project = horizontalVideos.shift();
-      let h2Project = null;
-      
-      if (horizontalVideos.length > 0) {
-        h2Project = horizontalVideos.shift();
-      } else {
-        h2Project = getNextArtCard("horizontal");
-      }
-      
-      const groupDiv = document.createElement("div");
-      groupDiv.className = `portfolio-group ${isLeftVertical ? "left-vertical" : "right-vertical"}`;
-      
-      if (isLeftVertical) {
-        groupDiv.appendChild(createCard(vProject));
-        groupDiv.appendChild(createCard(h1Project));
-        groupDiv.appendChild(createCard(h2Project));
-      } else {
-        groupDiv.appendChild(createCard(h1Project));
-        groupDiv.appendChild(createCard(h2Project));
-        groupDiv.appendChild(createCard(vProject));
-      }
-      
-      projectGrid.appendChild(groupDiv);
-      isLeftVertical = !isLeftVertical;
-      maybeInjectArtCard();
-      continue;
-    }
-    
-    // 3. Если остались вертикальные видео, но горизонтальных видео больше нет -> группируем по парам (2V)
-    if (verticalVideos.length > 0 && horizontalVideos.length === 0) {
-      const v1Project = verticalVideos.shift();
-      let v2Project = null;
-      
-      if (verticalVideos.length > 0) {
-        v2Project = verticalVideos.shift();
-      } else {
-        v2Project = getNextArtCard("vertical");
-      }
-      
-      const groupDiv = document.createElement("div");
-      groupDiv.className = "portfolio-group";
-      groupDiv.appendChild(createCard(v1Project));
-      groupDiv.appendChild(createCard(v2Project));
-      projectGrid.appendChild(groupDiv);
-      maybeInjectArtCard();
-      continue;
-    }
-    
-    // 4. Если остались только горизонтальные видео -> группируем по парам (2H)
-    if (horizontalVideos.length > 0) {
-      const h1Project = horizontalVideos.shift();
-      let h2Project = null;
-      
-      if (horizontalVideos.length > 0) {
-        h2Project = horizontalVideos.shift();
-      } else {
-        h2Project = getNextArtCard("horizontal");
-      }
-      
-      const groupDiv = document.createElement("div");
-      groupDiv.className = "portfolio-group";
-      groupDiv.appendChild(createCard(h1Project));
-      groupDiv.appendChild(createCard(h2Project));
-      projectGrid.appendChild(groupDiv);
-      maybeInjectArtCard();
-      continue;
-    }
-  }
+  // Рендерим плоскую сетку
+  itemsToRender.forEach(item => {
+    projectGrid.appendChild(createCard(item));
+  });
   
   // Скрытие/показ кнопки Show More
   if (filteredVideos.length <= INITIAL_ITEMS_COUNT || showingAll) {
@@ -253,7 +135,7 @@ export function renderGrid() {
   } else {
     showMoreBtn.style.display = "inline-flex";
   }
-
+  
   // Оповещаем об обновлении сетки для переподключения эффектов
   document.dispatchEvent(new CustomEvent("gridrendered"));
 }

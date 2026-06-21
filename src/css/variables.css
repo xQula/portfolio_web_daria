@@ -21,9 +21,9 @@
 
 @font-face {
   font-family: 'Dirtyline';
-  src: url('/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff2') format('woff2'),
-       url('/font/dirtyline36daysoftype2022/woff/Dirtyline 36daysoftype 2022.woff') format('woff'),
-       url('/font/dirtyline36daysoftype2022/Dirtyline 36daysoftype 2022.otf') format('opentype');
+  src: url('/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff2') format('woff2'),
+       url('/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff') format('woff'),
+       url('/font/dirtyline36daysoftype2022/Dirtyline-36daysoftype-2022.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

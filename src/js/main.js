@@ -1,12 +1,9 @@
-import { initTheme, toggleTheme } from "./theme.js";
 import { initLanguage, toggleLanguage } from "./i18n.js";
 import { loadProjects } from "./api.js";
 import { initGrid, renderGrid, setupFeaturedVideo } from "./grid.js";
 import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 
-const themeToggleBtn = document.getElementById("theme-toggle");
-const mobileThemeToggleBtn = document.getElementById("mobile-theme-toggle");
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
 const burgerBtn = document.getElementById("mobile-menu-trigger");
@@ -17,8 +14,7 @@ const drawerLinks = document.querySelectorAll(".drawer-link");
 let lenisInstance;
 
 async function init() {
-  // Настройка темы и языка
-  initTheme();
+  // Настройка языка
   initLanguage();
   
   // Загружаем проекты из файлов
@@ -42,13 +38,6 @@ async function init() {
   initCustomCursor();
   initScrollHighlight();
 
-  // Переключатель тем (кнопка скрыта в CSS, но обработчики оставляем для совместимости)
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener("click", toggleTheme);
-  }
-  if (mobileThemeToggleBtn) {
-    mobileThemeToggleBtn.addEventListener("click", toggleTheme);
-  }
 
   // Переключатели языков
   if (langToggleBtn) {

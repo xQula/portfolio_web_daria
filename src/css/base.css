@@ -157,9 +157,20 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Hide original cursor on pointer-enabled devices */
+/* Hide original cursor on pointer-enabled devices only when custom cursor is successfully initialized */
 @media (hover: hover) {
-  body, a, button, [role="button"], [tabindex="0"], select, input, textarea {
+  html:has(.custom-cursor--visible) {
+    cursor: none;
+  }
+  
+  html:has(.custom-cursor--visible) body,
+  html:has(.custom-cursor--visible) a,
+  html:has(.custom-cursor--visible) button,
+  html:has(.custom-cursor--visible) [role="button"],
+  html:has(.custom-cursor--visible) [tabindex="0"],
+  html:has(.custom-cursor--visible) select,
+  html:has(.custom-cursor--visible) input,
+  html:has(.custom-cursor--visible) textarea {
     cursor: none !important;
   }
   

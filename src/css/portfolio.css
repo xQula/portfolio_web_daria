@@ -51,66 +51,25 @@
   border-color: var(--color-text-primary);
 }
 
-/* Сетка портфолио */
+/* Сетка портфолио - современный CSS Grid с автозаполнением */
 .project-grid {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-auto-flow: dense;
+  column-gap: 2.5rem;
+  row-gap: 2.5rem;
+  margin-bottom: 2.5rem;
   transition: all 0.4s ease;
 }
 
-/* Группы портфолио */
-.portfolio-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 2.5rem;
-  row-gap: 1.25rem;
-  margin-bottom: 2.5rem;
-}
-
-.portfolio-group.wide-group {
-  display: block;
-}
-
-/* Группа: вертикальный слева, два горизонтальных справа */
-.portfolio-group.left-vertical {
-  grid-template-rows: auto auto;
-}
-.portfolio-group.left-vertical .project-card.vertical {
-  grid-column: 1;
-  grid-row: 1 / span 2;
-}
-.portfolio-group.left-vertical .project-card.horizontal {
-  grid-column: 2;
-  grid-row: span 1;
-}
-
-/* Группа: два горизонтальных слева, вертикальный справа */
-.portfolio-group.right-vertical {
-  grid-template-rows: auto auto;
-}
-.portfolio-group.right-vertical .project-card.horizontal {
-  grid-column: 1;
-  grid-row: span 1;
-}
-.portfolio-group.right-vertical .project-card.vertical {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-}
-
-/* Фолбек-группа для остатков */
-.portfolio-group.fallback-group {
-  grid-auto-flow: dense;
-}
-.portfolio-group.fallback-group .project-card.horizontal {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-.portfolio-group.fallback-group .project-card.vertical {
-  grid-column: span 1;
+/* Вертикальные карточки занимают две строки по высоте */
+.project-card.vertical {
   grid-row: span 2;
 }
-.portfolio-group.fallback-group .project-card.wide {
+
+/* Широкоформатные карточки занимают две колонки по ширине */
+.project-card.wide {
   grid-column: span 2;
-  grid-row: span 1;
 }
 
 /* Карточка проекта - Borderless look with soft glow on hover */
@@ -303,8 +262,9 @@
 }
 
 @media (max-width: 1024px) {
-  .portfolio-group {
-    grid-template-columns: repeat(2, 1fr);
+  .project-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
   }
 }
 
@@ -324,22 +284,14 @@
     padding: 0.5rem 1.1rem;
     font-size: 0.75rem;
   }
-  .portfolio-group {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    gap: 2.5rem;
-    margin-bottom: 1.5rem;
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  .portfolio-group .project-card {
-    grid-column: span 1 !important;
+  .project-card.vertical,
+  .project-card.wide {
     grid-row: span 1 !important;
-  }
-  .portfolio-group.left-vertical .project-card.vertical,
-  .portfolio-group.left-vertical .project-card.horizontal,
-  .portfolio-group.right-vertical .project-card.vertical,
-  .portfolio-group.right-vertical .project-card.horizontal {
-    grid-column: auto !important;
-    grid-row: auto !important;
+    grid-column: span 1 !important;
   }
   .project-card.wide .card-thumbnail-container {
     aspect-ratio: 16/9;
