@@ -22,8 +22,7 @@
         "en": "Official video editing showreel of Daria Evstigneeva. Showcasing key techniques of dynamic cutting, sound design, color grading, and motion graphics."
       },
       "featured": true,
-      "hideFromGrid": true,
-      "preview": "/img/previews/showreel.png"
+      "hideFromGrid": true
     },
     {
       "id": 1,
@@ -45,8 +44,7 @@
       "desc": {
         "ru": "Fashion-ролик с акцентом на мягкую игру света и текстур одежды. Использован динамический ритмичный монтаж и глубокая цветокоррекция в соответствии с брендбуком.",
         "en": "Fashion video focusing on the soft interplay of light and clothing textures. Features dynamic rhythmic editing and deep color grading."
-      },
-      "preview": "/img/previews/1.png"
+      }
     },
     {
       "id": 2,
@@ -68,8 +66,7 @@
       "desc": {
         "ru": "Динамичный монтаж танцевального перформанса. Ключевая фишка — использование эффектов speed ramp (замедление/ускорение) и точная синхронизация движений под ритм саундтрека.",
         "en": "Dynamic editing of a dance performance. Key feature is speed ramping (slow/fast motion) and precise motion synchronization with the soundtrack rhythm."
-      },
-      "preview": "/img/previews/2.png"
+      }
     },
     {
       "id": 3,
@@ -91,8 +88,7 @@
       "desc": {
         "ru": "Коммерческий презентационный ролик архитектурных решений. Строгая композиция кадра, выверенные переходы и атмосферный саунд-дизайн, подчеркивающий монументальность.",
         "en": "Commercial presentation video of architectural solutions. Features strict composition, well-calculated cuts, and atmospheric sound design emphasizing monumentality."
-      },
-      "preview": "/img/previews/3.png"
+      }
     },
     {
       "id": 5,
@@ -114,8 +110,7 @@
       "desc": {
         "ru": "Трендовый вертикальный ролик для соцсетей. Применены эффекты неонового свечения, глитчи и зум-переходы под трендовый аудиозвук.",
         "en": "Trending vertical video for social media. Features neon glow effects, glitches, and zoom transitions synced with trending audio."
-      },
-      "preview": "/img/previews/5.png"
+      }
     },
     {
       "id": 6,
@@ -137,8 +132,7 @@
       "desc": {
         "ru": "Сборный отчетный ролик с показов недели моды в Нью-Йорке. Сочетание репортажной динамики и плавных фэшн-склеек.",
         "en": "Highlights video compilation of runway shows from NYFW. Combining documentary dynamics with smooth fashion cuts."
-      },
-      "preview": "/img/previews/6.png"
+      }
     },
     {
       "id": 7,
@@ -160,8 +154,7 @@
       "desc": {
         "ru": "Музыкальный клип с упором на сторителлинг через образы. Мягкая склейка по движению, контрастные переходы.",
         "en": "Music video emphasizing image-based storytelling. Smooth match-cut transitions and high-contrast styling."
-      },
-      "preview": "/img/previews/7.png"
+      }
     },
     {
       "id": 8,
@@ -183,8 +176,7 @@
       "desc": {
         "ru": "Промо-ролик уличного бренда одежды в вертикальном формате. Высокая плотность монтажных склеек, стилизованные глитч-переходы.",
         "en": "Streetwear brand promo video in vertical format. Features high-density editing cuts and stylized glitch transitions."
-      },
-      "preview": "/img/previews/8.png"
+      }
     },
     {
       "id": 9,
@@ -201,8 +193,8 @@
       },
       "client": "LEOKBOO Production",
       "videoUrl": "https://rutube.ru/play/embed/b53b817e07a6a42217c91ca7c9082260",
-      "aspect": "horizontal",
       "preview": "/img/previews/9.png",
+      "aspect": "horizontal",
       "soft": "DaVinci Resolve · Audition",
       "desc": {
         "ru": "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube.",

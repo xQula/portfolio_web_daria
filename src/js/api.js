@@ -24,8 +24,22 @@ export async function loadProjects() {
       throw new Error(`Ошибка загрузки проектов: ${response.status}`);
     }
     const data = await response.json();
-    projects = data.projects || [];
     artTemplates = data.artTemplates || [];
+    
+    const rawProjects = data.projects || [];
+    projects = rawProjects.map(project => {
+      const projectCopy = { ...project };
+      if (projectCopy.type === "video" && projectCopy.videoUrl) {
+        const ytId = getYoutubeId(projectCopy.videoUrl);
+        if (ytId) {
+          // Если превью не задано вручную в JSON, формируем ссылку на YouTube
+          if (!projectCopy.preview) {
+            projectCopy.preview = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+          }
+        }
+      }
+      return projectCopy;
+    });
   } catch (err) {
     console.error("Ошибка при загрузке проектов из JSON:", err);
     throw err;
