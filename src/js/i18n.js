@@ -21,6 +21,9 @@ export const translations = {
     hero_cat_digital: "digital-контент",
     hero_cta: "Смотреть работы",
     hero_showreel_title: "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
+    hero_scroll_down: "ЛИСТАЙТЕ ВНИЗ",
+    hero_mobile_title: "ДАРЬЯ ЕВСТИГНЕЕВА",
+    hero_mobile_subtitle: "РЕЖИССЕР МОНТАЖА & КОНТЕНТ-МЕЙКЕР",
     
     // Секция Портфолио
     portfolio_title: "ПОРТФОЛИО",
@@ -77,6 +80,9 @@ export const translations = {
     hero_cat_digital: "digital content",
     hero_cta: "View works",
     hero_showreel_title: "SHOWREEL 2026 | EDITING SHOWCASE",
+    hero_scroll_down: "SCROLL DOWN",
+    hero_mobile_title: "DARIA EVSTIGNEEVA",
+    hero_mobile_subtitle: "VIDEO EDITOR & CONTENT CREATOR",
     
     // Portfolio
     portfolio_title: "PORTFOLIO",

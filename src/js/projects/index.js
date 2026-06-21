@@ -19,11 +19,8 @@ export const projects = [
   modernMovement,
   urbanGeometry,
   cyberpunkRunway,
-  movementSpace,
-  artEditing,
   theCollection,
   coutureStory,
-  elevatingStories,
   streetCulture,
   theEssenceRoad
 ];

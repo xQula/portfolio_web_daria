@@ -107,6 +107,7 @@
 
 /* Переключатель темы */
 .theme-toggle-btn {
+  display: none !important;
   background: none;
   border: 2px solid var(--color-text-primary); /* Увеличенная толщина контура кнопки */
   border-radius: 50%;
@@ -264,7 +265,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(224, 219, 198, 0.95); /* Бежевый фон подвала/темы с размытием */
+  background-color: rgba(5, 6, 7, 0.98); /* Глубокий черный фон темы */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 150;
@@ -277,7 +278,7 @@
 }
 
 [data-theme="dark"] .mobile-drawer {
-  background-color: rgba(18, 32, 36, 0.95); /* Сланец в темной теме */
+  background-color: rgba(5, 6, 7, 0.98);
 }
 
 .mobile-drawer.active {

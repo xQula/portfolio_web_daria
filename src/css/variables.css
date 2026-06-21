@@ -33,30 +33,30 @@
    DESIGN SYSTEM & VARIABLES (SOF BRAND IDENTITY)
    ---------------------------------------------------- */
 :root {
-  /* Светлая тема (По умолчанию, как на референсе) */
-  --color-bg-primary: #E0DBC6;       /* Warm Sand - Основной бежевый фон */
-  --color-bg-secondary: #EBE7D5;     /* Warm Sand Light - Более интегрированные карточки и элементы */
-  --color-lightbox-bg: #EBE7D5;      /* Warm Sand Light (Beige) - Только для открытого лайтбокса/модального окна */
-  --color-bg-contrast: #122024;      /* Slate Dark - Темные блоки */
-  --color-text-primary: #122024;     /* Slate Dark - Основной текст */
-  --color-text-secondary: #4B5563;   /* Темно-серый - Второстепенный текст для соответствия WCAG AA */
+  /* Neo-Noir Kinetic (Fully Dark Theme by default) */
+  --color-bg-primary: #050607;       /* Deep Void - Глубокий черный фон */
+  --color-bg-secondary: #0A0D0E;     /* Obsidian Black - Контейнеры и карточки */
+  --color-lightbox-bg: #0A0D0E;      /* Obsidian Black для лайтбоксов */
+  --color-bg-contrast: #EBE7D5;      /* Warm Sand для редких контрастных элементов */
+  --color-text-primary: #FFFFFF;     /* White - Основной текст */
+  --color-text-secondary: #9CA3AF;   /* Muted Gray - Второстепенный текст */
   --color-text-light: #FFFFFF;       /* White - Светлый текст */
-  --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
-  --color-accent-text: #4A6B00;      /* Deep Lime - Читаемый акцентный текст на бежевом */
-  --color-border: rgba(18, 32, 36, 0.12);
-  --color-border-hover: var(--color-accent-text); /* Контрастная рамка при наведении */
-  --shadow-accent: rgba(204, 255, 0, 0.4);
-  --shadow-general: rgba(18, 32, 36, 0.08);
+  --color-accent: #CCFF00;           /* Electric Lime - Неоновый лаймовый */
+  --color-accent-text: #CCFF00;      /* Electric Lime - Неоновый лаймовый */
+  --color-border: rgba(255, 255, 255, 0.08); /* Очень тонкая светлая граница для темных блоков */
+  --color-border-hover: var(--color-accent);  /* Неоновый лайм при ховере */
+  --shadow-accent: rgba(204, 255, 0, 0.25);
+  --shadow-general: rgba(0, 0, 0, 0.6);
   
-  /* Тематические токены кнопок (для предотвращения плохой читаемости) */
-  --color-btn-accent-bg: #122024;       /* Темный сланец в светлой теме для отличного контраста */
-  --color-btn-accent-text: #EBE7D5;     /* Бежевый текст */
-  --color-btn-accent-hover-bg: #CCFF00;  /* Фирменный лаймовый при наведении */
-  --color-btn-accent-hover-text: #122024;
-  --color-btn-border: rgba(18, 32, 36, 0.15);
+  /* Токены кнопок - Glassmorphism по умолчанию с ярким акцентом при ховере */
+  --color-btn-accent-bg: #CCFF00;
+  --color-btn-accent-text: #050607;
+  --color-btn-accent-hover-bg: #FFFFFF;
+  --color-btn-accent-hover-text: #050607;
+  --color-btn-border: transparent;
 
   /* Токен хедера */
-  --color-header-bg: rgba(224, 219, 198, 0.75); /* Полупрозрачный бежевый для стеклянного эффекта */
+  --color-header-bg: rgba(5, 6, 7, 0.85); /* Полупрозрачная черная бездна */
   
   /* Шрифты */
   --font-sans: 'Inter', sans-serif;
@@ -72,30 +72,26 @@
 }
 
 [data-theme="dark"] {
-  /* Темная тема */
-  --color-bg-primary: #122024;       /* Slate Dark - Основной темный фон */
-  --color-bg-secondary: #1C2E33;     /* Более светлый сланец */
-  --color-lightbox-bg: #1C2E33;      /* Более светлый сланец для открытого лайтбокса */
-  --color-bg-contrast: #EBE7D5;      /* Beige - Контрастные светлые блоки */
-  --color-text-primary: #EFEFEF;     /* Off-White - Основной текст */
-  --color-text-secondary: #9CA3AF;   /* Светло-серый - Второстепенный текст */
-  --color-text-light: #122024;       /* Slate Dark - Темный текст */
-  --color-accent: #CCFF00;           /* Lime Green - Фирменный акцент */
-  --color-accent-text: #CCFF00;      /* Lime Green - Яркий акцентный текст на темном */
-  --color-border: rgba(239, 239, 239, 0.12);
-  --color-border-hover: var(--color-accent); /* Неоново-лаймовая рамка при наведении */
-  --shadow-accent: rgba(204, 255, 0, 0.6);
-  --shadow-general: rgba(0, 0, 0, 0.3);
-
-  /* Кнопки в темной теме остаются яркими неоново-лаймовыми */
+  /* Оставляем те же значения для исключения вспышек светлой темы при переключениях */
+  --color-bg-primary: #050607;
+  --color-bg-secondary: #0A0D0E;
+  --color-lightbox-bg: #0A0D0E;
+  --color-bg-contrast: #EBE7D5;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #9CA3AF;
+  --color-text-light: #FFFFFF;
+  --color-accent: #CCFF00;
+  --color-accent-text: #CCFF00;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: var(--color-accent);
+  --shadow-accent: rgba(204, 255, 0, 0.25);
+  --shadow-general: rgba(0, 0, 0, 0.6);
   --color-btn-accent-bg: #CCFF00;
-  --color-btn-accent-text: #122024;
+  --color-btn-accent-text: #050607;
   --color-btn-accent-hover-bg: #FFFFFF;
-  --color-btn-accent-hover-text: #122024;
+  --color-btn-accent-hover-text: #050607;
   --color-btn-border: transparent;
-
-  /* Токен хедера */
-  --color-header-bg: rgba(28, 46, 51, 0.75);   /* Полупрозрачный темный для стеклянного эффекта */
+  --color-header-bg: rgba(5, 6, 7, 0.85);
 }
 
 /* ----------------------------------------------------

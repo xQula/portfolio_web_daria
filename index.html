@@ -162,18 +162,27 @@
     <!-- Главный экран (Hero Section) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
-        <!-- Левая часть: текст и описание -->
-        <div class="hero-text-block">
+        <!-- Левая часть: текст и описание (Десктоп) -->
+        <div class="hero-text-block desktop-only">
           <h1 class="hero-title" data-i18n="hero_title">РАСКРЫВАЯ ИСТОРИИ ЧЕРЕЗ ФОРМУ И ДВИЖЕНИЕ</h1>
           <p class="hero-subtitle" data-i18n="hero_subtitle">Высококлассный бренд видеопроизводства.</p>
           <div class="hero-bio">
             <p data-i18n="hero_bio_name">Евстигнеева Дарья — режиссер монтажа и контент-мейкер.</p>
             <p class="bio-tagline" data-i18n="hero_bio_tagline">Готова к работе с любыми медиаплощадками.</p>
             <div class="bio-categories">
-              <span data-i18n="hero_cat_cinema">кинопродвижение</span> · <span data-i18n="hero_cat_brands">реклама и бренды</span> · <span data-i18n="hero_cat_music">музыкальное видео</span> · <span data-i18n="hero_cat_digital">digital-контент</span>
+              <span data-i18n="hero_cat_cinema">кинопродвижение</span>
+              <span data-i18n="hero_cat_brands">реклама и бренды</span>
+              <span data-i18n="hero_cat_music">музыкальное видео</span>
+              <span data-i18n="hero_cat_digital">digital-контент</span>
             </div>
           </div>
           <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta" data-i18n="hero_cta">Смотреть работы</a>
+        </div>
+
+        <!-- Левая часть: текст и описание (Мобильный) -->
+        <div class="hero-text-block-mobile mobile-only">
+          <h1 class="hero-title-mobile" data-i18n="hero_mobile_title">ДАРЬЯ ЕВСТИГНЕЕВА</h1>
+          <p class="hero-subtitle-mobile" data-i18n="hero_mobile_subtitle">РЕЖИССЕР МОНТАЖА & КОНТЕНТ-МЕЙКЕР</p>
         </div>
 
         <!-- Правая часть: главный проект (Featured Video) -->
@@ -194,6 +203,31 @@
             </div>
           </div>
         </div>
+      </div>
+      
+      <!-- Индикатор прокрутки (Scroll Indicator) -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <a href="#portfolio" class="scroll-indicator-link">
+          <span class="scroll-indicator-text" data-i18n="hero_scroll_down">ЛИСТАЙТЕ ВНИЗ</span>
+          <span class="scroll-indicator-line"></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Мобильный блок "О себе" (Mobile-Only About Section) -->
+    <section class="mobile-about-section mobile-only">
+      <div class="mobile-about-container">
+        <div class="hero-bio">
+          <p data-i18n="hero_bio_name">Евстигнеева Дарья — режиссер монтажа и контент-мейкер.</p>
+          <p class="bio-tagline" data-i18n="hero_bio_tagline">Готова к работе с любыми медиаплощадками.</p>
+          <div class="bio-categories">
+            <span data-i18n="hero_cat_cinema">кинопродвижение</span>
+            <span data-i18n="hero_cat_brands">реклама и бренды</span>
+            <span data-i18n="hero_cat_music">музыкальное видео</span>
+            <span data-i18n="hero_cat_digital">digital-контент</span>
+          </div>
+        </div>
+        <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta" data-i18n="hero_cta">Смотреть работы</a>
       </div>
     </section>
 
@@ -354,7 +388,17 @@
     </div>
   </div>
 
+  <!-- Элементы для Neo-Noir Kinetic стиля -->
+  <div class="film-grain"></div>
+  <div id="custom-cursor" class="custom-cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+    <div class="cursor-play-label">PLAY</div>
+  </div>
+  <div id="cursor-glow" class="cursor-glow"></div>
+
   <!-- Скрипты -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script type="module" src="./src/js/main.js"></script>
 </body>
 </html>
