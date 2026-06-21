@@ -37,9 +37,10 @@ async function init() {
   renderGrid();
   setupFeaturedVideo();
 
-  // Инициализация Lenis и кастомного курсора
+  // Инициализация Lenis, кастомного курсора и подсветки скролла на мобильных
   initScroll();
   initCustomCursor();
+  initScrollHighlight();
 
   // Переключатель тем (кнопка скрыта в CSS, но обработчики оставляем для совместимости)
   if (themeToggleBtn) {
@@ -224,6 +225,66 @@ function initCustomCursor() {
       cursor.classList.remove("hover-video");
     }
   });
+}
+
+// ----------------------------------------------------
+// АКТИВНЫЕ КАРТОЧКИ ПРИ СКРОЛЛЕ НА МОБИЛЬНЫХ (Scroll Highlight)
+// ----------------------------------------------------
+function initScrollHighlight() {
+  // Запускаем только на мобильных/планшетах
+  if (!window.matchMedia("(max-width: 1024px)").matches) return;
+
+  const getCards = () => document.querySelectorAll(".project-card:not(.art-block), .featured-card");
+  
+  function updateScrollHighlight() {
+    const cards = getCards();
+    if (cards.length === 0) return;
+
+    const viewportCenter = window.innerHeight / 2;
+    let closestCard = null;
+    let minDistance = Infinity;
+
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      
+      // Игнорируем карточки, которые полностью вне экрана
+      if (rect.bottom < 0 || rect.top > window.innerHeight) {
+        card.classList.remove("active-scroll");
+        return;
+      }
+
+      const cardCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(cardCenter - viewportCenter);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestCard = card;
+      }
+    });
+
+    // Порог: центр карточки должен быть в пределах 35% от центра экрана
+    const threshold = window.innerHeight * 0.35;
+
+    cards.forEach(card => {
+      if (card === closestCard && minDistance < threshold) {
+        card.classList.add("active-scroll");
+      } else {
+        card.classList.remove("active-scroll");
+      }
+    });
+  }
+
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+    scrollTimeout = requestAnimationFrame(updateScrollHighlight);
+  }, { passive: true });
+
+  // Запуск при рендере сетки и переключении фильтров
+  document.addEventListener("gridrendered", updateScrollHighlight);
+  
+  // Первый запуск с задержкой, чтобы дать элементам загрузиться
+  setTimeout(updateScrollHighlight, 500);
 }
 
 // Запуск инициализации при загрузке DOM

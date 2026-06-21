@@ -443,3 +443,23 @@
   align-self: center;
   margin-top: 0;
 }
+
+/* Active Scroll Highlight (Mobile) */
+.featured-card {
+  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.featured-card.active-scroll {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px var(--shadow-general), 0 0 25px var(--shadow-accent);
+  border-color: var(--color-border-hover);
+}
+
+.featured-card.active-scroll .featured-thumbnail-img {
+  transform: scale(1.03);
+}
+
+.featured-card.active-scroll .play-btn-large {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 0 20px var(--color-accent);
+}

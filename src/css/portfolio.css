@@ -351,3 +351,19 @@
     font-size: 1.8rem;
   }
 }
+
+/* Active Scroll Highlight (Mobile) */
+.project-card.active-scroll {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--shadow-accent);
+  border-color: var(--color-border-hover);
+}
+
+.project-card.active-scroll .card-thumbnail-img {
+  transform: scale(1.03);
+}
+
+.project-card.active-scroll .play-btn-small {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 0 15px var(--color-accent);
+}
