@@ -51,25 +51,66 @@
   border-color: var(--color-text-primary);
 }
 
-/* Сетка портфолио - современный CSS Grid с автозаполнением */
+/* Сетка портфолио */
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  grid-auto-flow: dense;
-  column-gap: 2.5rem;
-  row-gap: 2.5rem;
-  margin-bottom: 2.5rem;
+  display: block;
   transition: all 0.4s ease;
 }
 
-/* Вертикальные карточки занимают две строки по высоте */
-.project-card.vertical {
-  grid-row: span 2;
+/* Группы портфолио */
+.portfolio-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 1.25rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Широкоформатные карточки занимают две колонки по ширине */
-.project-card.wide {
+.portfolio-group.wide-group {
+  display: block;
+}
+
+/* Группа: вертикальный слева, два горизонтальных справа */
+.portfolio-group.left-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.left-vertical .project-card.vertical {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+.portfolio-group.left-vertical .project-card.horizontal {
+  grid-column: 2;
+  grid-row: span 1;
+}
+
+/* Группа: два горизонтальных слева, вертикальный справа */
+.portfolio-group.right-vertical {
+  grid-template-rows: auto auto;
+}
+.portfolio-group.right-vertical .project-card.horizontal {
+  grid-column: 1;
+  grid-row: span 1;
+}
+.portfolio-group.right-vertical .project-card.vertical {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* Фолбек-группа для остатков */
+.portfolio-group.fallback-group {
+  grid-auto-flow: dense;
+}
+.portfolio-group.fallback-group .project-card.horizontal {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+.portfolio-group.fallback-group .project-card.vertical {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+.portfolio-group.fallback-group .project-card.wide {
   grid-column: span 2;
+  grid-row: span 1;
 }
 
 /* Карточка проекта - Borderless look with soft glow on hover */
@@ -262,9 +303,8 @@
 }
 
 @media (max-width: 1024px) {
-  .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+  .portfolio-group {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -284,14 +324,22 @@
     padding: 0.5rem 1.1rem;
     font-size: 0.75rem;
   }
-  .project-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .portfolio-group {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    gap: 2.5rem;
+    margin-bottom: 1.5rem;
   }
-  .project-card.vertical,
-  .project-card.wide {
-    grid-row: span 1 !important;
+  .portfolio-group .project-card {
     grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  .portfolio-group.left-vertical .project-card.vertical,
+  .portfolio-group.left-vertical .project-card.horizontal,
+  .portfolio-group.right-vertical .project-card.vertical,
+  .portfolio-group.right-vertical .project-card.horizontal {
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
   .project-card.wide .card-thumbnail-container {
     aspect-ratio: 16/9;
