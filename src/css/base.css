@@ -20,7 +20,6 @@ body {
   color: var(--color-text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 img {
@@ -65,19 +64,16 @@ h1, h2, h3, h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.05em;
   padding: 0.8rem 1.8rem;
   border: none;
   cursor: pointer;
-  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
   text-transform: uppercase;
   border-radius: var(--border-radius-btn);
-}
-
-.btn-pill {
-  border-radius: var(--border-radius-btn); /* Изменено с 100px на геометрический радиус для соответствия сетке */
 }
 
 .btn-accent {
@@ -87,26 +83,42 @@ h1, h2, h3, h4 {
 }
 
 .btn-accent:hover {
-  transform: translateY(-2px);
-  background-color: var(--color-btn-accent-hover-bg);
-  color: var(--color-btn-accent-hover-text);
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
   box-shadow: 0 8px 20px var(--shadow-accent);
 }
 
 .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--color-glass-bg);
   color: var(--color-text-primary);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--color-glass-border);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-accent);
-  color: #050607;
   border-color: var(--color-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px var(--shadow-accent);
+  color: var(--color-accent);
+  background-color: rgba(204, 255, 0, 0.06);
+}
+
+/* Магнитное притяжение к курсору — координаты выставляет main.js через initMagneticButtons() */
+.btn-magnet {
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* ----------------------------------------------------
+   SCROLL REVEAL UTILITY — переключается через IntersectionObserver в main.js
+   ---------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ----------------------------------------------------
@@ -129,59 +141,10 @@ button:focus-visible,
 }
 
 /* ----------------------------------------------------
-   NEO-NOIR KINETIC: CORE STYLES & INTERACTION
+   PREMIUM LANDING: CORE STYLES
    ---------------------------------------------------- */
 
-/* Z-Index Layering — glow рендерится между фоном секций и контентом */
-.hero-container,
-.portfolio-container,
-.footer-content {
-  position: relative;
-  z-index: 10;
-}
-
-/* Lenis Smooth Scroll Compatibility */
-html.lenis, html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-/* Hide original cursor on pointer-enabled devices only when custom cursor is successfully initialized */
-@media (hover: hover) {
-  html:has(.custom-cursor--visible) {
-    cursor: none;
-  }
-  
-  html:has(.custom-cursor--visible) body,
-  html:has(.custom-cursor--visible) a,
-  html:has(.custom-cursor--visible) button,
-  html:has(.custom-cursor--visible) [role="button"],
-  html:has(.custom-cursor--visible) [tabindex="0"],
-  html:has(.custom-cursor--visible) select,
-  html:has(.custom-cursor--visible) input,
-  html:has(.custom-cursor--visible) textarea {
-    cursor: none !important;
-  }
-  
-  /* Скрываем статические кнопки воспроизведения на десктопе, их заменит магнитный PLAY-курсор */
-  .play-btn-large, .play-btn-small {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
-
-/* Film Grain Overlay */
+/* Film Grain Overlay — часть бренда SOF, сохранена и используется во всех секциях */
 .film-grain {
   position: fixed;
   top: 0;
@@ -194,130 +157,13 @@ html.lenis, html.lenis body {
   z-index: 9999;
 }
 
-/* Custom Mouse Cursor */
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  z-index: 10000;
-  mix-blend-mode: difference;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.custom-cursor.custom-cursor--visible {
-  opacity: 1;
-}
-
-@media (hover: hover) {
-  .custom-cursor {
-    display: block;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-}
-
-.cursor-dot {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background-color: var(--color-accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-  pointer-events: none;
-}
-
-.cursor-circle {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid var(--color-accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-              height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-              background-color 0.3s ease, 
-              border-color 0.3s ease;
-  pointer-events: none;
-}
-
-.cursor-play-label {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  color: #050607;
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-/* Custom Cursor Hover States */
-.custom-cursor.hover-link .cursor-circle {
-  width: 56px;
-  height: 56px;
-  background-color: rgba(204, 255, 0, 0.1);
-  border-color: var(--color-accent);
-}
-
-.custom-cursor.hover-video .cursor-dot {
-  opacity: 0;
-}
-
-.custom-cursor.hover-video .cursor-circle {
-  width: 80px;
-  height: 80px;
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-.custom-cursor.hover-video {
-  mix-blend-mode: normal;
-}
-
-.custom-cursor.hover-video .cursor-play-label {
-  opacity: 1;
-}
-
-/* Cursor Glow Effect — рендерится между фоном секций и контентом */
-.cursor-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(204, 255, 0, 0.1) 0%, transparent 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 5; /* Над фоном секций (auto), но под контентом (z-index: 10) */
-  display: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.cursor-glow.cursor-glow--visible {
-  opacity: 1;
-}
-
-@media (hover: hover) {
-  .cursor-glow {
-    display: block;
-  }
-}
-
-/* Visibility Utilities */
-@media (min-width: 1025px) {
-  .mobile-only {
-    display: none !important;
-  }
-}
-@media (max-width: 1024px) {
-  .desktop-only {
-    display: none !important;
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

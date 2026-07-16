@@ -1,6 +1,6 @@
 import { initLanguage, toggleLanguage } from "./i18n.js";
 import { loadProjects } from "./api.js";
-import { initGrid, renderGrid, setupFeaturedVideo } from "./grid.js";
+import { initGrid, renderGrid, setupFeaturedVideo, renderTrust, renderStats } from "./grid.js";
 import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 
@@ -10,34 +10,37 @@ const burgerBtn = document.getElementById("mobile-menu-trigger");
 const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerLinks = document.querySelectorAll(".drawer-link");
 
-// Глобальные переменные для плавного скролла и курсора
-let lenisInstance;
+const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hasHover = () => window.matchMedia("(hover: hover)").matches;
 
 async function init() {
   // Настройка языка
   initLanguage();
-  
+
   // Загружаем проекты из файлов
   try {
     await loadProjects();
   } catch (err) {
     console.error("Ошибка при загрузке проектов:", err);
   }
-  
+
   // Инициализация компонентов
   initGrid();
   initLightbox();
   initContactModal();
-  
-  // Рендеринг сетки и главного видео
+
+  // Рендеринг сетки, главного видео и блоков, посчитанных из данных
   renderGrid();
   setupFeaturedVideo();
+  renderTrust();
+  renderStats();
 
-  // Инициализация Lenis, кастомного курсора и подсветки скролла на мобильных
-  initScroll();
-  initCustomCursor();
+  // Слой моушна премиального лендинга
+  initStickyHeader();
+  initScrollReveal();
+  initTiltCard();
+  initMagneticButtons();
   initScrollHighlight();
-
 
   // Переключатели языков
   if (langToggleBtn) {
@@ -69,150 +72,79 @@ async function init() {
 }
 
 // ----------------------------------------------------
-// ЛОГИКА ПЛАВНОГО СКРОЛЛА (Lenis)
+// ЛИПКИЙ ХЕДЕР: прозрачный вверху страницы, уплотняется при скролле
 // ----------------------------------------------------
-function initScroll() {
-  if (typeof Lenis !== "undefined") {
-    lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
+function initStickyHeader() {
+  const header = document.getElementById("site-header");
+  if (!header) return;
 
-    function raf(time) {
-      lenisInstance.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Плавный скролл до якорей через Lenis API
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute("href");
-        if (targetId === "#") return;
-        const targetEl = document.querySelector(targetId);
-        if (targetEl) {
-          lenisInstance.scrollTo(targetEl, {
-            offset: -84 // Высота липкого хедера
-          });
-        }
-      });
-    });
-  }
+  const update = () => {
+    header.classList.toggle("site-header--solid", window.scrollY > 40);
+  };
+  window.addEventListener("scroll", update, { passive: true });
+  update();
 }
 
 // ----------------------------------------------------
-// ЛОГИКА КАСТОМНОГО МАГНИТНОГО КУРСОРA И СВЕЧЕНИЯ
+// SCROLL REVEAL: плавное появление секций (.reveal) через IntersectionObserver
 // ----------------------------------------------------
-function initCustomCursor() {
-  const cursor = document.getElementById("custom-cursor");
-  const glow = document.getElementById("cursor-glow");
-  if (!cursor) return;
+function initScrollReveal() {
+  const targets = document.querySelectorAll(".reveal");
+  if (!targets.length) return;
 
-  // Отключаем на устройствах без мыши (тач-экраны)
-  if (window.matchMedia("(hover: none)").matches) {
-    cursor.style.display = "none";
-    if (glow) glow.style.display = "none";
+  if (prefersReducedMotion()) {
+    targets.forEach(el => el.classList.add("in-view"));
     return;
   }
 
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  
-  // Координаты для сглаженного следования внешнего круга
-  let circleX = mouseX;
-  let circleY = mouseY;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
 
-  let hasMoved = false;
+  targets.forEach(el => observer.observe(el));
+}
 
-  window.addEventListener("pointermove", (e) => {
-    // Игнорируем тач-события
-    if (e.pointerType === "touch") return;
+// ----------------------------------------------------
+// 3D-TILT КАРТОЧКА ШОУРИЛА: наклон вслед за курсором
+// ----------------------------------------------------
+function initTiltCard() {
+  const wrap = document.getElementById("tilt-wrap");
+  const card = document.getElementById("featured-card-element");
+  if (!wrap || !card || prefersReducedMotion() || !hasHover()) return;
 
-    if (!hasMoved) {
-      hasMoved = true;
-      cursor.classList.add("custom-cursor--visible");
-      if (glow) glow.classList.add("cursor-glow--visible");
-    }
-
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+  wrap.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
   });
 
-  window.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "touch") {
-      cursor.classList.remove("custom-cursor--visible");
-      if (glow) glow.classList.remove("cursor-glow--visible");
-    }
+  wrap.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateY(0deg) rotateX(0deg)";
   });
+}
 
-  // Цикл отрисовки через requestAnimationFrame
-  function updatePhysics() {
-    // Внешний круг следует с инерцией
-    const circleEase = 0.15;
-    circleX += (mouseX - circleX) * circleEase;
-    circleY += (mouseY - circleY) * circleEase;
+// ----------------------------------------------------
+// МАГНИТНЫЕ КНОПКИ (.btn-magnet): лёгкое притяжение к курсору
+// ----------------------------------------------------
+function initMagneticButtons() {
+  if (prefersReducedMotion() || !hasHover()) return;
 
-    // Контейнер курсора следует мгновенно
-    cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-
-    // Круг и текстовая метка смещаются относительно начала координат контейнера
-    const dx = circleX - mouseX;
-    const dy = circleY - mouseY;
-    
-    const circle = cursor.querySelector(".cursor-circle");
-    const playLabel = cursor.querySelector(".cursor-play-label");
-    
-    if (circle) {
-      circle.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
-    }
-    if (playLabel) {
-      playLabel.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
-    }
-
-    // Радиальный свет следует за курсором в фоне
-    if (glow) {
-      glow.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-    }
-
-    requestAnimationFrame(updatePhysics);
-  }
-
-  requestAnimationFrame(updatePhysics);
-
-  // Делегирование событий наведения мыши для высокой производительности и динамической сетки
-  document.addEventListener("mouseover", (e) => {
-    const target = e.target;
-    if (!target) return;
-
-    // Ссылки и кнопки
-    if (target.closest("a, button, [role='button'], .filter-btn, .lang-toggle-btn")) {
-      cursor.classList.add("hover-link");
-    }
-
-    // Видео-карточки (Главный шоурил и видео в сетке)
-    if (target.closest(".featured-card, .project-card:not(.art-block)")) {
-      cursor.classList.add("hover-video");
-    }
-  });
-
-  document.addEventListener("mouseout", (e) => {
-    const target = e.target;
-    if (!target) return;
-
-    if (target.closest("a, button, [role='button'], .filter-btn, .lang-toggle-btn")) {
-      cursor.classList.remove("hover-link");
-    }
-    if (target.closest(".featured-card, .project-card:not(.art-block)")) {
-      cursor.classList.remove("hover-video");
-    }
+  document.querySelectorAll(".btn-magnet").forEach(btn => {
+    btn.addEventListener("mousemove", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.22}px, ${y * 0.3}px)`;
+    });
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = "translate(0, 0)";
+    });
   });
 }
 
@@ -223,8 +155,8 @@ function initScrollHighlight() {
   // Запускаем только на мобильных/планшетах
   if (!window.matchMedia("(max-width: 1024px)").matches) return;
 
-  const getCards = () => document.querySelectorAll(".project-card:not(.art-block), .featured-card");
-  
+  const getCards = () => document.querySelectorAll(".project-card, .featured-card");
+
   function updateScrollHighlight() {
     const cards = getCards();
     if (cards.length === 0) return;
@@ -235,7 +167,7 @@ function initScrollHighlight() {
 
     cards.forEach(card => {
       const rect = card.getBoundingClientRect();
-      
+
       // Игнорируем карточки, которые полностью вне экрана
       if (rect.bottom < 0 || rect.top > window.innerHeight) {
         card.classList.remove("active-scroll");
@@ -271,7 +203,7 @@ function initScrollHighlight() {
 
   // Запуск при рендере сетки и переключении фильтров
   document.addEventListener("gridrendered", updateScrollHighlight);
-  
+
   // Первый запуск с задержкой, чтобы дать элементам загрузиться
   setTimeout(updateScrollHighlight, 500);
 }

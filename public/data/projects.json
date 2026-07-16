@@ -1,4 +1,7 @@
 {
+  "meta": {
+    "yearsExperience": 6
+  },
   "projects": [
     {
       "id": "showreel",
@@ -200,52 +203,6 @@
         "ru": "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube.",
         "en": "Cinematic project teaser. Created at the intersection of documentary drama and fashion aesthetics. Features RuTube video integration."
       }
-    }
-  ],
-  "artTemplates": [
-    {
-      "id": 4,
-      "type": "art",
-      "title": {
-        "ru": "МОЖЕТ БЫТЬ ДРУГИМ",
-        "en": "CAN BE DIFFERENT"
-      },
-      "subtitle": "SENSE OF FORM",
-      "category": "all",
-      "aspect": "horizontal"
-    },
-    {
-      "id": "art-movement-space",
-      "type": "art",
-      "title": {
-        "ru": "ДВИЖЕНИЕ И ПРОСТРАНСТВО",
-        "en": "MOVEMENT & SPACE"
-      },
-      "subtitle": "SENSE OF FORM",
-      "category": "all",
-      "aspect": "vertical"
-    },
-    {
-      "id": "art-editing",
-      "type": "art",
-      "title": {
-        "ru": "ИСКУССТВО МОНТАЖА",
-        "en": "THE ART OF EDITING"
-      },
-      "subtitle": "SOF STUDIO",
-      "category": "all",
-      "aspect": "horizontal"
-    },
-    {
-      "id": "art-elevating-stories",
-      "type": "art",
-      "title": {
-        "ru": "РАСКРЫВАЯ ИСТОРИИ",
-        "en": "ELEVATING STORIES"
-      },
-      "subtitle": "SENSE OF FORM",
-      "category": "all",
-      "aspect": "horizontal"
     }
   ]
 }

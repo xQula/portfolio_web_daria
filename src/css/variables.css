@@ -30,60 +30,45 @@
 }
 
 /* ----------------------------------------------------
-   DESIGN SYSTEM & VARIABLES (SOF BRAND IDENTITY)
+   DESIGN SYSTEM & VARIABLES (SOF BRAND IDENTITY — Premium Landing)
    ---------------------------------------------------- */
 :root {
-  /* Neo-Noir Kinetic (Slightly Lighter Slate Dark Theme by default) */
-  --color-bg-primary: #0d0f11;       /* Slate Dark - Темно-серый благородный фон */
-  --color-bg-secondary: #16191c;     /* Slate Charcoal - Контейнеры и карточки */
-  --color-lightbox-bg: #16191c;      /* Slate Charcoal для лайтбоксов */
-  --color-bg-contrast: #EBE7D5;      /* Warm Sand для редких контрастных элементов */
-  --color-text-primary: #FFFFFF;     /* White - Основной текст */
-  --color-text-secondary: #9CA3AF;   /* Muted Gray - Второстепенный текст */
-  --color-text-light: #FFFFFF;       /* White - Светлый текст */
-  --color-accent: #CCFF00;           /* Electric Lime - Неоновый лаймовый */
-  --color-accent-text: #CCFF00;      /* Electric Lime - Неоновый лаймовый */
-  --color-border: rgba(255, 255, 255, 0.12); /* Умеренно светлая граница для лучшей очерченности блоков */
-  --color-border-hover: var(--color-accent);  /* Неоновый лайм при ховере */
-  --shadow-accent: rgba(204, 255, 0, 0.25);
+  /* Premium Landing — cold near-black ground, single committed dark theme */
+  --color-bg-primary: #0a0b0d;       /* Ground */
+  --color-bg-secondary: #0f1113;     /* Raised surfaces (stat tiles etc.) */
+  --color-lightbox-bg: #0f1113;
+  --color-text-primary: #f7f6f2;     /* Warm off-white, not pure white */
+  --color-text-secondary: #9297a0;   /* Muted cool grey */
+  --color-text-faint: #4c5054;       /* Footers, timestamps */
+  --color-text-light: #f7f6f2;
+  --color-accent: #CCFF00;           /* Electric Lime — brand-critical, unchanged */
+  --color-accent-text: #CCFF00;
+  --color-glass-bg: rgba(255, 255, 255, 0.045);
+  --color-glass-border: rgba(255, 255, 255, 0.11);
+  --color-border: rgba(255, 255, 255, 0.11);
+  --color-border-hover: var(--color-accent);
+  --shadow-accent: rgba(204, 255, 0, 0.22);
   --shadow-general: rgba(0, 0, 0, 0.6);
-  
-  /* Токены кнопок - Glassmorphism по умолчанию с ярким акцентом при ховере */
+
+  /* Токены кнопок */
   --color-btn-accent-bg: #CCFF00;
-  --color-btn-accent-text: #0d0f11;
+  --color-btn-accent-text: #0a0b0d;
   --color-btn-accent-hover-bg: #FFFFFF;
-  --color-btn-accent-hover-text: #0d0f11;
+  --color-btn-accent-hover-text: #0a0b0d;
   --color-btn-border: transparent;
 
-  /* Токен хедера */
-  --color-header-bg: rgba(13, 15, 17, 0.85); /* Полупрозрачный темно-серый хедер */
-  
+  /* Токен хедера — прозрачный до скролла, уплотняется через .site-header--solid (см. main.js) */
+  --color-header-bg-solid: rgba(10, 11, 13, 0.72);
+
   /* Шрифты */
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'MAK', serif;
   --font-gothic: 'Dirtyline', sans-serif;
-  
+
   /* Размеры и переходы */
-  --transition-speed: 0.35s;
-  --border-radius-sm: 4px;
-  --border-radius-md: 12px;
-  --border-radius-lg: 24px;
-  --border-radius-btn: 6px;           /* Геометричные премиум-кнопки вместо капсул */
-}
-
-/* ----------------------------------------------------
-   VIEW TRANSITIONS (THEME CIRCULAR RIPPLE REVEAL)
-   ---------------------------------------------------- */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-  z-index: 1;
-}
-
-::view-transition-new(root) {
-  z-index: 9999;
+  --transition-speed: 0.3s;
+  --border-radius-sm: 3px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 14px;
+  --border-radius-btn: 3px;          /* Геометричные премиум-кнопки, без капсул */
 }

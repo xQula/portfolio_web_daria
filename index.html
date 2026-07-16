@@ -6,7 +6,7 @@
   <meta name="description" content="Портфолио Евстигнеевой Дарьи — профессионального режиссера монтажа и контент-мейкера. Кинопродвижение, реклама, музыкальные клипы и трендовый вертикальный контент.">
   <meta name="keywords" content="режиссер монтажа, видеомонтаж, клипмейкер, трейлеры, тизеры, реклама, Reels, Shorts, Дарья Евстигнеева, SOF Sense of Form">
   <title>SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио</title>
-  
+
   <!-- Предзагрузка локальных бренд-шрифтов -->
   <link rel="preload" href="/font/Mak/Mak font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff2" as="font" type="font/woff2" crossorigin>
@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  
+
   <!-- Стили сайта -->
   <link rel="stylesheet" href="./src/css/main.css">
 
@@ -71,7 +71,7 @@
 
       <nav class="main-nav" id="main-nav">
         <ul>
-          <li><a href="#hero" class="nav-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="nav_services">НАПРАВЛЕНИЯ</a></li>
           <li><a href="#portfolio" class="nav-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
           <li><a href="#" class="nav-link" id="contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
@@ -81,10 +81,8 @@
         <!-- Кнопка переключателя языка -->
         <button id="lang-toggle" class="lang-toggle-btn" aria-label="Сменить язык" data-i18n-aria="aria_toggle_lang">RU</button>
 
-
-
         <!-- Кнопка действия -->
-        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill btn-start" id="start-project-btn" data-i18n="nav_start_project">
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-start btn-magnet" id="start-project-btn" data-i18n="nav_start_project">
           НАЧАТЬ ПРОЕКТ
         </a>
 
@@ -104,18 +102,17 @@
       <nav class="drawer-nav">
         <ul>
           <li><a href="#hero" class="drawer-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
+          <li><a href="#services" class="drawer-link" data-i18n="nav_services">НАПРАВЛЕНИЯ</a></li>
           <li><a href="#portfolio" class="drawer-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
           <li><a href="#" class="drawer-link" id="mobile-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
       </nav>
-      
+
       <div class="drawer-actions">
         <div class="drawer-toggles">
           <button id="mobile-lang-toggle" class="lang-toggle-btn" aria-label="Сменить язык" data-i18n-aria="aria_toggle_lang">RU</button>
-          
-
         </div>
-        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-pill drawer-btn" data-i18n="nav_start_project">
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent drawer-btn" data-i18n="nav_start_project">
           НАЧАТЬ ПРОЕКТ
         </a>
       </div>
@@ -123,79 +120,103 @@
   </div>
 
   <main>
-    <!-- Главный экран (Hero Section) -->
+    <!-- Главный экран (Hero) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
-        <!-- Левая часть: текст и описание (Десктоп) -->
-        <div class="hero-text-block desktop-only">
-          <h1 class="hero-title" data-i18n="hero_title">РАСКРЫВАЯ ИСТОРИИ ЧЕРЕЗ ФОРМУ И ДВИЖЕНИЕ</h1>
-          <p class="hero-subtitle" data-i18n="hero_subtitle">Высококлассный бренд видеопроизводства.</p>
-          <div class="hero-bio">
-            <p data-i18n="hero_bio_name">Евстигнеева Дарья — режиссер монтажа и контент-мейкер.</p>
-            <p class="bio-tagline" data-i18n="hero_bio_tagline">Готова к работе с любыми медиаплощадками.</p>
-            <div class="bio-categories">
-              <span data-i18n="hero_cat_cinema">кинопродвижение</span>
-              <span data-i18n="hero_cat_brands">реклама и бренды</span>
-              <span data-i18n="hero_cat_music">музыкальное видео</span>
-              <span data-i18n="hero_cat_digital">digital-контент</span>
-            </div>
+        <div class="hero-text-block">
+          <div class="hero-eyebrow">
+            <span class="dot"></span>
+            <span data-i18n="hero_eyebrow">Доступна для новых проектов</span>
           </div>
-          <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta" data-i18n="hero_cta">Смотреть работы</a>
+          <h1 class="hero-title" data-i18n="hero_title">Раскрывая истории через форму и движение</h1>
+          <p class="hero-desc" data-i18n="hero_desc">Евстигнеева Дарья — режиссёр монтажа и контент-мейкер. Кинопродвижение, реклама, музыкальное видео и трендовый вертикальный контент — под ключ, от черновой сборки до финальной цветокоррекции.</p>
+          <div class="hero-cta-row">
+            <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="nav_start_project">НАЧАТЬ ПРОЕКТ</a>
+            <button type="button" class="btn btn-secondary btn-magnet" id="hero-showreel-btn" data-i18n="hero_cta_secondary">Смотреть шоурил</button>
+          </div>
         </div>
 
-        <!-- Левая часть: текст и описание (Мобильный) -->
-        <div class="hero-text-block-mobile mobile-only">
-          <h1 class="hero-title-mobile" data-i18n="hero_mobile_title">ДАРЬЯ ЕВСТИГНЕЕВА</h1>
-          <p class="hero-subtitle-mobile" data-i18n="hero_mobile_subtitle">РЕЖИССЕР МОНТАЖА & КОНТЕНТ-МЕЙКЕР</p>
-        </div>
-
-        <!-- Правая часть: главный проект (Featured Video) -->
-        <div class="hero-featured-block" id="featured-block">
-          <!-- Этот блок рендерится как интерактивная видео-карточка -->
+        <!-- Featured Video Card — 3D-tilt карточка (main.js: initTiltCard) -->
+        <div class="tilt-wrap" id="tilt-wrap">
           <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
+            <span class="featured-badge" data-i18n="hero_showreel_badge">Шоурил 2026</span>
             <div class="featured-thumbnail-container">
               <div class="featured-noise-overlay"></div>
               <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
               <button class="play-btn-large" aria-label="Смотреть шоурил" data-i18n-aria="aria_play_showreel">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
               </button>
-            </div>
-            <div class="featured-meta">
-              <span class="featured-title" data-i18n="hero_showreel_title">ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА</span>
+              <div class="featured-meta">
+                <span class="featured-title" data-i18n="hero_showreel_title">ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА</span>
+                <span class="featured-sub" id="featured-sub"></span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- Индикатор прокрутки (Scroll Indicator) -->
-      <div class="scroll-indicator" aria-hidden="true">
-        <a href="#portfolio" class="scroll-indicator-link">
-          <span class="scroll-indicator-text" data-i18n="hero_scroll_down">ЛИСТАЙТЕ ВНИЗ</span>
-          <span class="scroll-indicator-line"></span>
-        </a>
-      </div>
     </section>
 
-    <!-- Мобильный блок "О себе" (Mobile-Only About Section) -->
-    <section class="mobile-about-section mobile-only">
-      <div class="mobile-about-container">
-        <div class="hero-bio">
-          <p data-i18n="hero_bio_name">Евстигнеева Дарья — режиссер монтажа и контент-мейкер.</p>
-          <p class="bio-tagline" data-i18n="hero_bio_tagline">Готова к работе с любыми медиаплощадками.</p>
-          <div class="bio-categories">
-            <span data-i18n="hero_cat_cinema">кинопродвижение</span>
-            <span data-i18n="hero_cat_brands">реклама и бренды</span>
-            <span data-i18n="hero_cat_music">музыкальное видео</span>
-            <span data-i18n="hero_cat_digital">digital-контент</span>
-          </div>
+    <!-- Клиенты (Trust marquee) — список подтягивается из projects.json -->
+    <section class="trust-section" aria-label="Клиенты">
+      <div class="trust-label" data-i18n="trust_label">Работала с</div>
+      <div class="trust-track" id="trust-track"></div>
+    </section>
+
+    <!-- Статистика — числа считаются из projects.json -->
+    <section class="stats-section">
+      <div class="stats-grid reveal">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-projects">—</div>
+          <div class="stat-label" data-i18n="stat_label_projects">Завершённых проектов</div>
         </div>
-        <a href="#portfolio" class="btn btn-secondary btn-pill hero-cta" data-i18n="hero_cta">Смотреть работы</a>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-years">—</div>
+          <div class="stat-label" data-i18n="stat_label_years">Лет в монтаже</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-clients">—</div>
+          <div class="stat-label" data-i18n="stat_label_clients">Клиентов и брендов</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-categories">—</div>
+          <div class="stat-label" data-i18n="stat_label_categories">Направления работы</div>
+        </div>
       </div>
     </section>
 
-    <!-- Секция Портфолио (Portfolio Section) -->
+    <!-- Направления работы -->
+    <section class="services-section" id="services">
+      <div class="section-head reveal">
+        <h2 data-i18n="services_title">Направления работы</h2>
+        <p data-i18n="services_subtitle">От киноиндустрии до соцсетей — единый монтажный почерк под формат площадки.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card reveal">
+          <span class="service-num">01</span>
+          <div class="service-title" data-i18n="hero_cat_cinema">кинопродвижение</div>
+          <p class="service-desc" data-i18n="service_desc_cinema">Трейлеры и тизеры с точной драматургией и атмосферным саунд-дизайном.</p>
+        </div>
+        <div class="service-card reveal">
+          <span class="service-num">02</span>
+          <div class="service-title" data-i18n="hero_cat_brands">реклама и бренды</div>
+          <p class="service-desc" data-i18n="service_desc_brands">Коммерческие ролики с монтажом под брендбук и точными акцентами.</p>
+        </div>
+        <div class="service-card reveal">
+          <span class="service-num">03</span>
+          <div class="service-title" data-i18n="hero_cat_music">музыкальное видео</div>
+          <p class="service-desc" data-i18n="service_desc_music">Ритмичный монтаж, speed ramp и синхронизация под саундтрек.</p>
+        </div>
+        <div class="service-card reveal">
+          <span class="service-num">04</span>
+          <div class="service-title" data-i18n="hero_cat_digital">digital-контент</div>
+          <p class="service-desc" data-i18n="service_desc_digital">Shorts и Reels под трендовые форматы вертикальных площадок.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция Портфолио -->
     <section class="portfolio-section" id="portfolio">
       <div class="portfolio-container">
         <h2 class="section-title" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
@@ -211,12 +232,29 @@
 
         <!-- Сетка проектов (Grid) -->
         <div class="project-grid" id="project-grid">
-          <!-- Карточки проектов генерируются динамически с помощью JS -->
+          <!-- Карточки проектов генерируются динамически из public/data/projects.json -->
         </div>
 
         <!-- Кнопка "Показать еще" -->
         <div class="portfolio-more-container">
-          <button id="show-more-btn" class="btn btn-accent btn-pill" data-i18n="portfolio_show_more">ПОКАЗАТЬ ЕЩЕ</button>
+          <button id="show-more-btn" class="btn btn-accent" data-i18n="portfolio_show_more">ПОКАЗАТЬ ЕЩЕ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Финальный призыв к действию -->
+    <section class="cta-section">
+      <div class="cta-panel reveal">
+        <h2 data-i18n="cta_title">Готовы начать проект?</h2>
+        <p data-i18n="cta_subtitle">Ответ в течение суток. Обсудим формат, сроки и бюджет.</p>
+        <div class="cta-actions">
+          <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="cta_primary">Написать в Telegram</a>
+          <a href="#portfolio" class="btn btn-secondary btn-magnet" data-i18n="cta_secondary">Смотреть портфолио</a>
+        </div>
+        <div class="contact-chips">
+          <div>Telegram <span>@DariaEvst</span></div>
+          <div>Email <span>evst.daria@yandex.ru</span></div>
+          <div>VK <span>vk.com/dariaevst</span></div>
         </div>
       </div>
     </section>
@@ -290,7 +328,7 @@
       <div class="lightbox-video-wrapper" id="lightbox-video-wrapper">
         <!-- iframe будет встраиваться динамически -->
       </div>
-      
+
       <!-- Боковая/Нижняя панель информации проекта -->
       <div class="lightbox-info-panel" id="lightbox-info-panel">
         <h3 class="lightbox-title" id="lightbox-title" data-i18n="lightbox_default_title">Название проекта</h3>
@@ -309,7 +347,7 @@
     <div class="contact-modal-content">
       <h3 class="contact-modal-title" data-i18n="contact_title">КОНТАКТЫ</h3>
       <p class="contact-modal-subtitle" data-i18n="contact_subtitle">Ready to collaborate on your next project</p>
-      
+
       <div class="contact-modal-links">
         <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">
           <span class="contact-icon-wrapper">
@@ -352,17 +390,10 @@
     </div>
   </div>
 
-  <!-- Элементы для Neo-Noir Kinetic стиля -->
+  <!-- Зерно плёнки — часть бренда SOF -->
   <div class="film-grain"></div>
-  <div id="custom-cursor" class="custom-cursor">
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
-    <div class="cursor-play-label">PLAY</div>
-  </div>
-  <div id="cursor-glow" class="cursor-glow"></div>
 
   <!-- Скрипты -->
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script type="module" src="./src/js/main.js"></script>
 </body>
 </html>
