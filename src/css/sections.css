@@ -57,16 +57,22 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--color-glass-border);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
+  gap: 14px;
 }
 
 .stat-card {
-  background-color: var(--color-bg-secondary);
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--border-radius-md);
   padding: 1.9rem 1.5rem;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-accent);
+  background-color: rgba(204, 255, 0, 0.05);
+  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
 }
 
 .stat-num {
@@ -141,6 +147,7 @@
   transform: translateY(-6px);
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.05);
+  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
 }
 
 .service-num {
