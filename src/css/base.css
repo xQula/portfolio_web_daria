@@ -175,17 +175,27 @@ button:focus-visible,
    PREMIUM LANDING: CORE STYLES
    ---------------------------------------------------- */
 
-/* Film Grain Overlay — часть бренда SOF, сохранена и используется во всех секциях */
+/* Film Grain Overlay — часть бренда SOF. Слегка увеличен за пределы вьюпорта
+   и «дышит» через steps()-анимацию, имитируя мерцание настоящей плёночной зерна */
 .film-grain {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: -60px;
+  left: -60px;
+  width: calc(100vw + 120px);
+  height: calc(100vh + 120px);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.035;
   pointer-events: none;
   z-index: 9999;
+  animation: grain-flicker 1.4s steps(4) infinite;
+}
+
+@keyframes grain-flicker {
+  0%   { transform: translate(0, 0); opacity: 0.03; }
+  25%  { transform: translate(-1.4%, 1%); opacity: 0.045; }
+  50%  { transform: translate(1%, -1.2%); opacity: 0.03; }
+  75%  { transform: translate(-0.8%, -0.8%); opacity: 0.04; }
+  100% { transform: translate(0, 0); opacity: 0.03; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -196,5 +206,8 @@ button:focus-visible,
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .film-grain {
+    animation: none;
   }
 }

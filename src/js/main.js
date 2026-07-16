@@ -16,6 +16,8 @@ const hasHover = () => window.matchMedia("(hover: hover)").matches;
 async function init() {
   // Настройка языка
   initLanguage();
+  renderHeroWords();
+  document.addEventListener("languagechanged", renderHeroWords);
 
   // Загружаем проекты из файлов
   try {
@@ -72,6 +74,31 @@ async function init() {
 }
 
 // ----------------------------------------------------
+// КИНЕТИЧЕСКИЙ ЗАГОЛОВОК HERO: слова проявляются по очереди при загрузке.
+// При смене языка текст просто переустанавливается (без повторной анимации).
+// ----------------------------------------------------
+let heroWordsAnimated = false;
+
+function renderHeroWords() {
+  const el = document.querySelector(".hero-title");
+  if (!el) return;
+
+  const words = el.textContent.trim().split(/\s+/);
+  const reduce = prefersReducedMotion();
+
+  el.innerHTML = words
+    .map((word, i) => {
+      const isStatic = reduce || heroWordsAnimated;
+      const cls = isStatic ? "word word--static" : "word";
+      const delay = (0.15 + i * 0.07).toFixed(2);
+      return `<span class="${cls}" style="animation-delay:${delay}s">${word}</span>`;
+    })
+    .join(" ");
+
+  heroWordsAnimated = true;
+}
+
+// ----------------------------------------------------
 // ЛИПКИЙ ХЕДЕР: прозрачный вверху страницы, уплотняется при скролле
 // ----------------------------------------------------
 function initStickyHeader() {
@@ -86,14 +113,16 @@ function initStickyHeader() {
 }
 
 // ----------------------------------------------------
-// SCROLL REVEAL: плавное появление секций (.reveal) через IntersectionObserver
+// SCROLL REVEAL: плавное появление секций и карточек портфолио (.reveal)
+// через один общий IntersectionObserver. Карточки портфолио пересоздаются
+// при каждой фильтрации/показе ещё — поэтому подписываемся на "gridrendered"
+// и довешиваем наблюдение на свежедобавленные элементы.
 // ----------------------------------------------------
 function initScrollReveal() {
-  const targets = document.querySelectorAll(".reveal");
-  if (!targets.length) return;
-
   if (prefersReducedMotion()) {
-    targets.forEach(el => el.classList.add("in-view"));
+    const revealAll = () => document.querySelectorAll(".reveal").forEach(el => el.classList.add("in-view"));
+    revealAll();
+    document.addEventListener("gridrendered", revealAll);
     return;
   }
 
@@ -106,7 +135,11 @@ function initScrollReveal() {
     });
   }, { threshold: 0.15 });
 
-  targets.forEach(el => observer.observe(el));
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+  document.addEventListener("gridrendered", () => {
+    document.querySelectorAll("#project-grid .reveal").forEach(el => observer.observe(el));
+  });
 }
 
 // ----------------------------------------------------

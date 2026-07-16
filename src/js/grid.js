@@ -37,7 +37,7 @@ function getGridProjects() {
 // Вспомогательная функция создания карточки проекта
 export function createCard(project) {
   const card = document.createElement("div");
-  card.className = "project-card";
+  card.className = "project-card reveal";
   card.dataset.projectId = project.id;
 
   // Резервная ссылка на hqdefault для видео с YouTube (если maxresdefault вернет 404)

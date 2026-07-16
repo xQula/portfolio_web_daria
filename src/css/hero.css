@@ -57,6 +57,24 @@
   max-width: 15ch;
 }
 
+/* Кинетическое проявление заголовка по словам — разметку строит main.js (renderHeroWords) */
+.hero-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px);
+  animation: word-rise 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.hero-title .word--static {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@keyframes word-rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .hero-desc {
   margin-top: 1.4rem;
   font-size: 1.12rem;
@@ -280,6 +298,11 @@
   .hero-text-block, .tilt-wrap {
     animation: none;
     opacity: 1;
+  }
+  .hero-title .word {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
   .featured-card {
     transition: none;
