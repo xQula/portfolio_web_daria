@@ -24,7 +24,7 @@
 }
 
 .footer-author-text {
-  font-size: 0.85rem;
+  font-size: 0.94rem;
   color: var(--color-text-secondary);
 }
 
@@ -38,7 +38,7 @@
 
 .footer-link {
   font-weight: 600;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-secondary);

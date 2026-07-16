@@ -9,7 +9,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 18px; /* База поднята с 16px — 16px читается мелко (см. рекомендации NN/g и WCAG 1.4.4) */
   scroll-padding-top: 84px; /* Высота липкого хедера */
   scrollbar-gutter: stable; /* Предотвращает сдвиг макета при блокировке прокрутки */
 }
@@ -66,7 +66,7 @@ h1, h2, h3, h4 {
   justify-content: center;
   gap: 0.5rem;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   letter-spacing: 0.05em;
   padding: 0.8rem 1.8rem;
   border: none;
@@ -136,7 +136,7 @@ button:focus-visible,
    ---------------------------------------------------- */
 @media (max-width: 768px) {
   html {
-    font-size: 14px;
+    font-size: 16px; /* На мобильных база не должна быть меньше десктопной — тот же принцип читаемости */
   }
 }
 
