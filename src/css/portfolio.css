@@ -45,9 +45,9 @@
 
 .filter-btn:hover,
 .filter-btn.active {
-  background-color: var(--color-text-primary);
-  color: var(--color-bg-primary);
-  border-color: var(--color-text-primary);
+  background-color: var(--color-accent);
+  color: var(--color-btn-accent-text);
+  border-color: var(--color-accent);
 }
 
 /* ----------------------------------------------------

@@ -121,11 +121,11 @@ function initTiltCard() {
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+    card.style.transform = `translateY(-6px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
   });
 
   wrap.addEventListener("mouseleave", () => {
-    card.style.transform = "rotateY(0deg) rotateX(0deg)";
+    card.style.transform = "translateY(0) rotateY(0deg) rotateX(0deg)";
   });
 }
 

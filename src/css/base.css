@@ -58,6 +58,37 @@ h1, h2, h3, h4 {
 }
 
 /* ----------------------------------------------------
+   DISPLAY / BRANDING TEXT — заголовки, лейблы и цифры ведут себя
+   как графические элементы, а не как редактируемый контент:
+   без текстового курсора и без выделения при клике.
+   Настоящий читаемый текст (параграфы, контакты) остаётся выделяемым.
+   ---------------------------------------------------- */
+h1, h2, h3, h4,
+.logo-main,
+.logo-tagline,
+.hero-eyebrow,
+.service-title,
+.service-num,
+.stat-num,
+.stat-label,
+.trust-track span {
+  cursor: default;
+  user-select: none;
+}
+
+/* То же самое для текста внутри кликабельных карточек — но курсор
+   наследуем (pointer от родителя), а не сбрасываем в default */
+.card-title,
+.card-client,
+.card-meta,
+.featured-title,
+.featured-sub,
+.featured-badge {
+  cursor: inherit;
+  user-select: none;
+}
+
+/* ----------------------------------------------------
    BUTTONS & INTERACTIVE ELEMENTS
    ---------------------------------------------------- */
 .btn {
