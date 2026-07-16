@@ -51,13 +51,16 @@
 }
 
 /* ----------------------------------------------------
-   СЕТКА ПОРТФОЛИО — единый CSS Grid, все карточки одной пропорции.
-   Без ручной упаковки по форматам и без арт-заглушек: при неполном
-   последнем ряду просто остаётся меньше карточек — это ожидаемо.
+   СЕТКА ПОРТФОЛИО — flex-wrap вместо CSS Grid: если проектов не хватает
+   на полный последний ряд (частый случай, т.к. список растёт из JSON
+   и редко делится ровно на число колонок), ряд центрируется, а не
+   повисает слева с дырой. Без ручной упаковки по форматам и без
+   декоративных арт-заглушек.
    ---------------------------------------------------- */
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
   transition: opacity 0.3s ease;
 }
@@ -65,6 +68,8 @@
 .project-card {
   display: flex;
   flex-direction: column;
+  flex: 1 1 270px;
+  max-width: 340px;
   border-radius: var(--border-radius-md);
   overflow: hidden;
   background-color: var(--color-bg-secondary);
@@ -207,8 +212,11 @@
     padding: 4rem 1rem;
   }
   .project-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 12px;
+  }
+  .project-card {
+    flex-basis: 220px;
+    max-width: 280px;
   }
 }
 
