@@ -113,8 +113,8 @@ export function renderGrid() {
     };
   }
   
-  // Фильтруем скрытые из сетки проекты
-  const gridProjects = projects.filter(p => !p.hideFromGrid);
+  // Фильтруем скрытые из сетки проекты и исключаем арт-блоки (они используются только как заполнители)
+  const gridProjects = projects.filter(p => !p.hideFromGrid && p.type !== "art");
   
   // Фильтрация проектов по категориям
   let filteredVideos = gridProjects;
@@ -122,9 +122,9 @@ export function renderGrid() {
     filteredVideos = gridProjects.filter(p => {
       if (!p.category) return false;
       if (Array.isArray(p.category)) {
-        return p.category.includes(currentFilter) || p.category.includes("all");
+        return p.category.includes(currentFilter);
       }
-      return p.category === currentFilter || p.category === "all";
+      return p.category === currentFilter;
     });
   }
   
@@ -137,6 +137,27 @@ export function renderGrid() {
   const horizontalVideos = videosToShow.filter(p => p.aspect !== "vertical" && p.aspect !== "wide");
   
   let isLeftVertical = true;
+  let groupCount = 0;
+  const ART_INJECT_EVERY = 2; // Вставлять арт-карточку каждые N видео-групп
+  const MAX_ART_INJECTIONS = 2; // Максимум арт-вставок за весь грид
+  let artInjectionsUsed = 0;
+  
+  // Вспомогательная функция: вставить арт-карточку между видео-группами
+  function maybeInjectArtCard() {
+    groupCount++;
+    if (
+      groupCount % ART_INJECT_EVERY === 0 &&
+      artInjectionsUsed < MAX_ART_INJECTIONS &&
+      artTemplates && artTemplates.length > 0
+    ) {
+      artInjectionsUsed++;
+      const artProject = getNextArtCard("horizontal");
+      const artGroupDiv = document.createElement("div");
+      artGroupDiv.className = "portfolio-group wide-group";
+      artGroupDiv.appendChild(createCard(artProject));
+      projectGrid.appendChild(artGroupDiv);
+    }
+  }
   
   // Группируем проекты в идеальные строки/блоки без пустот
   while (wideVideos.length > 0 || verticalVideos.length > 0 || horizontalVideos.length > 0) {
@@ -147,6 +168,7 @@ export function renderGrid() {
       groupDiv.className = "portfolio-group wide-group";
       groupDiv.appendChild(createCard(project));
       projectGrid.appendChild(groupDiv);
+      maybeInjectArtCard();
       continue;
     }
     
@@ -177,6 +199,7 @@ export function renderGrid() {
       
       projectGrid.appendChild(groupDiv);
       isLeftVertical = !isLeftVertical;
+      maybeInjectArtCard();
       continue;
     }
     
@@ -196,10 +219,11 @@ export function renderGrid() {
       groupDiv.appendChild(createCard(v1Project));
       groupDiv.appendChild(createCard(v2Project));
       projectGrid.appendChild(groupDiv);
+      maybeInjectArtCard();
       continue;
     }
     
-    // 4. Если остались только горизонтальные видео -> группируем по парам (2H)
+    // 4. Если остались только горизонтальные видео -> grouping по парам (2H)
     if (horizontalVideos.length > 0) {
       const h1Project = horizontalVideos.shift();
       let h2Project = null;
@@ -215,6 +239,7 @@ export function renderGrid() {
       groupDiv.appendChild(createCard(h1Project));
       groupDiv.appendChild(createCard(h2Project));
       projectGrid.appendChild(groupDiv);
+      maybeInjectArtCard();
       continue;
     }
   }
@@ -225,6 +250,9 @@ export function renderGrid() {
   } else {
     showMoreBtn.style.display = "inline-flex";
   }
+  
+  // Оповещаем об обновлении сетки для переподключения эффектов
+  document.dispatchEvent(new CustomEvent("gridrendered"));
 }
 
 // Фильтрация

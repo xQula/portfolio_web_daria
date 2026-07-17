@@ -1,5 +1,3 @@
-import { projects as rawProjects, artTemplates as rawArtTemplates } from './projects/index.js';
-
 export let projects = [];
 export let artTemplates = [];
 
@@ -18,31 +16,32 @@ export function getRutubeId(url) {
   return match ? match[2] : null;
 }
 
-// Функция для обработки локально импортированных проектов
+// Функция для загрузки проектов из JSON
 export async function loadProjects() {
-  // Сохраняем загруженные шаблоны
-  artTemplates = [...rawArtTemplates];
-  
-  // Автоматическая обработка ссылок и превью для видео
-  projects = rawProjects.map(project => {
-    const projectCopy = { ...project };
-    if (projectCopy.type === "video" && projectCopy.videoUrl) {
-      const ytId = getYoutubeId(projectCopy.videoUrl);
-      if (ytId) {
-        // Превращаем любую ссылку YouTube во встроенную (embed)
-        projectCopy.videoUrl = `https://www.youtube.com/embed/${ytId}`;
-        // Если превью не задано вручную, генерируем ссылку на максимальное разрешение
-        if (!projectCopy.preview) {
-          projectCopy.preview = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-        }
-      } else {
-        const rtId = getRutubeId(projectCopy.videoUrl);
-        if (rtId) {
-          // Превращаем любую ссылку RuTube во встроенную (embed)
-          projectCopy.videoUrl = `https://rutube.ru/play/embed/${rtId}`;
+  try {
+    const response = await fetch('/data/projects.json');
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки проектов: ${response.status}`);
+    }
+    const data = await response.json();
+    artTemplates = data.artTemplates || [];
+    
+    const rawProjects = data.projects || [];
+    projects = rawProjects.map(project => {
+      const projectCopy = { ...project };
+      if (projectCopy.type === "video" && projectCopy.videoUrl) {
+        const ytId = getYoutubeId(projectCopy.videoUrl);
+        if (ytId) {
+          // Если превью не задано вручную в JSON, формируем ссылку на YouTube
+          if (!projectCopy.preview) {
+            projectCopy.preview = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+          }
         }
       }
-    }
-    return projectCopy;
-  });
+      return projectCopy;
+    });
+  } catch (err) {
+    console.error("Ошибка при загрузке проектов из JSON:", err);
+    throw err;
+  }
 }

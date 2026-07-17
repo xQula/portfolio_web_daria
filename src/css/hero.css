@@ -2,10 +2,11 @@
    HERO SECTION STYLING
    ---------------------------------------------------- */
 .hero-section {
+  position: relative;
   min-height: calc(100vh - 84px); /* Высота во весь экран минус хедер */
   display: flex;
   align-items: center;
-  padding: 3.4rem 2rem; /* Ритм Фибоначчи (55px) */
+  padding: 3.4rem 2rem 7rem 2rem; /* Ритм Фибоначчи (55px) + отступ под индикатор */
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -23,20 +24,23 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  opacity: 0;
+  animation: heroFadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 .hero-title {
-  font-family: var(--font-sans);
-  font-size: clamp(2.5rem, 5vw, 4.2rem);
-  font-weight: 800;
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2.2rem, 4.8vw, 4.0rem);
+  font-weight: 900;
   line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--color-text-primary);
   text-transform: uppercase;
 }
 
 .hero-subtitle {
   font-family: var(--font-sans);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 400;
   color: var(--color-text-secondary);
 }
@@ -51,7 +55,7 @@
 }
 
 .hero-bio p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .bio-tagline {
@@ -60,14 +64,28 @@
 }
 
 .bio-categories {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--color-text-primary);
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.bio-categories span {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-speed) ease;
+}
+
+.bio-categories span:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: rgba(204, 255, 0, 0.05);
 }
 
 .hero-cta {
@@ -82,6 +100,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  opacity: 0;
+  animation: heroFadeInScale 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 .featured-card {
@@ -177,31 +197,269 @@
 
 @media (max-width: 1024px) {
   .hero-section {
-    min-height: auto;
-    padding: 3rem 1.5rem;
-  }
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-  .hero-text-block {
-    text-align: center;
-    align-items: center;
-  }
-  .hero-bio {
-    border-left: none;
-    border-top: 2px solid var(--color-accent);
-    padding-left: 0;
-    padding-top: 1.5rem;
-    align-items: center;
-  }
-  .bio-categories {
+    position: relative;
+    height: calc(100vh - 84px); /* Fallback для старых браузеров */
+    height: calc(100dvh - 84px); /* Учитывает плавающий нижний бар мобильных браузеров (Yandex, Safari, etc.) */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: 1.5rem 1.5rem 8.5rem 1.5rem; /* Увеличенный отступ снизу для выталкивания контента вверх */
+    box-sizing: border-box;
+    overflow: hidden;
   }
-  .hero-cta {
-    align-self: center;
+
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: -4.5rem; /* Сдвигаем весь контент (текст и видео) еще выше */
   }
+
+  .hero-text-block-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    opacity: 0;
+    animation: heroFadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+
+  .hero-title-mobile {
+    font-family: var(--font-serif), serif;
+    font-size: clamp(1.8rem, 6.5vw, 2.6rem); /* Слегка компактнее для лучшей посадки на экране */
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle-mobile {
+    font-family: var(--font-sans);
+    font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+  }
+
+  .hero-featured-block {
+    width: 100%;
+    max-width: 400px; /* Делаем видео-карточку компактнее на мобильном */
+    margin: 0 auto;
+    opacity: 0;
+    animation: heroFadeInScale 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
   .featured-card {
     margin: 0 auto;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
   }
+
+  .scroll-indicator {
+    bottom: 6.5rem; /* Поднимаем индикатор значительно выше над плавающими панелями */
+  }
+
+  .scroll-indicator-line {
+    height: 30px; /* Делаем линию чуть короче на мобильных */
+  }
+}
+
+/* ----------------------------------------------------
+   SCROLL INDICATOR & KEYFRAMES
+   ---------------------------------------------------- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 15;
+  pointer-events: auto;
+  opacity: 0;
+  animation: fadeInIndicator 1s ease 1.2s forwards;
+}
+
+.scroll-indicator-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.scroll-indicator-link:hover {
+  color: var(--color-accent);
+  transform: translateY(2px);
+}
+
+.scroll-indicator-text {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color var(--transition-speed) ease;
+}
+
+.scroll-indicator-link:hover .scroll-indicator-text {
+  color: var(--color-accent);
+}
+
+.scroll-indicator-line {
+  width: 1px;
+  height: 45px;
+  background: linear-gradient(to bottom, var(--color-accent) 50%, rgba(255, 255, 255, 0.1) 50%);
+  background-size: 100% 200%;
+  background-position: 100% 0%;
+  animation: scrollLine 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes scrollLine {
+  0% {
+    background-position: 100% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 100% -100%;
+  }
+}
+
+@keyframes fadeInIndicator {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-height: 560px) {
+  .scroll-indicator {
+    display: none !important;
+  }
+}
+
+/* Мобильный блок "О себе" */
+.mobile-about-section {
+  padding: 4.5rem 1.5rem;
+  background-color: var(--color-bg-primary);
+  border-top: 1px solid var(--color-border);
+  position: relative;
+  z-index: 10;
+}
+
+.mobile-about-container {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+
+.mobile-about-container .hero-bio {
+  border-left: none;
+  border-top: 2px solid var(--color-accent);
+  padding-left: 0;
+  padding-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  width: 100%;
+}
+
+.mobile-about-container .hero-bio p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+.mobile-about-container .bio-tagline {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.mobile-about-container .bio-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.mobile-about-container .bio-categories span {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.mobile-about-container .hero-cta {
+  align-self: center;
+  margin-top: 0;
+}
+
+/* Active Scroll Highlight (Mobile) */
+.featured-card {
+  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.featured-card.active-scroll {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px var(--shadow-general), 0 0 25px var(--shadow-accent);
+  border-color: var(--color-border-hover);
+}
+
+.featured-card.active-scroll .featured-thumbnail-img {
+  transform: scale(1.03);
+}
+
+.featured-card.active-scroll .play-btn-large {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 0 20px var(--color-accent);
 }

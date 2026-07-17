@@ -43,9 +43,11 @@ button, input, select, textarea {
    TYPOGRAPHY
    ---------------------------------------------------- */
 h1, h2, h3, h4 {
+  font-family: var(--font-sans), sans-serif;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .serif-text {
@@ -92,15 +94,19 @@ h1, h2, h3, h4 {
 }
 
 .btn-secondary {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.03);
   color: var(--color-text-primary);
-  border: 2px solid var(--color-text-primary);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-text-primary);
-  color: var(--color-bg-primary);
+  background-color: var(--color-accent);
+  color: #050607;
+  border-color: var(--color-accent);
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow-accent);
 }
 
 /* ----------------------------------------------------
@@ -119,5 +125,199 @@ button:focus-visible,
 @media (max-width: 768px) {
   html {
     font-size: 14px;
+  }
+}
+
+/* ----------------------------------------------------
+   NEO-NOIR KINETIC: CORE STYLES & INTERACTION
+   ---------------------------------------------------- */
+
+/* Z-Index Layering — glow рендерится между фоном секций и контентом */
+.hero-container,
+.portfolio-container,
+.footer-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Lenis Smooth Scroll Compatibility */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Hide original cursor on pointer-enabled devices only when custom cursor is successfully initialized */
+@media (hover: hover) {
+  html:has(.custom-cursor--visible) {
+    cursor: none;
+  }
+  
+  html:has(.custom-cursor--visible) body,
+  html:has(.custom-cursor--visible) a,
+  html:has(.custom-cursor--visible) button,
+  html:has(.custom-cursor--visible) [role="button"],
+  html:has(.custom-cursor--visible) [tabindex="0"],
+  html:has(.custom-cursor--visible) select,
+  html:has(.custom-cursor--visible) input,
+  html:has(.custom-cursor--visible) textarea {
+    cursor: none !important;
+  }
+  
+  /* Скрываем статические кнопки воспроизведения на десктопе, их заменит магнитный PLAY-курсор */
+  .play-btn-large, .play-btn-small {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Custom Mouse Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-cursor.custom-cursor--visible {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .custom-cursor {
+    display: block;
+  }
+}
+
+.cursor-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.cursor-circle {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              background-color 0.3s ease, 
+              border-color 0.3s ease;
+  pointer-events: none;
+}
+
+.cursor-play-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: #050607;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Custom Cursor Hover States */
+.custom-cursor.hover-link .cursor-circle {
+  width: 56px;
+  height: 56px;
+  background-color: rgba(204, 255, 0, 0.1);
+  border-color: var(--color-accent);
+}
+
+.custom-cursor.hover-video .cursor-dot {
+  opacity: 0;
+}
+
+.custom-cursor.hover-video .cursor-circle {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.custom-cursor.hover-video {
+  mix-blend-mode: normal;
+}
+
+.custom-cursor.hover-video .cursor-play-label {
+  opacity: 1;
+}
+
+/* Cursor Glow Effect — рендерится между фоном секций и контентом */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 5; /* Над фоном секций (auto), но под контентом (z-index: 10) */
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.cursor-glow.cursor-glow--visible {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .cursor-glow {
+    display: block;
+  }
+}
+
+/* Visibility Utilities */
+@media (min-width: 1025px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
   }
 }

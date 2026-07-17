@@ -94,9 +94,11 @@ export function openLightbox(project) {
     videoWrapper.classList.add("horizontal");
   }
   
-  // Создание iframe плеера
+  // Создание iframe плеера с мерами безопасности
   const iframe = document.createElement("iframe");
   iframe.src = project.videoUrl;
+  iframe.sandbox = "allow-scripts allow-same-origin allow-presentation allow-popups";
+  iframe.referrerPolicy = "no-referrer-when-downgrade";
   iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
   iframe.allowFullscreen = true;
   

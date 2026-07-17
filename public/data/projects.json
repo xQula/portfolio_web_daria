@@ -1,0 +1,251 @@
+{
+  "projects": [
+    {
+      "id": "showreel",
+      "type": "video",
+      "title": {
+        "ru": "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
+        "en": "SHOWREEL 2026 | EDITING SHOWCASE"
+      },
+      "duration": "1:30",
+      "category": "commercial",
+      "subCategory": {
+        "ru": "Шоурил монтажа",
+        "en": "Editing Showreel"
+      },
+      "client": "Daria Evstigneeva Portfolio",
+      "videoUrl": "https://www.youtube.com/embed/n9xhJrPXy4g",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · After Effects · DaVinci Resolve",
+      "desc": {
+        "ru": "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики.",
+        "en": "Official video editing showreel of Daria Evstigneeva. Showcasing key techniques of dynamic cutting, sound design, color grading, and motion graphics."
+      },
+      "featured": true,
+      "hideFromGrid": true
+    },
+    {
+      "id": 1,
+      "type": "video",
+      "title": {
+        "ru": "VELVET & LIGHT",
+        "en": "VELVET & LIGHT"
+      },
+      "duration": "2:15",
+      "category": "commercial",
+      "subCategory": {
+        "ru": "Fashion-видео",
+        "en": "Fashion Video"
+      },
+      "client": "NINA RICCI",
+      "videoUrl": "https://www.youtube.com/embed/n8y4NSxHH3I",
+      "aspect": "wide",
+      "soft": "Adobe Premiere Pro · DaVinci Resolve",
+      "desc": {
+        "ru": "Fashion-ролик с акцентом на мягкую игру света и текстур одежды. Использован динамический ритмичный монтаж и глубокая цветокоррекция в соответствии с брендбуком.",
+        "en": "A fashion video with an emphasis on the soft play of light and textures of clothing. Dynamic rhythmic editing and deep color correction in accordance with the brand book were used."
+      }
+    },
+    {
+      "id": 2,
+      "type": "video",
+      "title": {
+        "ru": "MODERN MOVEMENT",
+        "en": "MODERN MOVEMENT"
+      },
+      "duration": "3:01",
+      "category": "music",
+      "subCategory": {
+        "ru": "Танцевальное видео",
+        "en": "Dance film"
+      },
+      "client": "NYFW Showcase",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "aspect": "horizontal",
+      "soft": "Adobe Premiere Pro · After Effects",
+      "desc": {
+        "ru": "Динамичный монтаж танцевального перформанса. Ключевая фишка — использование эффектов speed ramp (замедление/ускорение) и точная синхронизация движений под ритм саундтрека.",
+        "en": "Dynamic editing of a dance performance. Key feature is speed ramping (slow/fast motion) and precise motion synchronization with the soundtrack rhythm."
+      }
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "title": {
+        "ru": "URBAN GEOMETRY",
+        "en": "URBAN GEOMETRY"
+      },
+      "duration": "1:58",
+      "category": "commercial",
+      "subCategory": {
+        "ru": "Архитектурное видео",
+        "en": "Architectural film"
+      },
+      "client": "KEFN",
+      "videoUrl": "https://www.youtube.com/embed/tgbNymZ7vqY",
+      "aspect": "horizontal",
+      "soft": "DaVinci Resolve · Audition",
+      "desc": {
+        "ru": "Коммерческий презентационный ролик архитектурных решений. Строгая композиция кадра, выверенные переходы и атмосферный саунд-дизайн, подчеркивающий монументальность.",
+        "en": "Commercial presentation video of architectural solutions. Features strict composition, well-calculated cuts, and atmospheric sound design emphasizing monumentality."
+      }
+    },
+    {
+      "id": 5,
+      "type": "video",
+      "title": {
+        "ru": "CYBERPUNK RUNWAY",
+        "en": "CYBERPUNK RUNWAY"
+      },
+      "duration": "0:45",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Shorts / Reels",
+        "en": "Shorts / Reels"
+      },
+      "client": "SOF Studio",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "aspect": "vertical",
+      "soft": "Adobe Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Трендовый вертикальный ролик для соцсетей. Применены эффекты неонового свечения, глитчи и зум-переходы под трендовый аудиозвук.",
+        "en": "Trending vertical video for social media. Features neon glow effects, glitches, and zoom transitions synced with trending audio."
+      }
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "title": {
+        "ru": "THE COLLECTION",
+        "en": "THE COLLECTION"
+      },
+      "duration": "4:30",
+      "category": "commercial",
+      "subCategory": {
+        "ru": "Обзор показа мод",
+        "en": "Runway highlights"
+      },
+      "client": "NYFW 2026",
+      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · DaVinci Resolve",
+      "desc": {
+        "ru": "Сборный отчетный ролик с показов недели моды в Нью-Йорке. Сочетание репортажной динамики и плавных фэшн-склеек.",
+        "en": "Highlights video compilation of runway shows from NYFW. Combining documentary dynamics with smooth fashion cuts."
+      }
+    },
+    {
+      "id": 7,
+      "type": "video",
+      "title": {
+        "ru": "COUTURE STORY",
+        "en": "COUTURE STORY"
+      },
+      "duration": "2:45",
+      "category": "music",
+      "subCategory": {
+        "ru": "Эдиториал клип",
+        "en": "Editorial MV"
+      },
+      "client": "EDITORIAL",
+      "videoUrl": "https://www.youtube.com/embed/n9xhJrPXy4g",
+      "aspect": "horizontal",
+      "soft": "Adobe Premiere Pro · Audition",
+      "desc": {
+        "ru": "Музыкальный клип с упором на сторителлинг через образы. Мягкая склейка по движению, контрастные переходы.",
+        "en": "Music video emphasizing image-based storytelling. Smooth match-cut transitions and high-contrast styling."
+      }
+    },
+    {
+      "id": 8,
+      "type": "video",
+      "title": {
+        "ru": "STREET CULTURE",
+        "en": "STREET CULTURE"
+      },
+      "duration": "0:30",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Shorts / Reels",
+        "en": "Shorts / Reels"
+      },
+      "client": "Streetwear Brand",
+      "videoUrl": "https://www.youtube.com/embed/tgbNymZ7vqY",
+      "aspect": "vertical",
+      "soft": "Adobe Premiere Pro · After Effects",
+      "desc": {
+        "ru": "Промо-ролик уличного бренда одежды в вертикальном формате. Высокая плотность монтажных склеек, стилизованные глитч-переходы.",
+        "en": "Streetwear brand promo video in vertical format. Features high-density editing cuts and stylized glitch transitions."
+      }
+    },
+    {
+      "id": 9,
+      "type": "video",
+      "title": {
+        "ru": "THE ESSENCE ROAD",
+        "en": "THE ESSENCE ROAD"
+      },
+      "duration": "3:40",
+      "category": "trailers",
+      "subCategory": {
+        "ru": "Тизер / Трейлер",
+        "en": "Teaser / Trailer"
+      },
+      "client": "LEOKBOO Production",
+      "videoUrl": "https://rutube.ru/play/embed/b53b817e07a6a42217c91ca7c9082260",
+      "preview": "/img/previews/9.png",
+      "aspect": "horizontal",
+      "soft": "DaVinci Resolve · Audition",
+      "desc": {
+        "ru": "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube.",
+        "en": "Cinematic project teaser. Created at the intersection of documentary drama and fashion aesthetics. Features RuTube video integration."
+      }
+    }
+  ],
+  "artTemplates": [
+    {
+      "id": 4,
+      "type": "art",
+      "title": {
+        "ru": "МОЖЕТ БЫТЬ ДРУГИМ",
+        "en": "CAN BE DIFFERENT"
+      },
+      "subtitle": "SENSE OF FORM",
+      "category": "all",
+      "aspect": "horizontal"
+    },
+    {
+      "id": "art-movement-space",
+      "type": "art",
+      "title": {
+        "ru": "ДВИЖЕНИЕ И ПРОСТРАНСТВО",
+        "en": "MOVEMENT & SPACE"
+      },
+      "subtitle": "SENSE OF FORM",
+      "category": "all",
+      "aspect": "vertical"
+    },
+    {
+      "id": "art-editing",
+      "type": "art",
+      "title": {
+        "ru": "ИСКУССТВО МОНТАЖА",
+        "en": "THE ART OF EDITING"
+      },
+      "subtitle": "SOF STUDIO",
+      "category": "all",
+      "aspect": "horizontal"
+    },
+    {
+      "id": "art-elevating-stories",
+      "type": "art",
+      "title": {
+        "ru": "РАСКРЫВАЯ ИСТОРИИ",
+        "en": "ELEVATING STORIES"
+      },
+      "subtitle": "SENSE OF FORM",
+      "category": "all",
+      "aspect": "horizontal"
+    }
+  ]
+}
