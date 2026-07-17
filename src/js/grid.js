@@ -136,15 +136,15 @@ export function setupFeaturedVideo() {
   // Находим проект с флагом featured
   const featuredProject = projects.find(p => p.featured) || {
     title: {
-      ru: "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
-      en: "SHOWREEL 2026 | EDITING SHOWCASE"
+      ru: "SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД",
+      en: "SHOWREEL 2025 | ALL FILMS IN 60 SECONDS"
     },
     subCategory: {
       ru: "Шоурил монтажа",
       en: "Editing Showreel"
     },
     client: "Daria Evstigneeva Portfolio",
-    videoUrl: "https://www.youtube.com/embed/n9xhJrPXy4g",
+    videoUrl: "https://www.youtube.com/embed/TiMdGOTa48s",
     aspect: "horizontal",
     soft: "Premiere Pro · After Effects · DaVinci Resolve",
     desc: {
@@ -201,12 +201,17 @@ export function setupFeaturedVideo() {
   }
 }
 
+// "Клиенты" без реального внешнего заказчика (авторские/личные ролики) —
+// не показываем их ни в бегущей строке, ни в счётчике клиентов
+const NON_CLIENT_LABELS = new Set(["Личный проект", "Daria Evstigneeva Portfolio"]);
+const isRealClient = (client) => Boolean(client) && !NON_CLIENT_LABELS.has(client);
+
 // Бегущая строка клиентов — список собирается из projects.json, дублируется для бесшовной прокрутки
 export function renderTrust() {
   const track = document.getElementById("trust-track");
   if (!track) return;
 
-  const clients = [...new Set(getGridProjects().map(p => p.client).filter(Boolean))];
+  const clients = [...new Set(getGridProjects().map(p => p.client).filter(isRealClient))];
   if (clients.length === 0) {
     track.parentElement.style.display = "none";
     return;
@@ -219,7 +224,7 @@ export function renderTrust() {
 // Статистика хиро-секции — считается из projects.json + meta.yearsExperience
 export function renderStats() {
   const gridProjects = getGridProjects();
-  const clients = new Set(gridProjects.map(p => p.client).filter(Boolean));
+  const clients = new Set(gridProjects.map(p => p.client).filter(isRealClient));
   const categories = new Set();
   gridProjects.forEach(p => {
     if (!p.category) return;

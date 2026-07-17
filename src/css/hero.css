@@ -172,7 +172,9 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, transparent 45%, rgba(10, 11, 13, 0.92) 100%);
+  /* Реальные YouTube-превью часто уже содержат свой текст/лого внизу кадра —
+     градиент должен полностью гасить эту зону, а не только слегка затемнять её */
+  background: linear-gradient(180deg, transparent 35%, rgba(10, 11, 13, 0.75) 65%, rgba(10, 11, 13, 0.97) 100%);
 }
 
 .play-btn-large {
@@ -225,6 +227,9 @@
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .featured-sub {
@@ -233,6 +238,9 @@
   color: var(--color-text-secondary);
   margin-top: 0.3rem;
   letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 960px) {

@@ -7,22 +7,22 @@
       "id": "showreel",
       "type": "video",
       "title": {
-        "ru": "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
-        "en": "SHOWREEL 2026 | EDITING SHOWCASE"
+        "ru": "SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД",
+        "en": "SHOWREEL 2025 | ALL FILMS IN 60 SECONDS"
       },
-      "duration": "1:30",
-      "category": "commercial",
+      "duration": "0:42",
+      "category": "trailers",
       "subCategory": {
         "ru": "Шоурил монтажа",
         "en": "Editing Showreel"
       },
       "client": "Daria Evstigneeva Portfolio",
-      "videoUrl": "https://www.youtube.com/embed/n9xhJrPXy4g",
+      "videoUrl": "https://www.youtube.com/embed/TiMdGOTa48s",
       "aspect": "horizontal",
-      "soft": "Premiere Pro · After Effects · DaVinci Resolve",
+      "soft": "Premiere Pro · DaVinci Resolve · After Effects · Audition",
       "desc": {
-        "ru": "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи. Демонстрация ключевых приемов динамичного склеивания кадров, звукового дизайна, цветокоррекции и анимационной графики.",
-        "en": "Official video editing showreel of Daria Evstigneeva. Showcasing key techniques of dynamic cutting, sound design, color grading, and motion graphics."
+        "ru": "Самые яркие кадры из разных фильмов — монтаж, который меняет ритм, атмосферу и эмоциональный посыл сцены. Динамичная смена кадров из драм, экшена и артхауса, синхронизация с музыкой, цветокоррекция «под настроение».",
+        "en": "The brightest frames from different films — editing that reshapes a scene's rhythm, mood, and emotional charge. Dynamic cutting across drama, action, and arthouse, synced to music, with mood-driven colour grading."
       },
       "featured": true,
       "hideFromGrid": true
@@ -31,177 +31,440 @@
       "id": 1,
       "type": "video",
       "title": {
-        "ru": "VELVET & LIGHT",
-        "en": "VELVET & LIGHT"
+        "ru": "GRACE OF MONACO | Киноанонс",
+        "en": "GRACE OF MONACO | Film Teaser"
       },
-      "duration": "2:15",
-      "category": "commercial",
+      "duration": "0:30",
+      "category": "trailers",
       "subCategory": {
-        "ru": "Fashion-видео",
-        "en": "Fashion Video"
+        "ru": "Киноанонс",
+        "en": "Film Teaser"
       },
-      "client": "NINA RICCI",
-      "videoUrl": "https://www.youtube.com/embed/n8y4NSxHH3I",
-      "aspect": "wide",
-      "soft": "Adobe Premiere Pro · DaVinci Resolve",
+      "client": "GRACE OF MONACO",
+      "videoUrl": "https://www.youtube.com/embed/yylVxn27UhY",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
-        "ru": "Fashion-ролик с акцентом на мягкую игру света и текстур одежды. Использован динамический ритмичный монтаж и глубокая цветокоррекция в соответствии с брендбуком.",
-        "en": "A fashion video with an emphasis on the soft play of light and textures of clothing. Dynamic rhythmic editing and deep color correction in accordance with the brand book were used."
+        "ru": "Монтаж работает на атмосферу: плавные L-кадры, переходы по форме и цвету, синхронизация эмоций с музыкой. Стиль подходит для исторических и атмосферных проектов.",
+        "en": "Editing built for atmosphere: smooth L-cuts, shape- and colour-matched transitions, emotion synced to the music — a style suited to period and mood-driven projects."
       }
     },
     {
       "id": 2,
       "type": "video",
       "title": {
-        "ru": "MODERN MOVEMENT",
-        "en": "MODERN MOVEMENT"
+        "ru": "БОКСЕР | Киноанонс",
+        "en": "BOXER | Film Teaser"
       },
-      "duration": "3:01",
-      "category": "music",
+      "duration": "0:30",
+      "category": "trailers",
       "subCategory": {
-        "ru": "Танцевальное видео",
-        "en": "Dance film"
+        "ru": "Киноанонс",
+        "en": "Film Teaser"
       },
-      "client": "NYFW Showcase",
-      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "client": "БОКСЕР",
+      "videoUrl": "https://www.youtube.com/embed/QibP89qPoX8",
       "aspect": "horizontal",
-      "soft": "Adobe Premiere Pro · After Effects",
+      "soft": "Premiere Pro · Audition",
       "desc": {
-        "ru": "Динамичный монтаж танцевального перформанса. Ключевая фишка — использование эффектов speed ramp (замедление/ускорение) и точная синхронизация движений под ритм саундтрека.",
-        "en": "Dynamic editing of a dance performance. Key feature is speed ramping (slow/fast motion) and precise motion synchronization with the soundtrack rhythm."
+        "ru": "Эксперимент с формой: по сырым материалам выстроен ритм фильма через монтаж и иммерсивный саунд-дизайн. Русский бокс показан не как спорт, а как философия борьбы.",
+        "en": "An experiment in form: raw footage cut into a film's rhythm through editing and immersive sound design — Russian boxing shown not as a sport, but as a philosophy of struggle."
       }
     },
     {
       "id": 3,
       "type": "video",
       "title": {
-        "ru": "URBAN GEOMETRY",
-        "en": "URBAN GEOMETRY"
+        "ru": "УДАРНАЯ ВОЛНА | Кинематографический монтаж",
+        "en": "SHOCKWAVE | Cinematic Edit"
       },
-      "duration": "1:58",
-      "category": "commercial",
+      "duration": "1:00",
+      "category": "trailers",
       "subCategory": {
-        "ru": "Архитектурное видео",
-        "en": "Architectural film"
+        "ru": "Промо-монтаж",
+        "en": "Promo Edit"
       },
-      "client": "KEFN",
-      "videoUrl": "https://www.youtube.com/embed/tgbNymZ7vqY",
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/QFWRxJpSGl8",
       "aspect": "horizontal",
-      "soft": "DaVinci Resolve · Audition",
+      "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
-        "ru": "Коммерческий презентационный ролик архитектурных решений. Строгая композиция кадра, выверенные переходы и атмосферный саунд-дизайн, подчеркивающий монументальность.",
-        "en": "Commercial presentation video of architectural solutions. Features strict composition, well-calculated cuts, and atmospheric sound design emphasizing monumentality."
+        "ru": "Промо начинается не со взрыва, а с ритма первой склейки. Монтаж превращает набор кадров в накатывающую волну экшна.",
+        "en": "A promo doesn't start with an explosion — it starts with the rhythm of the first cut. Editing turns raw footage into a rolling wave of action."
+      }
+    },
+    {
+      "id": 4,
+      "type": "video",
+      "title": {
+        "ru": "DORIAN GRAY | Киноанонс",
+        "en": "DORIAN GRAY | Film Teaser"
+      },
+      "duration": "0:30",
+      "category": "trailers",
+      "subCategory": {
+        "ru": "Киноанонс",
+        "en": "Film Teaser"
+      },
+      "client": "DORIAN GRAY",
+      "videoUrl": "https://www.youtube.com/embed/Sr6DCdB-iVg",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · DaVinci Resolve",
+      "desc": {
+        "ru": "Монтаж для киноанонса на основе предоставленных видеоматериалов: жанровый монтаж для нагнетания напряжения, синхронизация картинки с музыкой и звуком.",
+        "en": "A teaser edit built from supplied footage: genre-driven cutting to build tension, image tightly synced to music and sound."
       }
     },
     {
       "id": 5,
       "type": "video",
       "title": {
-        "ru": "CYBERPUNK RUNWAY",
-        "en": "CYBERPUNK RUNWAY"
+        "ru": "БЛОКБАСТЕР ЗА 30 СЕКУНД",
+        "en": "BLOCKBUSTER IN 30 SECONDS"
       },
-      "duration": "0:45",
-      "category": "vertical",
+      "duration": "0:30",
+      "category": "trailers",
       "subCategory": {
-        "ru": "Shorts / Reels",
-        "en": "Shorts / Reels"
+        "ru": "Кино-спот",
+        "en": "Film Spot"
       },
-      "client": "SOF Studio",
-      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "aspect": "vertical",
-      "soft": "Adobe Premiere Pro · CapCut Pro",
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/5tQ5TY1_y3U",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro",
       "desc": {
-        "ru": "Трендовый вертикальный ролик для соцсетей. Применены эффекты неонового свечения, глитчи и зум-переходы под трендовый аудиозвук.",
-        "en": "Trending vertical video for social media. Features neon glow effects, glitches, and zoom transitions synced with trending audio."
+        "ru": "Никакой графики, никаких плагинов — только монтаж и адреналин: склейка на каждый удар, ускорение от кадра к кадру.",
+        "en": "No graphics, no plugins — just cuts and adrenaline: a splice on every beat, pace building from frame to frame."
       }
     },
     {
       "id": 6,
       "type": "video",
       "title": {
-        "ru": "THE COLLECTION",
-        "en": "THE COLLECTION"
+        "ru": "CAPSULAHAIR | Съёмка и монтаж",
+        "en": "CAPSULAHAIR | Shoot & Edit"
       },
-      "duration": "4:30",
+      "duration": "0:10",
       "category": "commercial",
       "subCategory": {
-        "ru": "Обзор показа мод",
-        "en": "Runway highlights"
+        "ru": "Fashion-контент",
+        "en": "Fashion Content"
       },
-      "client": "NYFW 2026",
-      "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      "aspect": "horizontal",
-      "soft": "Premiere Pro · DaVinci Resolve",
+      "client": "CAPSULAhair",
+      "videoUrl": "https://www.youtube.com/embed/XHfg7UWFXWE",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
       "desc": {
-        "ru": "Сборный отчетный ролик с показов недели моды в Нью-Йорке. Сочетание репортажной динамики и плавных фэшн-склеек.",
-        "en": "Highlights video compilation of runway shows from NYFW. Combining documentary dynamics with smooth fashion cuts."
+        "ru": "Контент для бренда CAPSULAhair (Санкт-Петербург): динамичный монтаж под формат соцсетей, акцент на текстуру и стиль.",
+        "en": "Content for the CAPSULAhair brand (St. Petersburg): social-ready dynamic editing with an emphasis on texture and style."
       }
     },
     {
       "id": 7,
       "type": "video",
       "title": {
-        "ru": "COUTURE STORY",
-        "en": "COUTURE STORY"
+        "ru": "INFO CONTENT | Инфо-ролик о монтаже",
+        "en": "INFO CONTENT | Editing Explainer"
       },
-      "duration": "2:45",
-      "category": "music",
+      "duration": "0:59",
+      "category": "commercial",
       "subCategory": {
-        "ru": "Эдиториал клип",
-        "en": "Editorial MV"
+        "ru": "Digital-контент",
+        "en": "Digital Content"
       },
-      "client": "EDITORIAL",
-      "videoUrl": "https://www.youtube.com/embed/n9xhJrPXy4g",
-      "aspect": "horizontal",
-      "soft": "Adobe Premiere Pro · Audition",
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/diyWBmFJJ7o",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
       "desc": {
-        "ru": "Музыкальный клип с упором на сторителлинг через образы. Мягкая склейка по движению, контрастные переходы.",
-        "en": "Music video emphasizing image-based storytelling. Smooth match-cut transitions and high-contrast styling."
+        "ru": "Информационный вертикальный ролик о процессе видеомонтажа для соцсетей.",
+        "en": "A vertical explainer about the video-editing process, made for social."
       }
     },
     {
       "id": 8,
       "type": "video",
       "title": {
-        "ru": "STREET CULTURE",
-        "en": "STREET CULTURE"
+        "ru": "SENSE OF FORM | Авторский проект",
+        "en": "SENSE OF FORM | Signature Project"
       },
-      "duration": "0:30",
-      "category": "vertical",
+      "duration": "0:46",
+      "category": "commercial",
       "subCategory": {
-        "ru": "Shorts / Reels",
-        "en": "Shorts / Reels"
+        "ru": "Бренд-контент",
+        "en": "Brand Content"
       },
-      "client": "Streetwear Brand",
-      "videoUrl": "https://www.youtube.com/embed/tgbNymZ7vqY",
+      "client": "SOF Studio",
+      "videoUrl": "https://www.youtube.com/embed/1ZS5Zp6A7BY",
       "aspect": "vertical",
-      "soft": "Adobe Premiere Pro · After Effects",
+      "soft": "Premiere Pro · After Effects",
       "desc": {
-        "ru": "Промо-ролик уличного бренда одежды в вертикальном формате. Высокая плотность монтажных склеек, стилизованные глитч-переходы.",
-        "en": "Streetwear brand promo video in vertical format. Features high-density editing cuts and stylized glitch transitions."
+        "ru": "SENSE OF FORM — проект, где рождается визуал бренда: свежий взгляд на привычный контент, движение как способ рассказать о концепте.",
+        "en": "SENSE OF FORM is where the brand's visual language comes together — a fresh take on familiar content, using movement to tell the concept's story."
       }
     },
     {
       "id": 9,
       "type": "video",
       "title": {
-        "ru": "THE ESSENCE ROAD",
-        "en": "THE ESSENCE ROAD"
+        "ru": "BACKSTAGE | for CAPSULAhair",
+        "en": "BACKSTAGE | for CAPSULAhair"
       },
-      "duration": "3:40",
-      "category": "trailers",
+      "duration": "0:20",
+      "category": "commercial",
       "subCategory": {
-        "ru": "Тизер / Трейлер",
-        "en": "Teaser / Trailer"
+        "ru": "Backstage",
+        "en": "Backstage"
       },
-      "client": "LEOKBOO Production",
-      "videoUrl": "https://rutube.ru/play/embed/b53b817e07a6a42217c91ca7c9082260",
-      "preview": "/img/previews/9.png",
-      "aspect": "horizontal",
-      "soft": "DaVinci Resolve · Audition",
+      "client": "CAPSULAhair",
+      "videoUrl": "https://www.youtube.com/embed/Md6Q1_9-1FU",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
       "desc": {
-        "ru": "Тизер кинематографического проекта. Выполнен на стыке документальной драмы и фэшн-эстетики. Использована интеграция видеохостинга RuTube.",
-        "en": "Cinematic project teaser. Created at the intersection of documentary drama and fashion aesthetics. Features RuTube video integration."
+        "ru": "Бэкстейдж со съёмки для CAPSULAhair — атмосфера процесса, живой монтаж без постановочности.",
+        "en": "Behind-the-scenes footage from a CAPSULAhair shoot — the raw energy of the process, cut without over-staging."
+      }
+    },
+    {
+      "id": 10,
+      "type": "video",
+      "title": {
+        "ru": "COMMERCIAL EDIT | Рекламный монтаж",
+        "en": "COMMERCIAL EDIT"
+      },
+      "duration": "0:29",
+      "category": "commercial",
+      "subCategory": {
+        "ru": "Реклама",
+        "en": "Commercial"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/UVpFne4qUuA",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Рекламный вертикальный монтаж под формат Reels/Shorts.",
+        "en": "A vertical commercial edit built for the Reels/Shorts format."
+      }
+    },
+    {
+      "id": 11,
+      "type": "video",
+      "title": {
+        "ru": "КАК ОЩУЩАЕТСЯ ВАША ЗИМА? ❄️",
+        "en": "HOW DOES YOUR WINTER FEEL? ❄️"
+      },
+      "duration": "0:12",
+      "category": "music",
+      "subCategory": {
+        "ru": "Музыкальный шортс",
+        "en": "Music Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/QgLQslvy9H0",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Настроенческий видео-момент под 80s-музыку и текст песни — монтаж в ритм саунда.",
+        "en": "A mood-driven short cut to 80s music and lyrics, edited to the beat of the track."
+      }
+    },
+    {
+      "id": 12,
+      "type": "video",
+      "title": {
+        "ru": "К ЧЕМУ ПРИСЛУШАЕШЬСЯ ТЫ?",
+        "en": "WHAT WILL YOU LISTEN TO?"
+      },
+      "duration": "0:15",
+      "category": "music",
+      "subCategory": {
+        "ru": "Музыкальный шортс",
+        "en": "Music Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/750hWGn9eP4",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Самый залайканный ролик канала — короткая история под музыку, смонтированная на эмоции.",
+        "en": "The channel's most-liked short — a brief, music-led story cut for emotion."
+      }
+    },
+    {
+      "id": 13,
+      "type": "video",
+      "title": {
+        "ru": "WON'T | Dance Project",
+        "en": "WON'T | Dance Project"
+      },
+      "duration": "2:08",
+      "category": "music",
+      "subCategory": {
+        "ru": "Танцевальное видео",
+        "en": "Dance Film"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/NXXqP3Xj72w",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · After Effects",
+      "desc": {
+        "ru": "Танец как форма выражения: авторский проект, где Дарья выступила хореографом и режиссёром. Каждое движение — результат тщательной работы над историей.",
+        "en": "Dance as a form of expression: a self-directed project where Daria worked as both choreographer and director — every movement built to serve the story."
+      }
+    },
+    {
+      "id": 14,
+      "type": "video",
+      "title": {
+        "ru": "\"LET ME DOWN\" | Dance Video",
+        "en": "\"LET ME DOWN\" | Dance Video"
+      },
+      "duration": "1:24",
+      "category": "music",
+      "subCategory": {
+        "ru": "Танцевальное видео",
+        "en": "Dance Video"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/8dYpkD-qlBk",
+      "aspect": "horizontal",
+      "soft": "Premiere Pro · After Effects",
+      "desc": {
+        "ru": "Первая танцевальная и режиссёрская видеоработа — полное погружение в продакшн и пост-продакшн от идеи до монтажа.",
+        "en": "Her first dance-and-director video work — full immersion in production and post, from concept to final cut."
+      }
+    },
+    {
+      "id": 15,
+      "type": "video",
+      "title": {
+        "ru": "НЕ ЗАБЫВАЙ ОТДЫХАТЬ 🤍",
+        "en": "DON'T FORGET TO REST 🤍"
+      },
+      "duration": "0:13",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Lifestyle-шортс",
+        "en": "Lifestyle Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/Y6aOAnLFkXQ",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Один из самых залайканных шортсов канала — спокойный монтаж без лишней динамики, на атмосферу.",
+        "en": "One of the channel's most-liked shorts — a calm, atmosphere-first edit without unnecessary motion."
+      }
+    },
+    {
+      "id": 16,
+      "type": "video",
+      "title": {
+        "ru": "ЛЮБИМОЕ ЗАНЯТИЕ НА ВЫХОДНЫХ 💫",
+        "en": "FAVOURITE WEEKEND RITUAL 💫"
+      },
+      "duration": "0:13",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Lifestyle-шортс",
+        "en": "Lifestyle Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/BprA2X3WA1M",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Личный лайфстайл-шортс с высоким вовлечением аудитории — лёгкий монтаж под настроение выходного дня.",
+        "en": "A personal lifestyle short with strong audience engagement — light, weekend-mood editing."
+      }
+    },
+    {
+      "id": 17,
+      "type": "video",
+      "title": {
+        "ru": "УЛОЖИЛА РАБОЧИЙ ДЕНЬ В НЕСКОЛЬКО СЕКУНД 💻",
+        "en": "MY WORKDAY IN A FEW SECONDS 💻"
+      },
+      "duration": "0:11",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Backstage",
+        "en": "Backstage"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/R2WBqDalnFI",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Рабочий день монтажёра, сжатый в динамичный шортс — быстрые склейки под ритм дня.",
+        "en": "An editor's workday compressed into a fast-paced short — quick cuts matching the rhythm of the day."
+      }
+    },
+    {
+      "id": 18,
+      "type": "video",
+      "title": {
+        "ru": "РЕЖИССЁР МОНТАЖА | БУДЕМ ЗНАКОМЫ!",
+        "en": "VIDEO EDITOR | NICE TO MEET YOU!"
+      },
+      "duration": "0:20",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Знакомство",
+        "en": "Intro"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/oqVffPelHug",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Короткое представление: режиссёр монтажа и контент-мейкер, готова к работе с любыми медиаплощадками.",
+        "en": "A short introduction: video editor and content creator, ready to work across any media platform."
+      }
+    },
+    {
+      "id": 19,
+      "type": "video",
+      "title": {
+        "ru": "ЖИТЬ ЭТУ ЖИЗНЬ ❤️",
+        "en": "LIVING THIS LIFE ❤️"
+      },
+      "duration": "0:10",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Lifestyle-шортс",
+        "en": "Lifestyle Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/x2KLLdtXIw8",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Атмосферный личный шортс — монтаж на эмоцию и настроение момента.",
+        "en": "An atmospheric personal short — edited for emotion and the mood of the moment."
+      }
+    },
+    {
+      "id": 20,
+      "type": "video",
+      "title": {
+        "ru": "10 МАРТА 2026 Г.",
+        "en": "MARCH 10, 2026"
+      },
+      "duration": "0:20",
+      "category": "vertical",
+      "subCategory": {
+        "ru": "Lifestyle-шортс",
+        "en": "Lifestyle Short"
+      },
+      "client": "Личный проект",
+      "videoUrl": "https://www.youtube.com/embed/25U57IejVvw",
+      "aspect": "vertical",
+      "soft": "Premiere Pro · CapCut Pro",
+      "desc": {
+        "ru": "Самый просматриваемый ролик канала — дневниковый момент, снятый и смонтированный в тот же день.",
+        "en": "The channel's most-viewed short — a diary-style moment, shot and edited the same day."
       }
     }
   ]
