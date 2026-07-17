@@ -1,1 +1,1 @@
-export const INITIAL_ITEMS_COUNT = 7;
+export const INITIAL_ITEMS_COUNT = 4;

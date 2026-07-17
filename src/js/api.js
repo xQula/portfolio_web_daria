@@ -1,5 +1,5 @@
 export let projects = [];
-export let artTemplates = [];
+export let siteMeta = {};
 
 // Вспомогательная функция для получения ID видео с YouTube
 export function getYoutubeId(url) {
@@ -24,8 +24,8 @@ export async function loadProjects() {
       throw new Error(`Ошибка загрузки проектов: ${response.status}`);
     }
     const data = await response.json();
-    artTemplates = data.artTemplates || [];
-    
+    siteMeta = data.meta || {};
+
     const rawProjects = data.projects || [];
     projects = rawProjects.map(project => {
       const projectCopy = { ...project };
