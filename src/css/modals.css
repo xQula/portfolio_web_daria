@@ -130,6 +130,13 @@
   .lightbox-info-panel > *:last-child {
     margin-bottom: auto;
   }
+
+  /* Вертикальное видео уже само по себе узкое (см. .lightbox-video-wrapper.vertical) —
+     карточка не должна оставаться широкой "под горизонтальное" вокруг него */
+  .lightbox-content.is-vertical {
+    width: auto;
+    grid-template-columns: auto minmax(300px, 360px);
+  }
 }
 
 .lightbox-title {

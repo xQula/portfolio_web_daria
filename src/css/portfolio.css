@@ -95,7 +95,7 @@
   width: 100%;
   aspect-ratio: 4/5;
   overflow: hidden;
-  background-color: #000;
+  background-color: var(--color-bg-secondary);
 }
 
 .card-thumbnail-img {
