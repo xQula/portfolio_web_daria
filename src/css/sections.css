@@ -17,11 +17,27 @@
   margin-bottom: 14px;
 }
 
+/* Стационарный «вьюпорт»: мягкий фейд по краям, чтобы имена клиентов
+   плавно появлялись и растворялись, а не обрывались о границу секции. */
+.trust-viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
 .trust-track {
   display: flex;
-  gap: 60px;
   width: max-content;
-  animation: trust-scroll 28s linear infinite;
+  animation: trust-scroll 55s linear infinite;
+}
+
+/* Две идентичные группы едут встык. Внутренний gap и trailing padding-right
+   равны, поэтому translateX(-50%) сдвигает ровно на ширину одной группы —
+   стык бесшовный, без рывка на пол-гэпа. */
+.trust-group {
+  display: flex;
+  gap: 60px;
+  padding-right: 60px;
 }
 
 .trust-track span {
@@ -41,7 +57,11 @@
 @media (prefers-reduced-motion: reduce) {
   .trust-track {
     animation: none;
+  }
+  .trust-viewport {
     overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
@@ -49,7 +69,12 @@
    STATS
    ---------------------------------------------------- */
 .stats-section {
-  padding: clamp(3.5rem, 7vw, 5.6rem) 2rem;
+  --stats-pad-y: clamp(1.6rem, 3vw, 2.8rem);
+  padding: var(--stats-pad-y) 2rem;
+  /* Дополнительный запас снизу — под плавающую подсказку "Листайте вниз"
+     (.scroll-cue, ~65px + 32px отступ от края), чтобы она не перекрывала
+     сами карточки, а зависала над пустым полем */
+  padding-bottom: calc(var(--stats-pad-y) + 76px);
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -94,6 +119,33 @@
 @media (max-width: 760px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Тот же компактный режим по высоте, что и в hero.css — trust marquee
+   и статистика тоже подтягивают отступы, чтобы весь стартовый блок
+   помещался на невысоких окнах. */
+@media (max-height: 1300px) {
+  .trust-section {
+    padding: 10px 0;
+  }
+
+  .trust-label {
+    margin-bottom: 8px;
+  }
+
+  .stats-section {
+    --stats-pad-y: clamp(0.8rem, 1.5vw, 1.4rem);
+    padding: var(--stats-pad-y) 2rem;
+    padding-bottom: calc(var(--stats-pad-y) + 76px);
+  }
+
+  .stat-card {
+    padding: 1rem 1.2rem;
+  }
+
+  .stat-num {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
   }
 }
 

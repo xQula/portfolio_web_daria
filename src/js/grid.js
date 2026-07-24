@@ -206,20 +206,46 @@ export function setupFeaturedVideo() {
 const NON_CLIENT_LABELS = new Set(["Личный проект", "Daria Evstigneeva Portfolio"]);
 const isRealClient = (client) => Boolean(client) && !NON_CLIENT_LABELS.has(client);
 
-// Бегущая строка клиентов — список собирается из projects.json, дублируется для бесшовной прокрутки
+// Бегущая строка клиентов — список собирается из projects.json.
+// Одна «группа» повторяет список столько раз, чтобы быть не уже вьюпорта
+// (иначе на широких экранах после ухода копии появляется пустота), и таких
+// групп две — сдвиг на -50% даёт бесшовный цикл.
 export function renderTrust() {
   const track = document.getElementById("trust-track");
   if (!track) return;
 
   const clients = [...new Set(getGridProjects().map(p => p.client).filter(isRealClient))];
   if (clients.length === 0) {
-    track.parentElement.style.display = "none";
+    const section = track.closest(".trust-section");
+    if (section) section.style.display = "none";
     return;
   }
 
-  const renderList = () => clients.map(c => `<span>${c}</span>`).join("");
-  track.innerHTML = renderList() + renderList();
+  const spans = clients.map(c => `<span>${c}</span>`).join("");
+  const viewport = track.closest(".trust-viewport") || track.parentElement;
+
+  // Измеряем ширину одного прохода списка, чтобы понять, сколько повторов
+  // нужно для заполнения экрана.
+  track.innerHTML = `<div class="trust-group">${spans}</div>`;
+  const oneListWidth = track.firstElementChild.scrollWidth || 1;
+  const need = viewport.clientWidth || window.innerWidth || oneListWidth;
+  const repeats = Math.max(1, Math.ceil(need / oneListWidth));
+
+  const groupSpans = spans.repeat(repeats);
+  // Вторую группу помечаем aria-hidden — это визуальная копия для цикла,
+  // скринридер читает список клиентов один раз.
+  track.innerHTML =
+    `<div class="trust-group">${groupSpans}</div>` +
+    `<div class="trust-group" aria-hidden="true">${groupSpans}</div>`;
 }
+
+// Пересчёт числа повторов при ресайзе — чтобы копия оставалась шире экрана
+// и на широких мониторах не появлялось пустое место.
+let trustResizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(trustResizeTimer);
+  trustResizeTimer = setTimeout(renderTrust, 200);
+});
 
 // Статистика хиро-секции — считается из projects.json + meta.yearsExperience
 export function renderStats() {

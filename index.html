@@ -8,7 +8,7 @@
   <title>SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио</title>
 
   <!-- Предзагрузка локальных бренд-шрифтов -->
-  <link rel="preload" href="/font/Mak/Mak font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/font/Mak/Mak-font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Подключение Google Fonts: Inter (Sans-serif) -->
@@ -123,6 +123,10 @@
   </div>
 
   <main id="main-content">
+    <!-- Стартовый экран: Hero + бегущая строка + статистика гарантированно
+         занимают минимум 100dvh целиком — портфолио физически не может
+         "подглядывать" снизу ни при каком разрешении экрана -->
+    <div class="above-fold">
     <!-- Главный экран (Hero) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
@@ -161,15 +165,26 @@
       </div>
     </section>
 
+    <!-- Подсказка "листайте вниз" — видна только у самого верха страницы,
+         исчезает после первого скролла (motion.js) -->
+    <div class="scroll-cue" id="scroll-cue" aria-hidden="true">
+      <span data-i18n="scroll_cue">Листайте вниз</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+
     <!-- Клиенты (Trust marquee) — список подтягивается из projects.json -->
     <section class="trust-section" aria-label="Клиенты">
       <div class="trust-label" data-i18n="trust_label">Работала с</div>
-      <div class="trust-track" id="trust-track"></div>
+      <div class="trust-viewport">
+        <div class="trust-track" id="trust-track"></div>
+      </div>
     </section>
 
     <!-- Статистика — числа считаются из projects.json -->
     <section class="stats-section">
-      <div class="stats-grid reveal">
+      <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-num" id="stat-projects">—</div>
           <div class="stat-label" data-i18n="stat_label_projects">Завершённых проектов</div>
@@ -188,6 +203,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <!-- Направления работы -->
     <section class="services-section" id="services">
@@ -222,10 +238,10 @@
     <!-- Секция Портфолио -->
     <section class="portfolio-section" id="portfolio">
       <div class="portfolio-container">
-        <h2 class="section-title" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
+        <h2 class="section-title reveal" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
 
         <!-- Фильтры проектов -->
-        <div class="portfolio-filters" id="portfolio-filters">
+        <div class="portfolio-filters reveal" id="portfolio-filters">
           <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Все проекты</button>
           <button class="filter-btn" data-filter="trailers" data-i18n="filter_cinema">Кинопродвижение</button>
           <button class="filter-btn" data-filter="commercial" data-i18n="filter_commercial">Реклама</button>

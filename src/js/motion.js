@@ -24,8 +24,24 @@ export function initMotion() {
   initTiltCard();
   initScrollReveal();
   refreshProjectGridReveal();
+  initScrollCue();
 
   document.addEventListener("gridrendered", refreshProjectGridReveal);
+}
+
+// ----------------------------------------------------
+// SCROLL CUE: подсказка "листайте вниз" исчезает после первого
+// реального скролла — дальше она не нужна и не должна маячить.
+// ----------------------------------------------------
+function initScrollCue() {
+  const cue = document.getElementById("scroll-cue");
+  if (!cue) return;
+
+  window.addEventListener(
+    "scroll",
+    () => cue.classList.add("is-hidden"),
+    { passive: true, once: true }
+  );
 }
 
 // ----------------------------------------------------
@@ -109,7 +125,33 @@ function initTiltCard() {
 // ScrollTrigger вместо IntersectionObserver. Карточки портфолио
 // пересоздаются при фильтрации/языке — их триггеры пересобираются
 // отдельно в refreshProjectGridReveal() по событию "gridrendered".
+//
+// На высоких/широких экранах секция может физически влезать в
+// стартовый экран целиком — ScrollTrigger в этом случае считает её
+// "уже вошедшей" и проявляет мгновенно при загрузке, без скролла.
+// Такие элементы вместо этого ждут первого реального скролла
+// (attachReveal ниже), а не позиции на странице.
 // ----------------------------------------------------
+function attachReveal(el) {
+  const alreadyInView = el.getBoundingClientRect().top < window.innerHeight * 0.9;
+
+  if (alreadyInView) {
+    window.addEventListener(
+      "scroll",
+      () => el.classList.add("in-view"),
+      { passive: true, once: true }
+    );
+    return null;
+  }
+
+  return ScrollTrigger.create({
+    trigger: el,
+    start: "top 90%",
+    onEnter: () => el.classList.add("in-view"),
+    onEnterBack: () => el.classList.add("in-view"),
+  });
+}
+
 function initScrollReveal() {
   const staticEls = Array.from(document.querySelectorAll(".reveal")).filter(
     (el) => !el.closest("#project-grid")
@@ -120,14 +162,7 @@ function initScrollReveal() {
     return;
   }
 
-  staticEls.forEach((el) => {
-    ScrollTrigger.create({
-      trigger: el,
-      start: "top 90%",
-      onEnter: () => el.classList.add("in-view"),
-      onEnterBack: () => el.classList.add("in-view"),
-    });
-  });
+  staticEls.forEach((el) => attachReveal(el));
 }
 
 function refreshProjectGridReveal() {
@@ -142,13 +177,16 @@ function refreshProjectGridReveal() {
   }
 
   cards.forEach((el) => {
-    projectGridTriggers.push(
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 90%",
-        onEnter: () => el.classList.add("in-view"),
-        onEnterBack: () => el.classList.add("in-view"),
-      })
-    );
+    // Сетка перерисовывается по действию пользователя (Show More, смена
+    // фильтра/языка). Карточки, уже попавшие в зону видимости, показываем
+    // сразу — иначе они висят с opacity:0 до первого скролла ("всё пусто").
+    // Ждать скролла имеет смысл только для карточек ниже вьюпорта.
+    const alreadyInView = el.getBoundingClientRect().top < window.innerHeight * 0.9;
+    if (alreadyInView) {
+      el.classList.add("in-view");
+      return;
+    }
+    const trigger = attachReveal(el);
+    if (trigger) projectGridTriggers.push(trigger);
   });
 }

@@ -18,6 +18,7 @@
       },
       "client": "Daria Evstigneeva Portfolio",
       "videoUrl": "https://www.youtube.com/embed/TiMdGOTa48s",
+      "preview": "/img/previews/showreel.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · DaVinci Resolve · After Effects · Audition",
       "desc": {
@@ -42,6 +43,7 @@
       },
       "client": "GRACE OF MONACO",
       "videoUrl": "https://www.youtube.com/embed/yylVxn27UhY",
+      "preview": "/img/previews/1.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -64,6 +66,7 @@
       },
       "client": "БОКСЕР",
       "videoUrl": "https://www.youtube.com/embed/QibP89qPoX8",
+      "preview": "/img/previews/2.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition",
       "desc": {
@@ -86,6 +89,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/QFWRxJpSGl8",
+      "preview": "/img/previews/3.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -108,6 +112,7 @@
       },
       "client": "DORIAN GRAY",
       "videoUrl": "https://www.youtube.com/embed/Sr6DCdB-iVg",
+      "preview": "/img/previews/4.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -130,6 +135,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/5tQ5TY1_y3U",
+      "preview": "/img/previews/5.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro",
       "desc": {
@@ -152,6 +158,7 @@
       },
       "client": "CAPSULAhair",
       "videoUrl": "https://www.youtube.com/embed/XHfg7UWFXWE",
+      "preview": "/img/previews/6.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -174,6 +181,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/diyWBmFJJ7o",
+      "preview": "/img/previews/7.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -196,6 +204,7 @@
       },
       "client": "SOF Studio",
       "videoUrl": "https://www.youtube.com/embed/1ZS5Zp6A7BY",
+      "preview": "/img/previews/8.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · After Effects",
       "desc": {
@@ -218,6 +227,7 @@
       },
       "client": "CAPSULAhair",
       "videoUrl": "https://www.youtube.com/embed/Md6Q1_9-1FU",
+      "preview": "/img/previews/9.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -240,6 +250,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/UVpFne4qUuA",
+      "preview": "/img/previews/10.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -262,6 +273,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/QgLQslvy9H0",
+      "preview": "/img/previews/11.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -284,6 +296,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/750hWGn9eP4",
+      "preview": "/img/previews/12.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -306,6 +319,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/NXXqP3Xj72w",
+      "preview": "/img/previews/13.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · After Effects",
       "desc": {
@@ -328,6 +342,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/8dYpkD-qlBk",
+      "preview": "/img/previews/14.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · After Effects",
       "desc": {
@@ -350,6 +365,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/Y6aOAnLFkXQ",
+      "preview": "/img/previews/15.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -372,6 +388,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/BprA2X3WA1M",
+      "preview": "/img/previews/16.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -394,6 +411,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/R2WBqDalnFI",
+      "preview": "/img/previews/17.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -416,6 +434,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/oqVffPelHug",
+      "preview": "/img/previews/18.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -438,6 +457,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/x2KLLdtXIw8",
+      "preview": "/img/previews/19.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
@@ -460,6 +480,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/25U57IejVvw",
+      "preview": "/img/previews/20.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
