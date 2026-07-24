@@ -296,16 +296,16 @@
   }
 
   .lang-toggle-btn {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     font-size: 0.75rem;
   }
 
   .mobile-menu-btn {
     display: flex;
-    width: 36px;
-    height: 36px;
-    padding: 10px 8px;
+    width: 44px;
+    height: 44px;
+    padding: 13px 11px;
   }
 
   .header-actions {

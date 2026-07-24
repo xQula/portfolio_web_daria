@@ -39,7 +39,7 @@
   --color-lightbox-bg: #0f1113;
   --color-text-primary: #f7f6f2;     /* Warm off-white, not pure white */
   --color-text-secondary: #9297a0;   /* Muted cool grey */
-  --color-text-faint: #4c5054;       /* Footers, timestamps */
+  --color-text-faint: #787d83;       /* Footers, timestamps — осветлено для WCAG AA (~4.7:1 на фоне) */
   --color-text-light: #f7f6f2;
   --color-accent: #CCFF00;           /* Electric Lime — brand-critical, unchanged */
   --color-accent-text: #CCFF00;
@@ -69,6 +69,7 @@
   --transition-speed: 0.3s;
   --border-radius-sm: 3px;
   --border-radius-md: 8px;
-  --border-radius-lg: 14px;
+  --border-radius-lg: 16px;
   --border-radius-btn: 3px;          /* Геометричные премиум-кнопки, без капсул */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); /* Фирменная плавная кривая (Cinema Dark) */
 }

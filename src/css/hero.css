@@ -9,7 +9,23 @@
   box-sizing: border-box;
 }
 
+/* Ambient glow — тихое кинематографичное свечение за hero, Cinema Dark */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: min(900px, 90vw);
+  height: min(900px, 90vw);
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.08), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .hero-container {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(2rem, 4vw, 4.5rem);
@@ -57,22 +73,18 @@
   max-width: 15ch;
 }
 
-/* Кинетическое проявление заголовка по словам — разметку строит main.js (renderHeroWords) */
+/* Кинетическое проявление заголовка посимвольно — разметку строит main.js
+   (renderHeroWords), саму анимацию — motion.js (GSAP fromTo + stagger).
+   Символы группируются по словам (.word, white-space: nowrap), иначе
+   перенос строки мог бы разорвать слово посередине. Начальное состояние
+   ставит GSAP инлайново, не CSS — без JS/при prefers-reduced-motion
+   символы остаются видимыми по умолчанию. */
 .hero-title .word {
+  white-space: nowrap;
+}
+
+.hero-title .ch {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(28px);
-  animation: word-rise 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.hero-title .word--static {
-  opacity: 1;
-  transform: none;
-  animation: none;
-}
-
-@keyframes word-rise {
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-desc {
@@ -110,7 +122,9 @@
   -webkit-backdrop-filter: blur(10px);
   padding: 14px;
   transform-style: preserve-3d;
-  transition: transform 0.15s ease-out, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  /* transform сюда сознательно не включён — им управляет motion.js через
+     GSAP quickTo() (инерционный тилт), CSS-transition только для остального */
+  transition: border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
   box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.7);
   cursor: pointer;
 }
@@ -306,11 +320,6 @@
   .hero-text-block, .tilt-wrap {
     animation: none;
     opacity: 1;
-  }
-  .hero-title .word {
-    animation: none;
-    opacity: 1;
-    transform: none;
   }
   .featured-card {
     transition: none;

@@ -8,7 +8,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Плавность скролла теперь даёт Lenis (motion.js) когда motion разрешён;
+     native smooth здесь конфликтовал бы с ним на переходах по якорям.
+     При reduced-motion Lenis не создаётся — скролл просто мгновенный. */
+  scroll-behavior: auto;
   font-size: 18px; /* База поднята с 16px — 16px читается мелко (см. рекомендации NN/g и WCAG 1.4.4) */
   scroll-padding-top: 84px; /* Высота липкого хедера */
   scrollbar-gutter: stable; /* Предотвращает сдвиг макета при блокировке прокрутки */
@@ -133,9 +136,10 @@ h1, h2, h3, h4,
   background-color: rgba(204, 255, 0, 0.06);
 }
 
-/* Магнитное притяжение к курсору — координаты выставляет main.js через initMagneticButtons() */
+/* Магнитное притяжение к курсору — координаты выставляет motion.js через GSAP quickTo(),
+   поэтому transform сюда сознательно не включён (иначе CSS-transition спорил бы с GSAP) */
 .btn-magnet {
-  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  transition: background-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium), box-shadow 0.35s var(--ease-premium);
 }
 
 /* ----------------------------------------------------
@@ -150,6 +154,27 @@ h1, h2, h3, h4,
 .reveal.in-view {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ----------------------------------------------------
+   SKIP LINK — скрыт визуально, появляется по клавиатурному фокусу
+   ---------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 300;
+  background-color: var(--color-accent);
+  color: var(--color-btn-accent-text);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--border-radius-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 /* ----------------------------------------------------
@@ -201,9 +226,6 @@ button:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   .reveal {
     opacity: 1;
     transform: none;

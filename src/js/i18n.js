@@ -4,6 +4,9 @@ export const translations = {
     site_title: "SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио",
     site_description: "Портфолио Евстигнеевой Дарьи — профессионального режиссера монтажа и контент-мейкера. Кинопродвижение, реклама, музыкальные клипы и трендовый вертикальный контент.",
     
+    // Доступность
+    skip_link: "Перейти к содержимому",
+
     // Навигация
     nav_home: "ГЛАВНАЯ",
     nav_services: "НАПРАВЛЕНИЯ",
@@ -82,6 +85,9 @@ export const translations = {
     site_title: "SOF — Video Editor Daria Evstigneeva | Portfolio",
     site_description: "Daria Evstigneeva's Portfolio — professional video editor and content creator. Film promotion, commercials, music videos, and trending vertical content.",
     
+    // Accessibility
+    skip_link: "Skip to content",
+
     // Navigation
     nav_home: "HOME",
     nav_services: "SERVICES",

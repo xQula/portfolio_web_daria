@@ -59,6 +59,9 @@
 </head>
 <body>
 
+  <!-- Skip-link: скрыт визуально, появляется по клавиатурному фокусу -->
+  <a href="#main-content" class="skip-link" data-i18n="skip_link">Перейти к содержимому</a>
+
   <!-- Шапка сайта (Header) -->
   <header class="site-header" id="site-header">
     <div class="header-container">
@@ -119,7 +122,7 @@
     </div>
   </div>
 
-  <main>
+  <main id="main-content">
     <!-- Главный экран (Hero) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
@@ -195,22 +198,22 @@
       <div class="service-grid">
         <div class="service-card reveal">
           <span class="service-num">01</span>
-          <div class="service-title" data-i18n="hero_cat_cinema">кинопродвижение</div>
+          <h3 class="service-title" data-i18n="hero_cat_cinema">кинопродвижение</h3>
           <p class="service-desc" data-i18n="service_desc_cinema">Трейлеры и тизеры с точной драматургией и атмосферным саунд-дизайном.</p>
         </div>
         <div class="service-card reveal">
           <span class="service-num">02</span>
-          <div class="service-title" data-i18n="hero_cat_brands">реклама и бренды</div>
+          <h3 class="service-title" data-i18n="hero_cat_brands">реклама и бренды</h3>
           <p class="service-desc" data-i18n="service_desc_brands">Коммерческие ролики с монтажом под брендбук и точными акцентами.</p>
         </div>
         <div class="service-card reveal">
           <span class="service-num">03</span>
-          <div class="service-title" data-i18n="hero_cat_music">музыкальное видео</div>
+          <h3 class="service-title" data-i18n="hero_cat_music">музыкальное видео</h3>
           <p class="service-desc" data-i18n="service_desc_music">Ритмичный монтаж, speed ramp и синхронизация под саундтрек.</p>
         </div>
         <div class="service-card reveal">
           <span class="service-num">04</span>
-          <div class="service-title" data-i18n="hero_cat_digital">digital-контент</div>
+          <h3 class="service-title" data-i18n="hero_cat_digital">digital-контент</h3>
           <p class="service-desc" data-i18n="service_desc_digital">Shorts и Reels под трендовые форматы вертикальных площадок.</p>
         </div>
       </div>

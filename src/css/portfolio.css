@@ -75,7 +75,7 @@
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-glass-border);
   cursor: pointer;
-  transition: transform var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1), border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  transition: transform var(--transition-speed) var(--ease-premium), border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 .project-card:hover,

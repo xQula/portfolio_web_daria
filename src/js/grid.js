@@ -55,7 +55,7 @@ export function createCard(project) {
       <div class="card-duration-badge">${project.duration}</div>
       <div class="card-info">
         <div class="card-client">${project.client}</div>
-        <div class="card-title">${getLocalized(project.title)}</div>
+        <h3 class="card-title">${getLocalized(project.title)}</h3>
         <span class="card-meta">${getLocalized(project.subCategory)}</span>
       </div>
     </div>
