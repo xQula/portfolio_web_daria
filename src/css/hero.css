@@ -14,7 +14,10 @@
 }
 
 /* ----------------------------------------------------
-   HERO SECTION STYLING
+   HERO SECTION — «КИНОКАДР»: шоурил превращается в широкую
+   кинематографичную сцену (2.39:1). Заголовок ложится титром поверх
+   кадра, доступность и таймкод — по верхним углам, подпись шоурила —
+   в нижнем правом. Описание и кнопки идут строкой под кадром.
    ---------------------------------------------------- */
 .hero-section {
   position: relative;
@@ -22,7 +25,7 @@
   display: flex;
   align-items: center;
   min-height: 0; /* иначе flex-item не может сжаться меньше контента */
-  padding: clamp(1.6rem, 4vw, 3.5rem) 2rem clamp(1.6rem, 3vw, 2.5rem);
+  padding: clamp(1.4rem, 3vw, 2.6rem) 2rem clamp(1.4rem, 3vw, 2.2rem);
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
@@ -46,145 +49,59 @@
 .hero-container {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(2rem, 4vw, 4.5rem);
-  align-items: center;
-  width: 100%;
-}
-
-.hero-text-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  opacity: 0;
-  animation: heroFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
-}
-
-.hero-eyebrow {
-  display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-bottom: 1.2rem;
-}
-
-.hero-eyebrow .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  flex: none;
-}
-
-.hero-title {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: clamp(2.1rem, 4.4vw, 3.8rem);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.01em;
-  text-transform: none;
-  color: var(--color-text-primary);
-  max-width: 15ch;
-}
-
-/* Кинетическое проявление заголовка посимвольно — разметку строит main.js
-   (renderHeroWords), саму анимацию — motion.js (GSAP fromTo + stagger).
-   Символы группируются по словам (.word, white-space: nowrap), иначе
-   перенос строки мог бы разорвать слово посередине. Начальное состояние
-   ставит GSAP инлайново, не CSS — без JS/при prefers-reduced-motion
-   символы остаются видимыми по умолчанию. */
-.hero-title .word {
-  white-space: nowrap;
-}
-
-.hero-title .ch {
-  display: inline-block;
-}
-
-.hero-desc {
-  margin-top: 1.4rem;
-  font-size: 1.12rem;
-  line-height: 1.75;
-  color: var(--color-text-secondary);
-  max-width: 46ch;
-}
-
-.hero-cta-row {
-  display: flex;
-  gap: 0.9rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-/* Featured Video Card (Hero Right) — 3D-tilt карточка, наклон обрабатывает main.js (initTiltCard) */
-.tilt-wrap {
+  gap: clamp(1.2rem, 2.5vw, 2rem);
   width: 100%;
-  perspective: 1200px;
+}
+
+/* ----------------------------------------------------
+   CINEMATIC STAGE — сам кадр 2.39:1. Ширина ограничена так, чтобы при
+   этом соотношении высота кадра не вылезала за бюджет .above-fold
+   (кадр + подпись + trust + stats должны помещаться на первом экране).
+   ---------------------------------------------------- */
+.hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: min(100%, calc(60dvh * 2.39));
+  aspect-ratio: 2.39 / 1;
+  margin: 0 auto;
   opacity: 0;
-  animation: heroFadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  animation: heroFadeInScale 1s var(--ease-premium) 0.25s forwards;
 }
 
 .featured-card {
   position: relative;
   width: 100%;
-  /* Аспект превью 4:5 — при max-width 480px это ~600px высоты, что не
-     влезает на невысоких экранах вместе с бегущей строкой и статистикой.
-     min(480px, 55dvh * 0.8) держит итоговую высоту превью не больше 55dvh. */
-  max-width: min(480px, 55dvh * 0.8);
-  margin: 0 auto;
+  height: 100%;
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--color-glass-border);
-  background: var(--color-glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 14px;
-  transform-style: preserve-3d;
-  /* transform сюда сознательно не включён — им управляет motion.js через
-     GSAP quickTo() (инерционный тилт), CSS-transition только для остального */
-  transition: border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
-  box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.7);
+  background: #000; /* тонкий кино-бордюр вокруг кадра */
+  padding: 8px;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8);
   cursor: pointer;
+  transition: border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
 }
 
 .featured-card:hover {
   border-color: var(--color-accent);
-  box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.7), 0 0 25px var(--shadow-accent);
-}
-
-.featured-badge {
-  position: absolute;
-  top: -14px;
-  right: 18px;
-  background-color: var(--color-accent);
-  color: var(--color-btn-accent-text);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
-  transform: translateZ(40px);
-  z-index: 4;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8), 0 0 30px var(--shadow-accent);
 }
 
 .featured-thumbnail-container {
   position: relative;
-  aspect-ratio: 4/5;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background-color: #000;
-  border-radius: calc(var(--border-radius-lg) - 6px);
+  border-radius: calc(var(--border-radius-lg) - 4px);
 }
 
 .featured-noise-overlay {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(18,32,36,0.1) 1px, transparent 0);
+  background-image: radial-gradient(rgba(18, 32, 36, 0.1) 1px, transparent 0);
   background-size: 4px 4px;
   z-index: 2;
   pointer-events: none;
@@ -204,16 +121,54 @@
   filter: grayscale(0) contrast(1.05);
 }
 
+/* Кинематографичный виньет: гасим верх (под eyebrow/таймкод) и низ
+   (под титр и подпись), середину оставляем прозрачной под изображение. */
 .featured-thumbnail-container::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  /* Реальные YouTube-превью часто уже содержат свой текст/лого внизу кадра —
-     градиент должен полностью гасить эту зону, а не только слегка затемнять её */
-  background: linear-gradient(180deg, transparent 35%, rgba(10, 11, 13, 0.75) 65%, rgba(10, 11, 13, 0.97) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(10, 11, 13, 0.55) 0%,
+    rgba(10, 11, 13, 0.12) 22%,
+    transparent 42%,
+    transparent 55%,
+    rgba(10, 11, 13, 0.55) 78%,
+    rgba(10, 11, 13, 0.96) 100%
+  );
 }
 
+/* -------- ОВЕРЛЕИ КАДРА -------- */
+
+/* Верхний левый угол — доступность */
+.hero-eyebrow {
+  position: absolute;
+  top: clamp(14px, 2vw, 22px);
+  left: clamp(16px, 2.2vw, 26px);
+  z-index: 4;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(247, 246, 242, 0.9);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.hero-eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--shadow-accent);
+  flex: none;
+}
+
+/* Центр — кнопка воспроизведения */
 .play-btn-large {
   position: absolute;
   top: 50%;
@@ -226,11 +181,12 @@
   color: var(--color-text-primary);
   border: 1px solid rgba(247, 246, 242, 0.5);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  z-index: 4;
   transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -249,21 +205,57 @@
   fill: var(--color-accent);
 }
 
+/* Заголовок-титр — нижний левый угол, поверх кадра. Клики проходят
+   сквозь него к карточке (pointer-events:none). Разметку на .word/.ch
+   строит main.js (renderHeroWords), анимацию — motion.js (GSAP). */
+.hero-title {
+  position: absolute;
+  left: clamp(16px, 2.6vw, 34px);
+  bottom: clamp(16px, 2.4vw, 30px);
+  z-index: 4;
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--color-text-primary);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.hero-title .word {
+  white-space: nowrap;
+}
+
+.hero-title .ch {
+  display: inline-block;
+}
+
+/* Подпись шоурила — верхний правый угол, мелко, выключка вправо
+   (разведена с заголовком-титром, который занимает низ кадра) */
 .featured-meta {
   position: absolute;
-  left: 30px;
-  right: 30px;
-  bottom: 24px;
-  z-index: 3;
+  right: clamp(16px, 2.2vw, 26px);
+  top: clamp(14px, 2vw, 22px);
+  bottom: auto;
+  left: auto;
+  z-index: 4;
+  max-width: 46%;
+  text-align: right;
 }
 
 .featured-title {
   display: block;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   letter-spacing: 0.02em;
   text-transform: none;
   color: var(--color-text-primary);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -271,91 +263,117 @@
 
 .featured-sub {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--color-text-secondary);
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
   letter-spacing: 0.04em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* -------- ПОДПИСЬ + ДЕЙСТВИЯ ПОД КАДРОМ -------- */
+.hero-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  width: 100%;
+  max-width: min(100%, calc(60dvh * 2.39));
+  margin: 0 auto;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: heroFadeInUp 0.9s var(--ease-premium) 0.5s forwards;
+}
+
+.hero-desc {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.hero-cta-row {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin: 0;
+  flex: none;
+}
+
+/* ----------------------------------------------------
+   АДАПТИВ ПО ШИРИНЕ
+   ---------------------------------------------------- */
 @media (max-width: 960px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-text-block {
-    align-items: center;
+  .hero-footer {
+    flex-direction: column;
+    align-items: stretch;
     text-align: center;
-  }
-
-  .hero-title {
-    max-width: none;
   }
 
   .hero-desc {
     max-width: 52ch;
+    margin: 0 auto;
   }
 
   .hero-cta-row {
     justify-content: center;
   }
+}
 
-  .tilt-wrap {
-    max-width: 400px;
-    margin: 0 auto;
+@media (max-width: 680px) {
+  /* На телефоне 2.39:1 слишком узкая полоса под титр — берём 16:9,
+     чтобы заголовку хватило высоты, и убираем мелкие подписи. */
+  .hero-stage {
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
   }
 
   .featured-meta {
-    left: 18px;
-    right: 18px;
-    bottom: 16px;
+    display: none;
   }
 
-  .featured-title {
-    font-size: 0.88rem;
-    line-height: 1.3;
+  .hero-title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    max-width: 88%;
   }
 
-  .featured-sub {
-    font-size: 0.75rem;
+  .hero-cta-row {
+    width: 100%;
   }
 
-  .featured-badge {
-    font-size: 0.68rem;
-    padding: 0.35rem 0.7rem;
-    right: 12px;
+  .hero-cta-row .btn {
+    flex: 1;
+    text-align: center;
   }
 }
 
 /* ----------------------------------------------------
-   КОМПАКТНЫЙ РЕЖИМ ПО ВЫСОТЕ — на невысоких окнах (ноутбуки, браузер не
-   в полный экран) текст hero + отступы уменьшаются, чтобы Hero вместе
-   с бегущей строкой и статистикой реально помещались на одном экране.
-   Триггерится по высоте вьюпорта, не по ширине — не задевает мобильные.
+   КОМПАКТНЫЙ РЕЖИМ ПО ВЫСОТЕ — на невысоких окнах ужимаем кадр и текст,
+   чтобы Hero вместе с бегущей строкой и статистикой помещались на одном
+   экране. Триггер по высоте вьюпорта, не по ширине — не задевает телефоны.
    ---------------------------------------------------- */
 @media (max-height: 1300px) {
-  .hero-eyebrow {
-    margin-bottom: 0.6rem;
+  .hero-section {
+    padding: clamp(0.8rem, 1.6vw, 1.4rem) 2rem clamp(0.8rem, 1.6vw, 1.4rem);
+  }
+
+  .hero-stage {
+    max-width: min(100%, calc(46dvh * 2.39));
+  }
+
+  .hero-footer {
+    max-width: min(100%, calc(46dvh * 2.39));
   }
 
   .hero-title {
-    font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
   }
 
   .hero-desc {
-    margin-top: 0.8rem;
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     line-height: 1.5;
-  }
-
-  .hero-cta-row {
-    margin-top: 1.1rem;
-  }
-
-  .featured-card {
-    max-width: min(340px, 40dvh * 0.8);
   }
 }
 
@@ -365,12 +383,12 @@
 }
 
 @keyframes heroFadeInScale {
-  from { opacity: 0; transform: scale(0.96) translateY(15px); }
+  from { opacity: 0; transform: scale(0.97) translateY(15px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-text-block, .tilt-wrap {
+  .hero-stage, .hero-footer {
     animation: none;
     opacity: 1;
   }

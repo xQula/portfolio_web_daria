@@ -64,6 +64,9 @@
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'MAK', serif;
   --font-gothic: 'Dirtyline', sans-serif;
+  /* Утилитарный моношрифт — технические подписи (таймкоды, форматы).
+     Системный стек, без сетевой загрузки. */
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
   /* Размеры и переходы */
   --transition-speed: 0.3s;
