@@ -22,6 +22,7 @@ export function initMotion() {
 
   initMagneticButtons();
   initTiltCard();
+  initCardSpotlight();
   initScrollReveal();
   refreshProjectGridReveal();
   initScrollCue();
@@ -80,6 +81,71 @@ function initMagneticButtons() {
       yTo(0);
     });
   });
+}
+
+// ----------------------------------------------------
+// SPOTLIGHT BORDER GLOW: подсветка контура плиток портфолио. Позицию
+// курсора проецируем в ЛОКАЛЬНЫЕ координаты каждой плитки (--mx/--my,
+// px) — их читает .project-card::before в portfolio.css. У ближней к
+// курсору плитки центр пятна попадает внутрь, и ярче всего светится
+// обращённая к курсору грань; у дальних плиток центр уходит далеко за
+// границы, поэтому рамка остаётся тёмной.
+//
+// Локальные координаты (а не общий вьюпортный фон через
+// background-attachment: fixed) выбраны сознательно: transform на hover
+// делает плитку containing block и ломает fixed-фон.
+//
+// Один слушатель на окне + rAF-троттлинг. Внутри кадра сначала читаем
+// все геометрии, затем пишем все переменные — чтобы не чередовать
+// чтение/запись стилей и не провоцировать лишние reflow.
+// ----------------------------------------------------
+function initCardSpotlight() {
+  if (prefersReducedMotion() || !hasHover()) return;
+
+  const grid = document.getElementById("project-grid");
+  if (!grid) return;
+
+  let queued = false;
+  let px = 0;
+  let py = 0;
+
+  const update = () => {
+    queued = false;
+    const cards = grid.querySelectorAll(".card-glow-wrap");
+    if (cards.length === 0) return;
+
+    // 1) читаем
+    const rects = [];
+    cards.forEach((card) => rects.push(card.getBoundingClientRect()));
+
+    // 2) пишем — координаты на обёртке (.card-glow-wrap), т.к. гло на ней
+    cards.forEach((card, i) => {
+      const rect = rects[i];
+      if (rect.bottom < -400 || rect.top > window.innerHeight + 400) return;
+      card.style.setProperty("--mx", `${(px - rect.left).toFixed(1)}px`);
+      card.style.setProperty("--my", `${(py - rect.top).toFixed(1)}px`);
+    });
+  };
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      px = e.clientX;
+      py = e.clientY;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true }
+  );
+
+  // Сброс при уходе курсора с сетки
+  grid.addEventListener("pointerleave", () => {
+    grid.querySelectorAll(".card-glow-wrap").forEach((wrap) => {
+      wrap.style.setProperty("--mx", "-500px");
+      wrap.style.setProperty("--my", "-500px");
+    });
+  }, { passive: true });
 }
 
 // ----------------------------------------------------

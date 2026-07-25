@@ -36,11 +36,17 @@ function getGridProjects() {
 
 // Вспомогательная функция создания карточки проекта
 export function createCard(project) {
-  const card = document.createElement("div");
-  card.className = "project-card reveal";
-  card.dataset.projectId = project.id;
+  // Обёртка — grid-item + носитель glow-эффекта (::before/::after в CSS).
+  // Карточка внутри закрывает градиент изнутри через overflow:hidden + z-index:1,
+  // снаружи (inset: -2px) градиент видно как светящийся контур.
+  const wrap = document.createElement("div");
+  const aspectClass = project.aspect === "vertical" ? "card-glow-wrap--tall" : "card-glow-wrap--wide";
+  wrap.className = `card-glow-wrap ${aspectClass} reveal`;
+  wrap.dataset.projectId = project.id;
 
-  // Резервная ссылка на hqdefault для видео с YouTube (если maxresdefault вернет 404)
+  const card = document.createElement("div");
+  card.className = "project-card";
+
   const ytId = getYoutubeId(project.videoUrl);
   const onerrorAttr = ytId ? `onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';"` : '';
 
@@ -70,7 +76,8 @@ export function createCard(project) {
     }
   });
 
-  return card;
+  wrap.appendChild(card);
+  return wrap;
 }
 
 // Рендеринг карточек проектов — единый CSS Grid, без ручной упаковки по форматам
