@@ -86,18 +86,61 @@
 }
 
 .stat-card {
+  position: relative;
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
   padding: 1.9rem 1.5rem;
-  transition: transform 0.35s var(--ease-premium), border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  transition:
+    transform 0.4s var(--ease-premium),
+    opacity 0.4s var(--ease-premium),
+    filter 0.4s var(--ease-premium),
+    border-color var(--transition-speed) ease,
+    background-color var(--transition-speed) ease;
 }
 
-.stat-card:hover {
-  transform: translateY(-6px);
+/* Та же лаймовая метка «в фокусе», что и в Services */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--color-accent);
+  border-radius: 2px 2px 0 0;
+  transition: width 0.4s var(--ease-premium);
+}
+
+/* ПРОЖЕКТОР (как в Services C): наведение на сетку притухляет все плитки… */
+.stats-grid:hover .stat-card {
+  opacity: 0.4;
+  filter: blur(1.5px) saturate(0.6);
+}
+
+/* …кроме активной — она в фокусе и выходит вперёд */
+.stats-grid .stat-card:hover {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.05);
-  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
+}
+
+.stats-grid .stat-card:hover::after {
+  width: 42%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-grid:hover .stat-card {
+    opacity: 1;
+    filter: none;
+  }
+  .stats-grid .stat-card:hover {
+    transform: none;
+  }
 }
 
 .stat-num {
@@ -188,32 +231,58 @@
 }
 
 .service-card {
+  position: relative;
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
   padding: 1.7rem 1.4rem;
-  transition: transform 0.35s var(--ease-premium), border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  transition:
+    transform 0.4s var(--ease-premium),
+    opacity 0.4s var(--ease-premium),
+    filter 0.4s var(--ease-premium),
+    border-color var(--transition-speed) ease,
+    background-color var(--transition-speed) ease;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
+/* Тонкая лаймовая метка «в фокусе» — вырастает слева сверху на активной карточке */
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--color-accent);
+  border-radius: 2px 2px 0 0;
+  transition: width 0.4s var(--ease-premium);
+}
+
+/* ПРОЖЕКТОР: при наведении на сетку все карточки притухают и слегка блюрятся… */
+.service-grid:hover .service-card {
+  opacity: 0.4;
+  filter: blur(1.5px) saturate(0.6);
+}
+
+/* …кроме той, что под курсором — она в фокусе и выходит вперёд */
+.service-grid .service-card:hover {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.05);
-  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
 }
 
-.service-num {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--color-accent);
-  font-size: 1.5rem;
+.service-grid .service-card:hover::after {
+  width: 42%;
 }
 
 .service-title {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.25rem;
-  margin-top: 0.9rem;
+  margin-top: 0;
   text-transform: none;
 }
 
@@ -222,6 +291,17 @@
   font-size: 0.92rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+/* Reduced motion: без блюра/сдвига/масштаба — фокус только по рамке */
+@media (prefers-reduced-motion: reduce) {
+  .service-grid:hover .service-card {
+    opacity: 1;
+    filter: none;
+  }
+  .service-grid .service-card:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 960px) {
