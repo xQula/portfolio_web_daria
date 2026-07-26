@@ -14,11 +14,7 @@
    • prefersReducedMotion + hasHover guards
    ---------------------------------------------------- */
 
-const prefersReducedMotion = () =>
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-const hasHover = () =>
-  window.matchMedia("(hover: hover)").matches;
+import { prefersReducedMotion, hasHover } from "./device.js";
 
 export function initNeonCursor() {
   /* Не запускаем, если:
@@ -105,6 +101,7 @@ export function initNeonCursor() {
   /* --------------------------------------------------
      Анимационный цикл
      -------------------------------------------------- */
+  let rafId = null;
   let lastAddTime = 0;
 
   function tick(now) {
@@ -219,9 +216,30 @@ export function initNeonCursor() {
     }
 
     /* Следующий кадр */
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
   }
 
+  function startLoop() {
+    if (rafId) return;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function stopLoop() {
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }
+
+  /* Останавливаем rAF при скрытии вкладки, возобновляем при показе */
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopLoop();
+    } else {
+      startLoop();
+    }
+  });
+
   /* Запуск цикла */
-  requestAnimationFrame(tick);
+  startLoop();
 }

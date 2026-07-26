@@ -1,7 +1,9 @@
 import { t, getLocalized } from "./i18n.js";
 import { getYoutubeId } from "./api.js";
+import { setupFocusTrap } from "./focus-trap.js";
 
 let lightbox, lightboxClose, lightboxContent, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription, lastActiveElement;
+let currentOpenProject = null;
 let ytPlayer = null;
 let ytApiPromise = null;
 
@@ -33,33 +35,13 @@ export function initLightbox() {
     }
   });
 
-  // Ловушка фокуса (Focus Trap)
-  lightbox.addEventListener("keydown", (e) => {
-    if (!lightbox.classList.contains("active")) return;
-    if (e.key === "Tab") {
-      const focusable = lightbox.querySelectorAll('a, button, iframe, [tabindex="0"]');
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-  });
+  // Ловушка фокуса (Focus Trap) — общий модуль
+  setupFocusTrap(lightbox);
 
   // Слушатель смены языка для обновления информации в открытом лайтбоксе (если он активен)
   document.addEventListener("languagechanged", () => {
-    if (lightbox.classList.contains("active") && window.currentOpenProject) {
-      updateLightboxContent(window.currentOpenProject);
+    if (lightbox.classList.contains("active") && currentOpenProject) {
+      updateLightboxContent(currentOpenProject);
     }
   });
 }
@@ -173,7 +155,7 @@ export function openLightbox(project) {
   if (!lbTitle || !lbCategory || !lbDescription || !lbDetails || !videoWrapper || !lightbox) return;
 
   // Сохраняем ссылку на текущий открытый проект в глобальной переменной для смены языка на лету
-  window.currentOpenProject = project;
+  currentOpenProject = project;
 
   // Обновляем текстовый контент
   updateLightboxContent(project);
@@ -224,7 +206,7 @@ export function closeLightbox() {
   if (lightboxContent) {
     lightboxContent.classList.remove("is-vertical");
   }
-  window.currentOpenProject = null;
+  currentOpenProject = null;
 
   // Возвращаем фокус на прежнее место
   if (lastActiveElement) {

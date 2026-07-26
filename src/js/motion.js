@@ -1,11 +1,9 @@
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion, hasHover } from "./device.js";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const hasHover = () => window.matchMedia("(hover: hover)").matches;
 
 let projectGridTriggers = [];
 

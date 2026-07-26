@@ -1,3 +1,5 @@
+import { setupFocusTrap } from "./focus-trap.js";
+
 let contactModal, contactClose, lastActiveElement;
 
 export function initContactModal() {
@@ -51,28 +53,8 @@ export function initContactModal() {
     }
   });
 
-  // Ловушка фокуса (Focus Trap)
-  contactModal.addEventListener("keydown", (e) => {
-    if (!contactModal.classList.contains("active")) return;
-    if (e.key === "Tab") {
-      const focusable = contactModal.querySelectorAll('a, button, [tabindex="0"]');
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-  });
+  // Ловушка фокуса (Focus Trap) — общий модуль
+  setupFocusTrap(contactModal);
 }
 
 export function openContactModal() {

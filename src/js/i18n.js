@@ -79,7 +79,8 @@ export const translations = {
     aria_toggle_lang: "Сменить язык",
     aria_play_showreel: "Смотреть шоурил",
     aria_play_video: "Смотреть видео",
-    aria_logo: "SOF — Sense of Form | На главную"
+    aria_logo: "SOF — Sense of Form | На главную",
+    burger_menu: "Открыть меню"
   },
   en: {
     site_title: "SOF — Video Editor Daria Evstigneeva | Portfolio",
@@ -160,7 +161,8 @@ export const translations = {
     aria_toggle_lang: "Change language",
     aria_play_showreel: "Watch showreel",
     aria_play_video: "Watch video",
-    aria_logo: "SOF — Sense of Form | Home"
+    aria_logo: "SOF — Sense of Form | Home",
+    burger_menu: "Open menu"
   }
 };
 
@@ -231,14 +233,6 @@ export function applyLanguage(lang) {
       el.setAttribute("aria-label", translations[lang][key]);
     }
   });
-
-  // Локализация заголовков для социальных сетей в DOM
-  const mailLink = document.getElementById("footer-contact-link");
-  if (mailLink && lang === "en") {
-    mailLink.textContent = "CONTACT";
-  } else if (mailLink && lang === "ru") {
-    mailLink.textContent = "КОНТАКТЫ";
-  }
 
   // Обновление текста на переключателе языков
   const langToggleBtn = document.getElementById("lang-toggle");
