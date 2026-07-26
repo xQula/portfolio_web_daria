@@ -163,7 +163,6 @@ export function setupFeaturedVideo() {
   // Заполняем HTML карточки данными из файла
   const img = featuredCard.querySelector(".featured-thumbnail-img");
   const titleSpan = featuredCard.querySelector(".featured-title");
-  const subSpan = featuredCard.querySelector("#featured-sub");
 
   if (img) {
     const ytId = getYoutubeId(featuredProject.videoUrl);
@@ -182,10 +181,6 @@ export function setupFeaturedVideo() {
   if (titleSpan) {
     titleSpan.textContent = getLocalized(featuredProject.title);
   }
-  if (subSpan) {
-    subSpan.textContent = `${getLocalized(featuredProject.subCategory)} · ${featuredProject.duration || featuredProject.soft || ""}`;
-  }
-
   const openFeatured = () => openLightbox(featuredProject);
 
   // Очищаем старые слушатели путем замены элемента (чтобы избежать дублирования)

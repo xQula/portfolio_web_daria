@@ -1,6 +1,6 @@
 {
   "meta": {
-    "yearsExperience": 6
+    "yearsExperience": 3
   },
   "projects": [
     {
@@ -41,7 +41,7 @@
         "ru": "Киноанонс",
         "en": "Film Teaser"
       },
-      "client": "GRACE OF MONACO",
+      "client": "Tricolor",
       "videoUrl": "https://www.youtube.com/embed/yylVxn27UhY",
       "preview": "/img/previews/1.webp",
       "aspect": "horizontal",
@@ -64,7 +64,7 @@
         "ru": "Киноанонс",
         "en": "Film Teaser"
       },
-      "client": "БОКСЕР",
+      "client": "Okko",
       "videoUrl": "https://www.youtube.com/embed/QibP89qPoX8",
       "preview": "/img/previews/2.webp",
       "aspect": "horizontal",
@@ -110,7 +110,7 @@
         "ru": "Киноанонс",
         "en": "Film Teaser"
       },
-      "client": "DORIAN GRAY",
+      "client": "Victorymuseum",
       "videoUrl": "https://www.youtube.com/embed/Sr6DCdB-iVg",
       "preview": "/img/previews/4.webp",
       "aspect": "horizontal",
@@ -156,13 +156,13 @@
         "ru": "Fashion-контент",
         "en": "Fashion Content"
       },
-      "client": "CAPSULAhair",
+      "client": "CapsulaHair",
       "videoUrl": "https://www.youtube.com/embed/XHfg7UWFXWE",
       "preview": "/img/previews/6.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
-        "ru": "Контент для бренда CAPSULAhair (Санкт-Петербург): динамичный монтаж под формат соцсетей, акцент на текстуру и стиль.",
+        "ru": "Контент для бренда CapsulaHair (Санкт-Петербург): динамичный монтаж под формат соцсетей, акцент на текстуру и стиль.",
         "en": "Content for the CAPSULAhair brand (St. Petersburg): social-ready dynamic editing with an emphasis on texture and style."
       }
     },
@@ -225,13 +225,13 @@
         "ru": "Backstage",
         "en": "Backstage"
       },
-      "client": "CAPSULAhair",
+      "client": "CapsulaHair",
       "videoUrl": "https://www.youtube.com/embed/Md6Q1_9-1FU",
       "preview": "/img/previews/9.webp",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut Pro",
       "desc": {
-        "ru": "Бэкстейдж со съёмки для CAPSULAhair — атмосфера процесса, живой монтаж без постановочности.",
+        "ru": "Бэкстейдж со съёмки для CapsulaHair — атмосфера процесса, живой монтаж без постановочности.",
         "en": "Behind-the-scenes footage from a CAPSULAhair shoot — the raw energy of the process, cut without over-staging."
       }
     },
@@ -317,14 +317,14 @@
         "ru": "Танцевальное видео",
         "en": "Dance Film"
       },
-      "client": "Личный проект",
+      "client": "Doaflip Dance Fest",
       "videoUrl": "https://www.youtube.com/embed/NXXqP3Xj72w",
       "preview": "/img/previews/13.webp",
       "aspect": "horizontal",
       "soft": "Premiere Pro · After Effects",
       "desc": {
-        "ru": "Танец как форма выражения: авторский проект, где Дарья выступила хореографом и режиссёром. Каждое движение — результат тщательной работы над историей.",
-        "en": "Dance as a form of expression: a self-directed project where Daria worked as both choreographer and director — every movement built to serve the story."
+        "ru": "Танец как форма выражения: проект для Doaflip Dance Fest, где Дарья выступила хореографом и режиссёром. Каждое движение — результат тщательной работы над историей.",
+        "en": "Dance as a form of expression: a project for Doaflip Dance Fest where Daria worked as both choreographer and director — every movement built to serve the story."
       }
     },
     {

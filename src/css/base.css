@@ -85,7 +85,6 @@ h1, h2, h3, h4,
 .card-client,
 .card-meta,
 .featured-title,
-.featured-sub,
 .featured-badge {
   cursor: inherit;
   user-select: none;
@@ -209,7 +208,8 @@ button:focus-visible,
    ---------------------------------------------------- */
 
 /* Film Grain Overlay — часть бренда SOF. Слегка увеличен за пределы вьюпорта
-   и «дышит» через steps()-анимацию, имитируя мерцание настоящей плёночной зерна */
+   и «дышит» через steps()-анимацию, имитируя мерцание настоящей плёночной зерна.
+   z-index: -1 — позади всего контента, чтобы не перекрывать карточки портфолио. */
 .film-grain {
   position: fixed;
   top: -60px;
@@ -219,9 +219,7 @@ button:focus-visible,
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.035;
   pointer-events: none;
-  /* Ниже модалок (lightbox/contact = 200+), чтобы зерно не ложилось поверх
-     видеоплеера, но по-прежнему поверх обычного контента страницы */
-  z-index: 190;
+  z-index: -1;
   animation: grain-flicker 1.4s steps(4) infinite;
 }
 

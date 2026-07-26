@@ -16,8 +16,8 @@ export const translations = {
 
     // Главный экран (Hero)
     hero_eyebrow: "Доступна для новых проектов",
-    hero_title: "Раскрывая истории через форму и движение",
-    hero_desc: "Евстигнеева Дарья — режиссёр монтажа и контент-мейкер. Кинопродвижение, реклама, музыкальное видео и трендовый вертикальный контент — под ключ, от черновой сборки до финальной цветокоррекции.",
+    hero_title: "Управляю вниманием зрителя от первого до последнего кадра",
+    hero_desc: "Кинопродвижение, реклама, музыкальные видео и вертикальный контент — от идеи до релиза.",
     hero_cta_secondary: "Смотреть шоурил",
     hero_showreel_badge: "Шоурил 2025",
     hero_cat_cinema: "кинопродвижение",
@@ -98,8 +98,8 @@ export const translations = {
 
     // Hero
     hero_eyebrow: "Available for new projects",
-    hero_title: "Elevating stories through form & movement",
-    hero_desc: "Daria Evstigneeva — video editor and content creator. Film promotion, commercials, music videos, and trending vertical content — end to end, from rough cut to final grade.",
+    hero_title: "Guiding the viewer's attention from the first frame to the last",
+    hero_desc: "Film promotion, commercials, music videos, and vertical content — from concept to release.",
     hero_cta_secondary: "Watch showreel",
     hero_showreel_badge: "Showreel 2025",
     hero_cat_cinema: "film promotion",

@@ -261,17 +261,6 @@
   text-overflow: ellipsis;
 }
 
-.featured-sub {
-  display: block;
-  font-size: 0.78rem;
-  color: var(--color-text-secondary);
-  margin-top: 0.25rem;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* -------- ПОДПИСЬ + ДЕЙСТВИЯ ПОД КАДРОМ -------- */
 .hero-footer {
   display: flex;
