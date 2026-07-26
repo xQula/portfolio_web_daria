@@ -25,24 +25,7 @@ export function initMotion() {
   initCardSpotlight();
   initScrollReveal();
   refreshProjectGridReveal();
-  initScrollCue();
-
   document.addEventListener("gridrendered", refreshProjectGridReveal);
-}
-
-// ----------------------------------------------------
-// SCROLL CUE: подсказка "листайте вниз" исчезает после первого
-// реального скролла — дальше она не нужна и не должна маячить.
-// ----------------------------------------------------
-function initScrollCue() {
-  const cue = document.getElementById("scroll-cue");
-  if (!cue) return;
-
-  window.addEventListener(
-    "scroll",
-    () => cue.classList.add("is-hidden"),
-    { passive: true, once: true }
-  );
 }
 
 // ----------------------------------------------------
