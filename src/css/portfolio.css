@@ -48,6 +48,7 @@
   background-color: var(--color-accent);
   color: var(--color-btn-accent-text);
   border-color: var(--color-accent);
+  box-shadow: 0 0 16px var(--shadow-accent);
 }
 
 /* ----------------------------------------------------

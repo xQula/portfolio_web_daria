@@ -58,7 +58,7 @@
   --color-btn-border: transparent;
 
   /* Токен хедера — прозрачный до скролла, уплотняется через .site-header--solid (см. main.js) */
-  --color-header-bg-solid: rgba(10, 11, 13, 0.72);
+  --color-header-bg-solid: rgba(10, 11, 13, 0.55);
 
   /* Шрифты */
   --font-sans: 'Inter', sans-serif;
