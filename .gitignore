@@ -6,3 +6,9 @@ Thumbs.db
 *.log
 dist/
 graphify-out/
+
+# Тестирование — скриншоты, снапшоты, логи Playwright
+.playwright-mcp/
+
+# Черновики, скрипты, временные утилиты (не часть проекта)
+scratch/

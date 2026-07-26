@@ -4,6 +4,7 @@ import { initGrid, renderGrid, setupFeaturedVideo, renderTrust, renderStats } fr
 import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 import { initMotion, animateHeroTitle } from "./motion.js";
+import { initNeonCursor } from "./neon-cursor.js";
 
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
@@ -39,6 +40,9 @@ async function init() {
   initStickyHeader();
   initMotion();
   initScrollHighlight();
+
+  // Неоновый шлейф за курсором
+  initNeonCursor();
 
   // Переключатели языков
   if (langToggleBtn) {
