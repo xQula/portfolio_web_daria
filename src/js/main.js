@@ -71,6 +71,8 @@ async function init() {
         burgerBtn.classList.remove("active");
         document.body.style.overflow = "";
         mobileDrawer.setAttribute("aria-hidden", "true");
+        burgerBtn.setAttribute("aria-label", t("burger_menu"));
+        burgerBtn.focus();
       });
     });
   }
