@@ -81,7 +81,11 @@ export const translations = {
     aria_play_showreel: "Смотреть шоурил",
     aria_play_video: "Смотреть видео",
     aria_logo: "SOF — Sense of Form | На главную",
-    burger_menu: "Открыть меню"
+    burger_menu: "Открыть меню",
+    chip_telegram: "Telegram: @DariaEvst — нажмите чтобы скопировать",
+    chip_email: "Email: evst.daria@yandex.ru — нажмите чтобы скопировать",
+    chip_vk: "VK: vk.com/dariaevst — нажмите чтобы скопировать",
+    copied: "Скопировано"
   },
   en: {
     site_title: "SOF — Video Editor Daria Evstigneeva | Portfolio",
@@ -164,7 +168,11 @@ export const translations = {
     aria_play_showreel: "Watch showreel",
     aria_play_video: "Watch video",
     aria_logo: "SOF — Sense of Form | Home",
-    burger_menu: "Open menu"
+    burger_menu: "Open menu",
+    chip_telegram: "Telegram: @DariaEvst — click to copy",
+    chip_email: "Email: evst.daria@yandex.ru — click to copy",
+    chip_vk: "VK: vk.com/dariaevst — click to copy",
+    copied: "Copied"
   }
 };
 

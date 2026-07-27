@@ -1,4 +1,4 @@
-import { initLanguage, toggleLanguage } from "./i18n.js";
+import { initLanguage, toggleLanguage, t } from "./i18n.js";
 import { loadProjects } from "./api.js";
 import { initGrid, renderGrid, setupFeaturedVideo, renderTrust, renderStats } from "./grid.js";
 import { initLightbox } from "./lightbox.js";
@@ -43,6 +43,9 @@ async function init() {
 
   // Неоновый шлейф за курсором
   initNeonCursor();
+
+  // Чипсы контактов — копирование по клику
+  initContactChips();
 
   // Переключатели языков
   if (langToggleBtn) {
@@ -173,6 +176,47 @@ function initScrollHighlight() {
 
   // Первый запуск с задержкой, чтобы дать элементам загрузиться
   setTimeout(updateScrollHighlight, 500);
+}
+
+// ----------------------------------------------------
+// ЧИПСЫ КОНТАКТОВ: копирование в буфер по клику + Toast
+// ----------------------------------------------------
+function initContactChips() {
+  const chips = document.querySelectorAll(".contact-chips .chip");
+  const toast = document.getElementById("copy-toast");
+  if (!chips.length || !toast) return;
+
+  let hideTimer = null;
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", async () => {
+      const text = chip.getAttribute("data-copy");
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // fallback для старых браузеров
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      // Показываем Toast
+      toast.textContent = t("copied");
+      toast.classList.add("visible");
+
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        toast.classList.remove("visible");
+      }, 1800);
+    });
+  });
 }
 
 // Запуск инициализации при загрузке DOM

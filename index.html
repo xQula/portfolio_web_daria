@@ -266,10 +266,19 @@
           <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="cta_primary">Написать в Telegram</a>
           <a href="#portfolio" class="btn btn-secondary btn-magnet" data-i18n="cta_secondary">Смотреть портфолио</a>
         </div>
-        <div class="contact-chips">
-          <div>Telegram <span>@DariaEvst</span></div>
-          <div>Email <span>evst.daria@yandex.ru</span></div>
-          <div>VK <span>vk.com/dariaevst</span></div>
+        <div class="contact-chips" id="contact-chips">
+          <div class="chip" data-copy="@DariaEvst" data-i18n-aria="chip_telegram" aria-label="Telegram: @DariaEvst — нажмите чтобы скопировать">
+            <span class="chip-label">Telegram</span>
+            <span class="chip-value">@DariaEvst</span>
+          </div>
+          <div class="chip" data-copy="evst.daria@yandex.ru" data-i18n-aria="chip_email" aria-label="Email: evst.daria@yandex.ru — нажмите чтобы скопировать">
+            <span class="chip-label">Email</span>
+            <span class="chip-value">evst.daria@yandex.ru</span>
+          </div>
+          <div class="chip" data-copy="vk.com/dariaevst" data-i18n-aria="chip_vk" aria-label="VK: vk.com/dariaevst — нажмите чтобы скопировать">
+            <span class="chip-label">VK</span>
+            <span class="chip-value">vk.com/dariaevst</span>
+          </div>
         </div>
       </div>
     </section>
@@ -455,5 +464,8 @@
 
   <!-- Скрипты -->
   <script type="module" src="./src/js/main.js"></script>
+
+  <!-- Toast для копирования -->
+  <div id="copy-toast" class="copy-toast" aria-live="polite"></div>
 </body>
 </html>
