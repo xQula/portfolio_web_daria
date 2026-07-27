@@ -153,7 +153,7 @@
 
               <!-- Нижний правый угол: подпись шоурила -->
               <div class="featured-meta">
-                <span class="featured-title" data-i18n="hero_showreel_title">ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА</span>
+                <span class="featured-title" data-i18n="hero_showreel_title">SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД</span>
               </div>
             </div>
           </div>
@@ -385,50 +385,66 @@
     </div>
   </div>
 
-  <!-- Модальное окно контактов -->
-  <div id="contact-modal" class="lightbox" aria-hidden="true" role="dialog">
+  <!-- Модальное окно контактов (Cinematic Contact) -->
+  <div id="contact-modal" class="lightbox contact-cinematic" aria-hidden="true" role="dialog">
     <button class="lightbox-close" id="contact-close" aria-label="Закрыть контакты" data-i18n-aria="aria_close_contacts">&times;</button>
-    <div class="contact-modal-content">
-      <h3 class="contact-modal-title" data-i18n="contact_title">КОНТАКТЫ</h3>
-      <p class="contact-modal-subtitle" data-i18n="contact_subtitle">Ready to collaborate on your next project</p>
 
-      <div class="contact-modal-links">
-        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m22 2-7 20-4-9-9-4Z"></path>
-              <path d="M22 2 11 13"></path>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">Telegram</span>
-            <span class="contact-value">@DariaEvst</span>
-          </div>
-        </a>
+    <div class="contact-cinematic-content">
+      <!-- Левая колонка: заголовок + соц-иконки -->
+      <div class="contact-cinematic-info">
+        <h2 class="contact-cinematic-title" data-i18n="contact_title">КОНТАКТЫ</h2>
+        <p class="contact-cinematic-subtitle" data-i18n="contact_subtitle">Готова к сотрудничеству</p>
 
-        <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">VKontakte</span>
-            <span class="contact-value">vk.com/dariaevst</span>
-          </div>
-        </a>
+        <div class="contact-social-row">
+          <!-- Telegram -->
+          <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="Telegram">
+            <span class="social-icon social-icon--telegram">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+                <path d="M22 2 11 13"></path>
+              </svg>
+            </span>
+            <span class="social-icon-label">Telegram</span>
+          </a>
 
-        <a href="mailto:evst.daria@yandex.ru" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">Email</span>
-            <span class="contact-value">evst.daria@yandex.ru</span>
-          </div>
+          <!-- Email -->
+          <a href="mailto:evst.daria@yandex.ru" class="social-icon-wrap" aria-label="Email">
+            <span class="social-icon social-icon--email">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">Email</span>
+          </a>
+
+          <!-- VK -->
+          <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="VKontakte">
+            <span class="social-icon social-icon--vk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">VK</span>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://www.youtube.com/@sofmotion" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="YouTube">
+            <span class="social-icon social-icon--youtube">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">YouTube</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Правая колонка: CTA -->
+      <div class="contact-cinematic-cta">
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn-magnet contact-cinematic-btn">
+          <span data-i18n="contact_cta_btn">Написать в Telegram</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
     </div>

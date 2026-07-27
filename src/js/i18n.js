@@ -19,12 +19,12 @@ export const translations = {
     hero_title: "Управляю вниманием зрителя от первого до последнего кадра",
     hero_desc: "Кинопродвижение, реклама, музыкальные видео и вертикальный контент — от идеи до релиза.",
     hero_cta_secondary: "Смотреть шоурил",
-    hero_showreel_badge: "Шоурил 2025",
+    hero_showreel_badge: "Showreel 2025",
     hero_cat_cinema: "кинопродвижение",
     hero_cat_brands: "реклама и бренды",
     hero_cat_music: "музыкальное видео",
     hero_cat_digital: "digital-контент",
-    hero_showreel_title: "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
+    hero_showreel_title: "SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД",
 
     // Клиенты и статистика
     trust_label: "Работала с",
@@ -59,9 +59,10 @@ export const translations = {
     // Подвал (Footer)
     footer_tagline: "Евстигнеева Дарья — Режиссер монтажа",
 
-    // Модалка контактов
+    // Модалка контактов (Cinematic Contact)
     contact_title: "КОНТАКТЫ",
-    contact_subtitle: "Готова к сотрудничеству над вашим следующим проектом",
+    contact_subtitle: "Готова к сотрудничеству",
+    contact_cta_btn: "Написать в Telegram",
     
     // Видео-лайтбокс
     lightbox_label_soft: "Софт",
@@ -106,7 +107,7 @@ export const translations = {
     hero_cat_brands: "brands & commercials",
     hero_cat_music: "music video",
     hero_cat_digital: "digital content",
-    hero_showreel_title: "SHOWREEL 2026 | EDITING SHOWCASE",
+    hero_showreel_title: "SHOWREEL 2025 | ALL FILMS IN 60 SECONDS",
 
     // Trust & stats
     trust_label: "Worked with",
@@ -141,9 +142,10 @@ export const translations = {
     // Footer
     footer_tagline: "Daria Evstigneeva — Video Editor",
 
-    // Contact modal
+    // Contact modal (Cinematic Contact)
     contact_title: "CONTACTS",
-    contact_subtitle: "Ready to collaborate on your next project",
+    contact_subtitle: "Ready to collaborate",
+    contact_cta_btn: "Message on Telegram",
     
     // Video Lightbox
     lightbox_label_soft: "Software",

@@ -150,13 +150,13 @@ export function setupFeaturedVideo() {
       ru: "Шоурил монтажа",
       en: "Editing Showreel"
     },
-    client: "Daria Evstigneeva Portfolio",
+    client: "Личный проект",
     videoUrl: "https://www.youtube.com/embed/TiMdGOTa48s",
     aspect: "horizontal",
-    soft: "Premiere Pro · After Effects · DaVinci Resolve",
+    soft: "Premiere Pro · Audition",
     desc: {
-      ru: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи.",
-      en: "Official video editing showreel of Daria Evstigneeva."
+      ru: "В этом шоуриле я собрала самые яркие кадры из разных фильмов, чтобы показать, как монтаж способен менять ритм, атмосферу и эмоциональный посыл сцены.",
+      en: "This showreel brings together the most striking frames from different films to demonstrate how editing reshapes the rhythm, atmosphere and emotional charge of a scene."
     }
   };
 
@@ -205,7 +205,7 @@ export function setupFeaturedVideo() {
 
 // "Клиенты" без реального внешнего заказчика (авторские/личные ролики) —
 // не показываем их ни в бегущей строке, ни в счётчике клиентов
-const NON_CLIENT_LABELS = new Set(["Личный проект", "Daria Evstigneeva Portfolio"]);
+const NON_CLIENT_LABELS = new Set(["Личный проект", "Личный блог", "SOF studio", "Daria Evstigneeva Portfolio"]);
 const isRealClient = (client) => Boolean(client) && !NON_CLIENT_LABELS.has(client);
 
 // Бегущая строка клиентов — список собирается из projects.json.
