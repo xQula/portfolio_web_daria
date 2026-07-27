@@ -204,97 +204,295 @@
 
 
 /* ----------------------------------------------------
-   CONTACT MODAL STYLING
+   CONTACT MODAL — CINEMATIC CONTACT (Вариант A)
    ---------------------------------------------------- */
-.contact-modal-content {
-  background-color: rgba(15, 17, 19, 0.9); /* Glassmorphism background */
-  border: 1px solid rgba(204, 255, 0, 0.15); /* Subtle neon border */
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border-radius: var(--border-radius-lg);
-  padding: 3rem;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(204, 255, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  color: var(--color-text-primary);
-  text-align: center;
-  position: relative;
-}
 
-.contact-modal-title {
-  font-family: var(--font-serif);
-  font-size: 2.2rem;
-  font-style: italic;
-  font-weight: 400;
-  text-transform: none;
-}
-
-.contact-modal-subtitle {
-  font-size: 1rem;
-  color: var(--color-text-secondary);
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.contact-modal-links {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.contact-modal-item {
-  display: flex;
+/* Оверлей */
+.lightbox.contact-cinematic {
   align-items: center;
-  gap: 1.2rem;
-  padding: 1rem 1.5rem;
-  background-color: var(--color-glass-bg);
-  border: 1px solid var(--color-glass-border);
-  border-radius: var(--border-radius-md);
-  text-align: left;
-  transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+  justify-content: center;
+  background-color: rgba(2, 3, 5, 0.88);
 }
 
-.contact-modal-item:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 20px var(--shadow-accent);
-  background-color: rgba(204, 255, 0, 0.03);
-  transform: translateY(-2px);
-}
-
-.contact-icon-wrapper {
-  background-color: var(--color-bg-primary);
+.lightbox.contact-cinematic .lightbox-close {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 220;
   color: var(--color-text-primary);
-  width: 44px;
-  height: 44px;
+  opacity: 0.5;
+  transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+.lightbox.contact-cinematic .lightbox-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+  color: var(--color-accent);
+}
+
+/* Центральный контейнер */
+.contact-cinematic-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+  width: 94%;
+  max-width: 520px;
+  padding: 3rem 3.2rem 3.2rem;
+  background: linear-gradient(145deg, rgba(12, 14, 16, 0.94), rgba(8, 9, 11, 0.97));
+  border: 1px solid rgba(204, 255, 0, 0.12);
+  border-radius: var(--border-radius-lg);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(204, 255, 0, 0.06),
+    inset 0 0 30px rgba(204, 255, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+
+  /* Анимация появления */
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  animation: cinematic-enter 0.6s var(--ease-premium) forwards;
+}
+
+@keyframes cinematic-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Декоративная верхняя линия */
+.contact-cinematic-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(204, 255, 0, 0.3), transparent);
+}
+
+/* ---- Информация ---- */
+.contact-cinematic-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.contact-cinematic-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  opacity: 0;
+  animation: cinematic-stagger 0.5s var(--ease-premium) 0.10s forwards;
+}
+
+.contact-cinematic-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 20px rgba(204, 255, 0, 0.25);
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: cinematic-stagger 0.5s var(--ease-premium) 0.18s forwards;
+}
+
+@keyframes cinematic-stagger {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Социальные иконки (как у Connect With Us) ---- */
+.contact-social-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: cinematic-stagger 0.5s var(--ease-premium) 0.26s forwards;
+}
+
+.social-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-premium);
+}
+
+.social-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-text-primary);
+  transition:
+    transform 0.4s var(--ease-premium),
+    background-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.contact-modal-item:hover .contact-icon-wrapper {
-  background-color: var(--color-accent);
-  color: var(--color-btn-accent-text);
+/* Ховер: иконка всплывает */
+.social-icon-wrap:hover {
+  transform: translateY(-6px);
 }
 
-.contact-item-info {
+.social-icon-wrap:hover .social-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+.social-icon-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--color-text-faint);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.3s var(--ease-premium);
+}
+
+.social-icon-wrap:hover .social-icon-label {
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--color-text-primary);
+}
+
+/* Telegram */
+.social-icon-wrap:hover .social-icon--telegram {
+  background: #0088cc;
+  color: #fff;
+  border-color: #0088cc;
+  box-shadow: 0 0 30px rgba(0, 136, 204, 0.4);
+}
+
+/* Email */
+.social-icon-wrap:hover .social-icon--email {
+  background: var(--color-accent);
+  color: #0a0b0d;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.35);
+}
+
+/* VK */
+.social-icon-wrap:hover .social-icon--vk {
+  background: #0077FF;
+  color: #fff;
+  border-color: #0077FF;
+  box-shadow: 0 0 30px rgba(0, 119, 255, 0.4);
+}
+
+/* YouTube */
+.social-icon-wrap:hover .social-icon--youtube {
+  background: #FF0000;
+  color: #fff;
+  border-color: #FF0000;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+/* ---- CTA-кнопка ---- */
+.contact-cinematic-cta {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: cinematic-stagger 0.5s var(--ease-premium) 0.34s forwards;
 }
 
-.contact-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--color-text-secondary);
-}
-
-.contact-value {
-  font-size: 1.05rem;
+.contact-cinematic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
   font-weight: 800;
-  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-btn-accent-text);
+  background: var(--color-btn-accent-bg);
+  border: none;
+  border-radius: var(--border-radius-btn);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-speed) ease,
+    transform 0.35s var(--ease-premium),
+    box-shadow 0.35s ease;
+}
+
+.contact-cinematic-btn:hover {
+  background: var(--color-btn-accent-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(204, 255, 0, 0.3);
+}
+
+.contact-cinematic-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-cinematic-content {
+    width: 94%;
+    padding: 2.2rem 1.8rem;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .lightbox.contact-cinematic .lightbox-close {
+    top: 16px;
+    right: 20px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .contact-cinematic-content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .contact-cinematic-title,
+  .contact-cinematic-subtitle,
+  .contact-social-row,
+  .contact-cinematic-cta {
+    animation: none;
+    opacity: 1;
+  }
+
+  .social-icon-wrap:hover {
+    transform: none;
+  }
+
+  .social-icon-wrap:hover .social-icon {
+    transform: none;
+  }
+
+  .social-icon-label {
+    opacity: 1;
+    transform: none;
+  }
 }

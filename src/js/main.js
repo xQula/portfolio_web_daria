@@ -1,17 +1,16 @@
-import { initLanguage, toggleLanguage } from "./i18n.js";
+import { initLanguage, toggleLanguage, t } from "./i18n.js";
 import { loadProjects } from "./api.js";
 import { initGrid, renderGrid, setupFeaturedVideo, renderTrust, renderStats } from "./grid.js";
 import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
+import { initMotion, animateHeroTitle } from "./motion.js";
+import { initNeonCursor } from "./neon-cursor.js";
 
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
 const burgerBtn = document.getElementById("mobile-menu-trigger");
 const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerLinks = document.querySelectorAll(".drawer-link");
-
-const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const hasHover = () => window.matchMedia("(hover: hover)").matches;
 
 async function init() {
   // Настройка языка
@@ -39,10 +38,14 @@ async function init() {
 
   // Слой моушна премиального лендинга
   initStickyHeader();
-  initScrollReveal();
-  initTiltCard();
-  initMagneticButtons();
+  initMotion();
   initScrollHighlight();
+
+  // Неоновый шлейф за курсором
+  initNeonCursor();
+
+  // Чипсы контактов — копирование по клику
+  initContactChips();
 
   // Переключатели языков
   if (langToggleBtn) {
@@ -68,34 +71,39 @@ async function init() {
         burgerBtn.classList.remove("active");
         document.body.style.overflow = "";
         mobileDrawer.setAttribute("aria-hidden", "true");
+        burgerBtn.setAttribute("aria-label", t("burger_menu"));
+        burgerBtn.focus();
       });
     });
   }
 }
 
 // ----------------------------------------------------
-// КИНЕТИЧЕСКИЙ ЗАГОЛОВОК HERO: слова проявляются по очереди при загрузке.
-// При смене языка текст просто переустанавливается (без повторной анимации).
+// КИНЕТИЧЕСКИЙ ЗАГОЛОВОК HERO: символы проявляются по очереди при загрузке
+// (анимацию делает motion.js через GSAP). При смене языка текст
+// переустанавливается без повторного проигрывания анимации.
 // ----------------------------------------------------
-let heroWordsAnimated = false;
+let heroTitleAnimated = false;
 
 function renderHeroWords() {
   const el = document.querySelector(".hero-title");
   if (!el) return;
 
+  // Символы группируются по словам (.word, white-space: nowrap в CSS),
+  // иначе перенос строки мог бы разорвать слово посередине —
+  // GSAP всё равно анимирует все .ch разом, независимо от вложенности.
   const words = el.textContent.trim().split(/\s+/);
-  const reduce = prefersReducedMotion();
-
   el.innerHTML = words
-    .map((word, i) => {
-      const isStatic = reduce || heroWordsAnimated;
-      const cls = isStatic ? "word word--static" : "word";
-      const delay = (0.15 + i * 0.07).toFixed(2);
-      return `<span class="${cls}" style="animation-delay:${delay}s">${word}</span>`;
+    .map((word) => {
+      const chars = [...word].map((c) => `<span class="ch">${c}</span>`).join("");
+      return `<span class="word">${chars}</span>`;
     })
     .join(" ");
 
-  heroWordsAnimated = true;
+  if (!heroTitleAnimated) {
+    animateHeroTitle(el.querySelectorAll(".ch"));
+    heroTitleAnimated = true;
+  }
 }
 
 // ----------------------------------------------------
@@ -110,75 +118,6 @@ function initStickyHeader() {
   };
   window.addEventListener("scroll", update, { passive: true });
   update();
-}
-
-// ----------------------------------------------------
-// SCROLL REVEAL: плавное появление секций и карточек портфолио (.reveal)
-// через один общий IntersectionObserver. Карточки портфолио пересоздаются
-// при каждой фильтрации/показе ещё — поэтому подписываемся на "gridrendered"
-// и довешиваем наблюдение на свежедобавленные элементы.
-// ----------------------------------------------------
-function initScrollReveal() {
-  if (prefersReducedMotion()) {
-    const revealAll = () => document.querySelectorAll(".reveal").forEach(el => el.classList.add("in-view"));
-    revealAll();
-    document.addEventListener("gridrendered", revealAll);
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("in-view");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-  document.addEventListener("gridrendered", () => {
-    document.querySelectorAll("#project-grid .reveal").forEach(el => observer.observe(el));
-  });
-}
-
-// ----------------------------------------------------
-// 3D-TILT КАРТОЧКА ШОУРИЛА: наклон вслед за курсором
-// ----------------------------------------------------
-function initTiltCard() {
-  const wrap = document.getElementById("tilt-wrap");
-  const card = document.getElementById("featured-card-element");
-  if (!wrap || !card || prefersReducedMotion() || !hasHover()) return;
-
-  wrap.addEventListener("mousemove", (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `translateY(-6px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
-  });
-
-  wrap.addEventListener("mouseleave", () => {
-    card.style.transform = "translateY(0) rotateY(0deg) rotateX(0deg)";
-  });
-}
-
-// ----------------------------------------------------
-// МАГНИТНЫЕ КНОПКИ (.btn-magnet): лёгкое притяжение к курсору
-// ----------------------------------------------------
-function initMagneticButtons() {
-  if (prefersReducedMotion() || !hasHover()) return;
-
-  document.querySelectorAll(".btn-magnet").forEach(btn => {
-    btn.addEventListener("mousemove", (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.22}px, ${y * 0.3}px)`;
-    });
-    btn.addEventListener("mouseleave", () => {
-      btn.style.transform = "translate(0, 0)";
-    });
-  });
 }
 
 // ----------------------------------------------------
@@ -239,6 +178,47 @@ function initScrollHighlight() {
 
   // Первый запуск с задержкой, чтобы дать элементам загрузиться
   setTimeout(updateScrollHighlight, 500);
+}
+
+// ----------------------------------------------------
+// ЧИПСЫ КОНТАКТОВ: копирование в буфер по клику + Toast
+// ----------------------------------------------------
+function initContactChips() {
+  const chips = document.querySelectorAll(".contact-chips .chip");
+  const toast = document.getElementById("copy-toast");
+  if (!chips.length || !toast) return;
+
+  let hideTimer = null;
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", async () => {
+      const text = chip.getAttribute("data-copy");
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // fallback для старых браузеров
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      // Показываем Toast
+      toast.textContent = t("copied");
+      toast.classList.add("visible");
+
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        toast.classList.remove("visible");
+      }, 1800);
+    });
+  });
 }
 
 // Запуск инициализации при загрузке DOM

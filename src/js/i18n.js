@@ -4,6 +4,9 @@ export const translations = {
     site_title: "SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио",
     site_description: "Портфолио Евстигнеевой Дарьи — профессионального режиссера монтажа и контент-мейкера. Кинопродвижение, реклама, музыкальные клипы и трендовый вертикальный контент.",
     
+    // Доступность
+    skip_link: "Перейти к содержимому",
+
     // Навигация
     nav_home: "ГЛАВНАЯ",
     nav_services: "НАПРАВЛЕНИЯ",
@@ -13,15 +16,15 @@ export const translations = {
 
     // Главный экран (Hero)
     hero_eyebrow: "Доступна для новых проектов",
-    hero_title: "Раскрывая истории через форму и движение",
-    hero_desc: "Евстигнеева Дарья — режиссёр монтажа и контент-мейкер. Кинопродвижение, реклама, музыкальное видео и трендовый вертикальный контент — под ключ, от черновой сборки до финальной цветокоррекции.",
+    hero_title: "Управляю вниманием зрителя от первого до последнего кадра",
+    hero_desc: "Кинопродвижение, реклама, музыкальные видео и вертикальный контент — от идеи до релиза.",
     hero_cta_secondary: "Смотреть шоурил",
-    hero_showreel_badge: "Шоурил 2025",
+    hero_showreel_badge: "Showreel 2025",
     hero_cat_cinema: "кинопродвижение",
     hero_cat_brands: "реклама и бренды",
     hero_cat_music: "музыкальное видео",
     hero_cat_digital: "digital-контент",
-    hero_showreel_title: "ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА",
+    hero_showreel_title: "SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД",
 
     // Клиенты и статистика
     trust_label: "Работала с",
@@ -56,9 +59,10 @@ export const translations = {
     // Подвал (Footer)
     footer_tagline: "Евстигнеева Дарья — Режиссер монтажа",
 
-    // Модалка контактов
+    // Модалка контактов (Cinematic Contact)
     contact_title: "КОНТАКТЫ",
-    contact_subtitle: "Готова к сотрудничеству над вашим следующим проектом",
+    contact_subtitle: "Готова к сотрудничеству",
+    contact_cta_btn: "Написать в Telegram",
     
     // Видео-лайтбокс
     lightbox_label_soft: "Софт",
@@ -76,12 +80,20 @@ export const translations = {
     aria_toggle_lang: "Сменить язык",
     aria_play_showreel: "Смотреть шоурил",
     aria_play_video: "Смотреть видео",
-    aria_logo: "SOF — Sense of Form | На главную"
+    aria_logo: "SOF — Sense of Form | На главную",
+    burger_menu: "Открыть меню",
+    chip_telegram: "Telegram: @DariaEvst — нажмите чтобы скопировать",
+    chip_email: "Email: evst.daria@yandex.ru — нажмите чтобы скопировать",
+    chip_vk: "VK: vk.com/dariaevst — нажмите чтобы скопировать",
+    copied: "Скопировано"
   },
   en: {
     site_title: "SOF — Video Editor Daria Evstigneeva | Portfolio",
     site_description: "Daria Evstigneeva's Portfolio — professional video editor and content creator. Film promotion, commercials, music videos, and trending vertical content.",
     
+    // Accessibility
+    skip_link: "Skip to content",
+
     // Navigation
     nav_home: "HOME",
     nav_services: "SERVICES",
@@ -91,15 +103,15 @@ export const translations = {
 
     // Hero
     hero_eyebrow: "Available for new projects",
-    hero_title: "Elevating stories through form & movement",
-    hero_desc: "Daria Evstigneeva — video editor and content creator. Film promotion, commercials, music videos, and trending vertical content — end to end, from rough cut to final grade.",
+    hero_title: "Guiding the viewer's attention from the first frame to the last",
+    hero_desc: "Film promotion, commercials, music videos, and vertical content — from concept to release.",
     hero_cta_secondary: "Watch showreel",
     hero_showreel_badge: "Showreel 2025",
     hero_cat_cinema: "film promotion",
     hero_cat_brands: "brands & commercials",
     hero_cat_music: "music video",
     hero_cat_digital: "digital content",
-    hero_showreel_title: "SHOWREEL 2026 | EDITING SHOWCASE",
+    hero_showreel_title: "SHOWREEL 2025 | ALL FILMS IN 60 SECONDS",
 
     // Trust & stats
     trust_label: "Worked with",
@@ -134,9 +146,10 @@ export const translations = {
     // Footer
     footer_tagline: "Daria Evstigneeva — Video Editor",
 
-    // Contact modal
+    // Contact modal (Cinematic Contact)
     contact_title: "CONTACTS",
-    contact_subtitle: "Ready to collaborate on your next project",
+    contact_subtitle: "Ready to collaborate",
+    contact_cta_btn: "Message on Telegram",
     
     // Video Lightbox
     lightbox_label_soft: "Software",
@@ -154,7 +167,12 @@ export const translations = {
     aria_toggle_lang: "Change language",
     aria_play_showreel: "Watch showreel",
     aria_play_video: "Watch video",
-    aria_logo: "SOF — Sense of Form | Home"
+    aria_logo: "SOF — Sense of Form | Home",
+    burger_menu: "Open menu",
+    chip_telegram: "Telegram: @DariaEvst — click to copy",
+    chip_email: "Email: evst.daria@yandex.ru — click to copy",
+    chip_vk: "VK: vk.com/dariaevst — click to copy",
+    copied: "Copied"
   }
 };
 
@@ -225,14 +243,6 @@ export function applyLanguage(lang) {
       el.setAttribute("aria-label", translations[lang][key]);
     }
   });
-
-  // Локализация заголовков для социальных сетей в DOM
-  const mailLink = document.getElementById("footer-contact-link");
-  if (mailLink && lang === "en") {
-    mailLink.textContent = "CONTACT";
-  } else if (mailLink && lang === "ru") {
-    mailLink.textContent = "КОНТАКТЫ";
-  }
 
   // Обновление текста на переключателе языков
   const langToggleBtn = document.getElementById("lang-toggle");

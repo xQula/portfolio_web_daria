@@ -1,0 +1,40 @@
+/* ----------------------------------------------------
+   NEON CURSOR TRAIL — Glowing Strip Follow Effect
+   Полоса-шлейф акцентного цвета за курсором на canvas.
+   Только на десктопе с устройством мыши (hover: hover).
+   ---------------------------------------------------- */
+
+/* Canvas поверх всего, не перехватывает события */
+.neon-cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Скрываем нативный курсор на hover-устройствах */
+@media (hover: hover) {
+  .neon-cursor-active {
+    cursor: none !important;
+  }
+  .neon-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* Скрываем на мобильных / touch-устройствах */
+@media (hover: none) {
+  .neon-cursor-canvas {
+    display: none;
+  }
+}
+
+/* Reduced motion: отключаем */
+@media (prefers-reduced-motion: reduce) {
+  .neon-cursor-canvas {
+    display: none;
+  }
+}

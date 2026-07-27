@@ -36,11 +36,17 @@ function getGridProjects() {
 
 // Вспомогательная функция создания карточки проекта
 export function createCard(project) {
-  const card = document.createElement("div");
-  card.className = "project-card reveal";
-  card.dataset.projectId = project.id;
+  // Обёртка — grid-item + носитель glow-эффекта (::before/::after в CSS).
+  // Карточка внутри закрывает градиент изнутри через overflow:hidden + z-index:1,
+  // снаружи (inset: -2px) градиент видно как светящийся контур.
+  const wrap = document.createElement("div");
+  const aspectClass = project.aspect === "vertical" ? "card-glow-wrap--tall" : "card-glow-wrap--wide";
+  wrap.className = `card-glow-wrap ${aspectClass} reveal`;
+  wrap.dataset.projectId = project.id;
 
-  // Резервная ссылка на hqdefault для видео с YouTube (если maxresdefault вернет 404)
+  const card = document.createElement("div");
+  card.className = "project-card";
+
   const ytId = getYoutubeId(project.videoUrl);
   const onerrorAttr = ytId ? `onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';"` : '';
 
@@ -55,7 +61,7 @@ export function createCard(project) {
       <div class="card-duration-badge">${project.duration}</div>
       <div class="card-info">
         <div class="card-client">${project.client}</div>
-        <div class="card-title">${getLocalized(project.title)}</div>
+        <h3 class="card-title">${getLocalized(project.title)}</h3>
         <span class="card-meta">${getLocalized(project.subCategory)}</span>
       </div>
     </div>
@@ -70,7 +76,8 @@ export function createCard(project) {
     }
   });
 
-  return card;
+  wrap.appendChild(card);
+  return wrap;
 }
 
 // Рендеринг карточек проектов — единый CSS Grid, без ручной упаковки по форматам
@@ -143,20 +150,19 @@ export function setupFeaturedVideo() {
       ru: "Шоурил монтажа",
       en: "Editing Showreel"
     },
-    client: "Daria Evstigneeva Portfolio",
+    client: "Личный проект",
     videoUrl: "https://www.youtube.com/embed/TiMdGOTa48s",
     aspect: "horizontal",
-    soft: "Premiere Pro · After Effects · DaVinci Resolve",
+    soft: "Premiere Pro · Audition",
     desc: {
-      ru: "Официальный шоурил режиссера монтажа Евстигнеевой Дарьи.",
-      en: "Official video editing showreel of Daria Evstigneeva."
+      ru: "В этом шоуриле я собрала самые яркие кадры из разных фильмов, чтобы показать, как монтаж способен менять ритм, атмосферу и эмоциональный посыл сцены.",
+      en: "This showreel brings together the most striking frames from different films to demonstrate how editing reshapes the rhythm, atmosphere and emotional charge of a scene."
     }
   };
 
   // Заполняем HTML карточки данными из файла
   const img = featuredCard.querySelector(".featured-thumbnail-img");
   const titleSpan = featuredCard.querySelector(".featured-title");
-  const subSpan = featuredCard.querySelector("#featured-sub");
 
   if (img) {
     const ytId = getYoutubeId(featuredProject.videoUrl);
@@ -175,10 +181,6 @@ export function setupFeaturedVideo() {
   if (titleSpan) {
     titleSpan.textContent = getLocalized(featuredProject.title);
   }
-  if (subSpan) {
-    subSpan.textContent = `${getLocalized(featuredProject.subCategory)} · ${featuredProject.duration || featuredProject.soft || ""}`;
-  }
-
   const openFeatured = () => openLightbox(featuredProject);
 
   // Очищаем старые слушатели путем замены элемента (чтобы избежать дублирования)
@@ -203,23 +205,49 @@ export function setupFeaturedVideo() {
 
 // "Клиенты" без реального внешнего заказчика (авторские/личные ролики) —
 // не показываем их ни в бегущей строке, ни в счётчике клиентов
-const NON_CLIENT_LABELS = new Set(["Личный проект", "Daria Evstigneeva Portfolio"]);
+const NON_CLIENT_LABELS = new Set(["Личный проект", "Личный блог", "SOF studio", "Daria Evstigneeva Portfolio"]);
 const isRealClient = (client) => Boolean(client) && !NON_CLIENT_LABELS.has(client);
 
-// Бегущая строка клиентов — список собирается из projects.json, дублируется для бесшовной прокрутки
+// Бегущая строка клиентов — список собирается из projects.json.
+// Одна «группа» повторяет список столько раз, чтобы быть не уже вьюпорта
+// (иначе на широких экранах после ухода копии появляется пустота), и таких
+// групп две — сдвиг на -50% даёт бесшовный цикл.
 export function renderTrust() {
   const track = document.getElementById("trust-track");
   if (!track) return;
 
   const clients = [...new Set(getGridProjects().map(p => p.client).filter(isRealClient))];
   if (clients.length === 0) {
-    track.parentElement.style.display = "none";
+    const section = track.closest(".trust-section");
+    if (section) section.style.display = "none";
     return;
   }
 
-  const renderList = () => clients.map(c => `<span>${c}</span>`).join("");
-  track.innerHTML = renderList() + renderList();
+  const spans = clients.map(c => `<span>${c}</span>`).join("");
+  const viewport = track.closest(".trust-viewport") || track.parentElement;
+
+  // Измеряем ширину одного прохода списка, чтобы понять, сколько повторов
+  // нужно для заполнения экрана.
+  track.innerHTML = `<div class="trust-group">${spans}</div>`;
+  const oneListWidth = track.firstElementChild.scrollWidth || 1;
+  const need = viewport.clientWidth || window.innerWidth || oneListWidth;
+  const repeats = Math.max(1, Math.ceil(need / oneListWidth));
+
+  const groupSpans = spans.repeat(repeats);
+  // Вторую группу помечаем aria-hidden — это визуальная копия для цикла,
+  // скринридер читает список клиентов один раз.
+  track.innerHTML =
+    `<div class="trust-group">${groupSpans}</div>` +
+    `<div class="trust-group" aria-hidden="true">${groupSpans}</div>`;
 }
+
+// Пересчёт числа повторов при ресайзе — чтобы копия оставалась шире экрана
+// и на широких мониторах не появлялось пустое место.
+let trustResizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(trustResizeTimer);
+  trustResizeTimer = setTimeout(renderTrust, 200);
+});
 
 // Статистика хиро-секции — считается из projects.json + meta.yearsExperience
 export function renderStats() {

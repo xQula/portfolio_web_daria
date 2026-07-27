@@ -2,7 +2,7 @@
    PORTFOLIO SECTION STYLING
    ---------------------------------------------------- */
 .portfolio-section {
-  padding: clamp(3.5rem, 7vw, 5.6rem) 2rem;
+  padding: clamp(4.5rem, 8vw, 6.6rem) 2rem;
   border-top: 1px solid var(--color-glass-border);
 }
 
@@ -48,53 +48,127 @@
   background-color: var(--color-accent);
   color: var(--color-btn-accent-text);
   border-color: var(--color-accent);
+  box-shadow: 0 0 16px var(--shadow-accent);
 }
 
 /* ----------------------------------------------------
-   СЕТКА ПОРТФОЛИО — flex-wrap вместо CSS Grid: если проектов не хватает
-   на полный последний ряд (частый случай, т.к. список растёт из JSON
-   и редко делится ровно на число колонок), ряд центрируется, а не
-   повисает слева с дырой. Без ручной упаковки по форматам и без
-   декоративных арт-заглушек.
+   СЕТКА ПОРТФОЛИО — BENTO-ИЕРАРХИЯ. Размер плитки задаётся родным
+   форматом проекта (поле aspect в projects.json → модификатор класса
+   в grid.js): горизонталь (16:9) → широкая плитка 2×2, вертикаль (9:16)
+   → высокая плитка 1×3. grid-auto-flow: dense плотно упаковывает разные
+   размеры без дыр. Превью заполняет плитку через object-fit: cover.
    ---------------------------------------------------- */
 .project-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: clamp(120px, 13.5vw, 165px);
+  grid-auto-flow: row dense;
+  gap: 16px;
   transition: opacity 0.3s ease;
 }
 
+/* ----------------------------------------------------
+   CARD-GLOW-WRAP — grid-item и носитель эффекта.
+   Карточка внутри (.project-card) закрывает гло изнутри через z-index:1 +
+   overflow:hidden. ::before/::after на обёртке выходят на inset:-2px наружу —
+   там градиент виден как светящийся контур рядом с рамкой карточки.
+   ---------------------------------------------------- */
+.card-glow-wrap {
+  position: relative;
+  grid-column: span 2;
+  grid-row: span 2;
+  border-radius: var(--border-radius-md);
+  isolation: isolate;
+  transition: opacity 0.4s ease;
+}
+
+.card-glow-wrap--wide { grid-column: span 2; grid-row: span 2; }
+.card-glow-wrap--tall { grid-column: span 1; grid-row: span 3; }
+
+/* ПРОЖЕКТОР: затемнение только когда курсор над карточкой, не над промежутком */
+.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap        { opacity: 0.4; }
+.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap:hover  { opacity: 1; }
+
+/* --- СЛОИ СВЕЧЕНИЯ (на обёртке, z-index:0 — под карточкой) --- */
+/* Толщина кольца = inset. Большой радиус градиента → равномерное
+   свечение по всему периметру; курсор добавляет яркость на ближней грани. */
+.card-glow-wrap::before,
+.card-glow-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Лайм-контур: 300px — реагирует только когда курсор близко */
+.card-glow-wrap::before {
+  background-image: radial-gradient(
+    300px at var(--mx, -500px) var(--my, -500px),
+    rgba(204, 255, 0, 1)    0%,
+    rgba(204, 255, 0, 0.6)  30%,
+    rgba(204, 255, 0, 0.15) 60%,
+    transparent             80%
+  );
+  filter: brightness(1.5);
+}
+
+/* Белый блик у ближней грани */
+.card-glow-wrap::after {
+  background-image: radial-gradient(
+    150px at var(--mx, -500px) var(--my, -500px),
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent              70%
+  );
+}
+
+/* --- КАРТОЧКА (заполняет обёртку, закрывает гло изнутри) --- */
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  flex: 1 1 270px;
-  max-width: 340px;
-  border-radius: var(--border-radius-md);
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   overflow: hidden;
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-glass-border);
   cursor: pointer;
-  transition: transform var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1), border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  z-index: 1;
+  transition: transform var(--transition-speed) var(--ease-premium),
+              border-color var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
 }
 
-.project-card:hover,
-.project-card:focus-visible {
-  transform: translateY(-6px);
-  border-color: var(--color-border-hover);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7), 0 0 25px var(--shadow-accent);
+.card-glow-wrap:hover {
+  transform: translateY(-4px);
 }
 
+.card-glow-wrap:hover .project-card {
+  border-color: rgba(204, 255, 0, 0.45);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* Клавиатурный фокус */
 .project-card:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .project-grid:hover .card-glow-wrap { opacity: 1; }
+  .card-glow-wrap:hover               { transform: none; }
+}
+
 .card-thumbnail-container {
   position: relative;
+  flex: 1;
   width: 100%;
-  aspect-ratio: 4/5;
+  min-height: 0;
   overflow: hidden;
+  border-radius: inherit;
   background-color: var(--color-bg-secondary);
 }
 
@@ -212,26 +286,41 @@
   margin-top: 3rem;
 }
 
-@media (max-width: 768px) {
+/* Планшет — 2 колонки */
+@media (max-width: 960px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: clamp(120px, 22vw, 175px);
+  }
+  .card-glow-wrap--wide { grid-column: span 2; grid-row: span 2; }
+  .card-glow-wrap--tall { grid-column: span 1; grid-row: span 3; }
+}
+
+/* Телефон — один столбец: плитки в родных пропорциях, без grid-спанов */
+@media (max-width: 560px) {
   .portfolio-section {
     padding: 4rem 1rem;
   }
   .project-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
     gap: 12px;
   }
-  .project-card {
-    flex-basis: 220px;
-    max-width: 280px;
+  .card-glow-wrap {
+    grid-column: auto;
+    grid-row: auto;
   }
+  .card-glow-wrap--wide { aspect-ratio: 16 / 9; }
+  .card-glow-wrap--tall { aspect-ratio: 9 / 16; max-height: 76vh; }
 }
 
 /* Active Scroll Highlight (Mobile) */
-.project-card.active-scroll {
+.card-glow-wrap.active-scroll .project-card {
   transform: translateY(-4px);
   box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.75), 0 0 20px var(--shadow-accent);
   border-color: var(--color-border-hover);
 }
 
-.project-card.active-scroll .card-thumbnail-img {
+.card-glow-wrap.active-scroll .card-thumbnail-img {
   transform: scale(1.04);
 }

@@ -8,7 +8,7 @@
   <title>SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио</title>
 
   <!-- Предзагрузка локальных бренд-шрифтов -->
-  <link rel="preload" href="/font/Mak/Mak font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="/font/Mak/Mak-font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Подключение Google Fonts: Inter (Sans-serif) -->
@@ -59,6 +59,9 @@
 </head>
 <body>
 
+  <!-- Skip-link: скрыт визуально, появляется по клавиатурному фокусу -->
+  <a href="#main-content" class="skip-link" data-i18n="skip_link">Перейти к содержимому</a>
+
   <!-- Шапка сайта (Header) -->
   <header class="site-header" id="site-header">
     <div class="header-container">
@@ -87,7 +90,7 @@
         </a>
 
         <!-- Кнопка бургер-меню -->
-        <button id="mobile-menu-trigger" class="mobile-menu-btn" aria-label="Открыть меню">
+        <button id="mobile-menu-trigger" class="mobile-menu-btn" aria-label="Открыть меню" data-i18n-aria="burger_menu">
           <span></span>
           <span></span>
           <span></span>
@@ -119,54 +122,69 @@
     </div>
   </div>
 
-  <main>
-    <!-- Главный экран (Hero) -->
+  <main id="main-content">
+    <!-- Стартовый экран: Hero + бегущая строка + статистика гарантированно
+         занимают минимум 100dvh целиком — портфолио физически не может
+         "подглядывать" снизу ни при каком разрешении экрана -->
+    <div class="above-fold">
+    <!-- Главный экран (Hero) — «Кинокадр»: шоурил как сцена (2.39:1) -->
     <section class="hero-section" id="hero">
       <div class="hero-container">
-        <div class="hero-text-block">
-          <div class="hero-eyebrow">
-            <span class="dot"></span>
-            <span data-i18n="hero_eyebrow">Доступна для новых проектов</span>
-          </div>
-          <h1 class="hero-title" data-i18n="hero_title">Раскрывая истории через форму и движение</h1>
-          <p class="hero-desc" data-i18n="hero_desc">Евстигнеева Дарья — режиссёр монтажа и контент-мейкер. Кинопродвижение, реклама, музыкальное видео и трендовый вертикальный контент — под ключ, от черновой сборки до финальной цветокоррекции.</p>
-          <div class="hero-cta-row">
-            <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="nav_start_project">НАЧАТЬ ПРОЕКТ</a>
-            <button type="button" class="btn btn-secondary btn-magnet" id="hero-showreel-btn" data-i18n="hero_cta_secondary">Смотреть шоурил</button>
-          </div>
-        </div>
 
-        <!-- Featured Video Card — 3D-tilt карточка (main.js: initTiltCard) -->
-        <div class="tilt-wrap" id="tilt-wrap">
+        <!-- Кинематографичная сцена: широкий кадр шоурила -->
+        <div class="hero-stage">
           <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
-            <span class="featured-badge" data-i18n="hero_showreel_badge">Шоурил 2025</span>
             <div class="featured-thumbnail-container">
               <div class="featured-noise-overlay"></div>
-              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
+              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
+
+              <!-- Верхние углы кадра -->
+              <div class="hero-eyebrow">
+                <span class="dot"></span>
+                <span data-i18n="hero_eyebrow">Доступна для новых проектов</span>
+              </div>
+
+              <!-- Центр: play -->
               <button class="play-btn-large" aria-label="Смотреть шоурил" data-i18n-aria="aria_play_showreel">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
               </button>
+
+              <!-- Нижний правый угол: подпись шоурила -->
               <div class="featured-meta">
-                <span class="featured-title" data-i18n="hero_showreel_title">ШОУРИЛ 2026 | ПРИМЕРЫ МОНТАЖА</span>
-                <span class="featured-sub" id="featured-sub"></span>
+                <span class="featured-title" data-i18n="hero_showreel_title">SHOWREEL 2025 | ВСЕ ФИЛЬМЫ ЗА 60 СЕКУНД</span>
               </div>
             </div>
           </div>
+
+          <!-- Заголовок-титр поверх кадра (клики проходят сквозь к карточке) -->
+          <h1 class="hero-title" data-i18n="hero_title">Управляю вниманием зрителя от первого до последнего кадра</h1>
+        </div>
+
+        <!-- Подпись + действия под кадром -->
+        <div class="hero-footer">
+          <p class="hero-desc" data-i18n="hero_desc">Кинопродвижение, реклама, музыкальные видео и вертикальный контент — от идеи до релиза.</p>
+          <div class="hero-cta-row">
+            <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="nav_start_project">НАЧАТЬ ПРОЕКТ</a>
+            <button type="button" class="btn btn-secondary btn-magnet" id="hero-showreel-btn" data-i18n="hero_cta_secondary">Смотреть шоурил</button>
+          </div>
         </div>
       </div>
+
     </section>
 
     <!-- Клиенты (Trust marquee) — список подтягивается из projects.json -->
     <section class="trust-section" aria-label="Клиенты">
       <div class="trust-label" data-i18n="trust_label">Работала с</div>
-      <div class="trust-track" id="trust-track"></div>
+      <div class="trust-viewport">
+        <div class="trust-track" id="trust-track"></div>
+      </div>
     </section>
 
     <!-- Статистика — числа считаются из projects.json -->
     <section class="stats-section">
-      <div class="stats-grid reveal">
+      <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-num" id="stat-projects">—</div>
           <div class="stat-label" data-i18n="stat_label_projects">Завершённых проектов</div>
@@ -185,6 +203,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <!-- Направления работы -->
     <section class="services-section" id="services">
@@ -193,36 +212,32 @@
         <p data-i18n="services_subtitle">От киноиндустрии до соцсетей — единый монтажный почерк под формат площадки.</p>
       </div>
       <div class="service-grid">
-        <div class="service-card reveal">
-          <span class="service-num">01</span>
-          <div class="service-title" data-i18n="hero_cat_cinema">кинопродвижение</div>
+        <article class="service-card reveal">
+          <h3 class="service-title" data-i18n="hero_cat_cinema">кинопродвижение</h3>
           <p class="service-desc" data-i18n="service_desc_cinema">Трейлеры и тизеры с точной драматургией и атмосферным саунд-дизайном.</p>
-        </div>
-        <div class="service-card reveal">
-          <span class="service-num">02</span>
-          <div class="service-title" data-i18n="hero_cat_brands">реклама и бренды</div>
+        </article>
+        <article class="service-card reveal">
+          <h3 class="service-title" data-i18n="hero_cat_brands">реклама и бренды</h3>
           <p class="service-desc" data-i18n="service_desc_brands">Коммерческие ролики с монтажом под брендбук и точными акцентами.</p>
-        </div>
-        <div class="service-card reveal">
-          <span class="service-num">03</span>
-          <div class="service-title" data-i18n="hero_cat_music">музыкальное видео</div>
+        </article>
+        <article class="service-card reveal">
+          <h3 class="service-title" data-i18n="hero_cat_music">музыкальное видео</h3>
           <p class="service-desc" data-i18n="service_desc_music">Ритмичный монтаж, speed ramp и синхронизация под саундтрек.</p>
-        </div>
-        <div class="service-card reveal">
-          <span class="service-num">04</span>
-          <div class="service-title" data-i18n="hero_cat_digital">digital-контент</div>
+        </article>
+        <article class="service-card reveal">
+          <h3 class="service-title" data-i18n="hero_cat_digital">digital-контент</h3>
           <p class="service-desc" data-i18n="service_desc_digital">Shorts и Reels под трендовые форматы вертикальных площадок.</p>
-        </div>
+        </article>
       </div>
     </section>
 
     <!-- Секция Портфолио -->
     <section class="portfolio-section" id="portfolio">
       <div class="portfolio-container">
-        <h2 class="section-title" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
+        <h2 class="section-title reveal" data-i18n="portfolio_title">ПОРТФОЛИО</h2>
 
         <!-- Фильтры проектов -->
-        <div class="portfolio-filters" id="portfolio-filters">
+        <div class="portfolio-filters reveal" id="portfolio-filters">
           <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Все проекты</button>
           <button class="filter-btn" data-filter="trailers" data-i18n="filter_cinema">Кинопродвижение</button>
           <button class="filter-btn" data-filter="commercial" data-i18n="filter_commercial">Реклама</button>
@@ -251,72 +266,110 @@
           <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-magnet" data-i18n="cta_primary">Написать в Telegram</a>
           <a href="#portfolio" class="btn btn-secondary btn-magnet" data-i18n="cta_secondary">Смотреть портфолио</a>
         </div>
-        <div class="contact-chips">
-          <div>Telegram <span>@DariaEvst</span></div>
-          <div>Email <span>evst.daria@yandex.ru</span></div>
-          <div>VK <span>vk.com/dariaevst</span></div>
+        <div class="contact-chips" id="contact-chips">
+          <div class="chip" data-copy="@DariaEvst" data-i18n-aria="chip_telegram" aria-label="Telegram: @DariaEvst — нажмите чтобы скопировать">
+            <span class="chip-label">Telegram</span>
+            <span class="chip-value">@DariaEvst</span>
+          </div>
+          <div class="chip" data-copy="evst.daria@yandex.ru" data-i18n-aria="chip_email" aria-label="Email: evst.daria@yandex.ru — нажмите чтобы скопировать">
+            <span class="chip-label">Email</span>
+            <span class="chip-value">evst.daria@yandex.ru</span>
+          </div>
+          <div class="chip" data-copy="vk.com/dariaevst" data-i18n-aria="chip_vk" aria-label="VK: vk.com/dariaevst — нажмите чтобы скопировать">
+            <span class="chip-label">VK</span>
+            <span class="chip-value">vk.com/dariaevst</span>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Подвал сайта (Footer) -->
+  <!-- Подвал сайта (Footer) — Glass multi-column -->
   <footer class="site-footer" id="footer">
     <div class="footer-container">
-      <div class="footer-left">
+      <!-- Колонка 1: Бренд -->
+      <div class="footer-col footer-brand">
         <a href="#hero" class="logo-block logo-footer" aria-label="SOF — Sense of Form | На главную" data-i18n-aria="aria_logo">
           <div class="logo-main">
             <span class="serif-char">S</span><span class="circle-char">O</span><span class="gothic-char">F</span>
           </div>
           <div class="logo-tagline">SENSE OF FORM</div>
         </a>
-        <p class="footer-author-text" data-i18n="footer_tagline">Евстигнеева Дарья — Режиссер монтажа</p>
+        <p class="footer-desc" data-i18n="footer_tagline">Евстигнеева Дарья — режиссёр монтажа. Кинопродвижение, реклама, музыкальное видео и трендовый контент — под ключ.</p>
+        <div class="footer-brand-cta">
+          <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-compact btn-magnet footer-cta-btn" data-i18n="nav_start_project">Начать проект</a>
+        </div>
       </div>
 
-      <nav class="footer-nav">
-        <ul>
-          <li><a href="#hero" class="footer-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
-          <li><a href="#portfolio" class="footer-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
-          <li><a href="#" class="footer-link" id="footer-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
+      <!-- Колонка 2: Навигация -->
+      <div class="footer-col">
+        <h4 class="footer-col-title" data-i18n="footer_nav_title">НАВИГАЦИЯ</h4>
+        <ul class="footer-list">
+          <li><a href="#hero" class="footer-link" data-i18n="nav_home">Главная</a></li>
+          <li><a href="#services" class="footer-link" data-i18n="nav_services">Направления</a></li>
+          <li><a href="#portfolio" class="footer-link" data-i18n="nav_portfolio">Портфолио</a></li>
+          <li><a href="#" class="footer-link" id="footer-contact-link" data-i18n="nav_contact">Контакты</a></li>
         </ul>
-      </nav>
+      </div>
 
-      <div class="footer-right">
-        <!-- Соцсети -->
-        <div class="social-links">
-          <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="social-item" title="Telegram" aria-label="Telegram">
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
-              <path d="m22 2-7 20-4-9-9-4Z" vector-effect="non-scaling-stroke"></path>
-              <path d="M22 2 11 13" vector-effect="non-scaling-stroke"></path>
-            </svg>
-          </a>
-          <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="social-item" title="ВКонтакте" aria-label="ВКонтакте">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" shape-rendering="geometricPrecision">
-              <path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/>
-            </svg>
-          </a>
-          <a href="https://www.youtube.com/@Daria__Evstigneeva" target="_blank" rel="noopener noreferrer" class="social-item" title="YouTube" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
-              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" vector-effect="non-scaling-stroke"></path>
-              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" vector-effect="non-scaling-stroke"></polygon>
-            </svg>
-          </a>
-          <a href="https://rutube.ru/channel/61040592/" target="_blank" rel="noopener noreferrer" class="social-item" title="RuTube" aria-label="RuTube">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" shape-rendering="geometricPrecision">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-            </svg>
-          </a>
-          <a href="mailto:evst.daria@yandex.ru" class="social-item" title="Email" aria-label="Email">
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" shape-rendering="geometricPrecision">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vector-effect="non-scaling-stroke"></path>
-              <polyline points="22,6 12,13 2,6" vector-effect="non-scaling-stroke"></polyline>
-            </svg>
-          </a>
-        </div>
-        <div class="copyright-block">
-          <span>&copy; 2026 Sense of Form</span>
+      <!-- Колонка 3: Соцсети -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">СОЦСЕТИ</h4>
+        <ul class="footer-list">
+          <li>
+            <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              Telegram
+            </a>
+          </li>
+          <li>
+            <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/></svg>
+              VK
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@Daria__Evstigneeva" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/></svg>
+              YouTube
+            </a>
+          </li>
+          <li>
+            <a href="https://rutube.ru/channel/61040592/" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              RuTube
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Колонка 4: Контакты -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">КОНТАКТЫ</h4>
+        <ul class="footer-list">
+          <li>
+            <a href="mailto:evst.daria@yandex.ru" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              evst.daria@yandex.ru
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="footer-link footer-link--social">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              @DariaEvst
+            </a>
+          </li>
+        </ul>
+        <div class="footer-contact-cta">
+          <a href="mailto:evst.daria@yandex.ru" class="btn btn-secondary btn-compact footer-cta-btn" data-i18n="footer_write_email">Написать на почту</a>
         </div>
       </div>
+    </div>
+
+    <!-- Нижняя планка -->
+    <div class="footer-bottom">
+      <span>&copy; 2026 SOF — Sense of Form</span>
+      <span data-i18n="footer_tagline">Евстигнеева Дарья — Режиссер монтажа</span>
     </div>
   </footer>
 
@@ -341,50 +394,66 @@
     </div>
   </div>
 
-  <!-- Модальное окно контактов -->
-  <div id="contact-modal" class="lightbox" aria-hidden="true" role="dialog">
+  <!-- Модальное окно контактов (Cinematic Contact) -->
+  <div id="contact-modal" class="lightbox contact-cinematic" aria-hidden="true" role="dialog">
     <button class="lightbox-close" id="contact-close" aria-label="Закрыть контакты" data-i18n-aria="aria_close_contacts">&times;</button>
-    <div class="contact-modal-content">
-      <h3 class="contact-modal-title" data-i18n="contact_title">КОНТАКТЫ</h3>
-      <p class="contact-modal-subtitle" data-i18n="contact_subtitle">Ready to collaborate on your next project</p>
 
-      <div class="contact-modal-links">
-        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m22 2-7 20-4-9-9-4Z"></path>
-              <path d="M22 2 11 13"></path>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">Telegram</span>
-            <span class="contact-value">@DariaEvst</span>
-          </div>
-        </a>
+    <div class="contact-cinematic-content">
+      <!-- Левая колонка: заголовок + соц-иконки -->
+      <div class="contact-cinematic-info">
+        <h2 class="contact-cinematic-title" data-i18n="contact_title">КОНТАКТЫ</h2>
+        <p class="contact-cinematic-subtitle" data-i18n="contact_subtitle">Готова к сотрудничеству</p>
 
-        <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">VKontakte</span>
-            <span class="contact-value">vk.com/dariaevst</span>
-          </div>
-        </a>
+        <div class="contact-social-row">
+          <!-- Telegram -->
+          <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="Telegram">
+            <span class="social-icon social-icon--telegram">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+                <path d="M22 2 11 13"></path>
+              </svg>
+            </span>
+            <span class="social-icon-label">Telegram</span>
+          </a>
 
-        <a href="mailto:evst.daria@yandex.ru" class="contact-modal-item">
-          <span class="contact-icon-wrapper">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-          </span>
-          <div class="contact-item-info">
-            <span class="contact-label">Email</span>
-            <span class="contact-value">evst.daria@yandex.ru</span>
-          </div>
+          <!-- Email -->
+          <a href="mailto:evst.daria@yandex.ru" class="social-icon-wrap" aria-label="Email">
+            <span class="social-icon social-icon--email">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">Email</span>
+          </a>
+
+          <!-- VK -->
+          <a href="https://vk.com/dariaevst" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="VKontakte">
+            <span class="social-icon social-icon--vk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M19.14 2H4.86A2.86 2.86 0 0 0 2 4.86v14.28A2.86 2.86 0 0 0 4.86 22h14.28A2.86 2.86 0 0 0 22 19.14V4.86A2.86 2.86 0 0 0 19.14 2zm.73 13c-.09.28-.46.85-1 1.37a8.55 8.55 0 0 1-1.12.87c-.36.24-.76.45-1.11.45s-.49-.1-.73-.34c-.26-.26-.82-1-.82-1s-.41-.57-.69-.53a.58.58 0 0 0-.49.33c-.22.45-.22 1.25-.22 1.25s0 .32-.17.48a.72.72 0 0 1-.5.16h-1c-1 0-2-.31-3-1.07a10 10 0 0 1-2.67-2.95A19.8 19.8 0 0 1 5.3 9.49a.66.66 0 0 1 .15-.46.74.74 0 0 1 .46-.17h1.49a.67.67 0 0 1 .63.47 13.6 13.6 0 0 0 1.22 2.45c.16.27.35.54.54.54s.24-.16.24-.48v-2a1 1 0 0 0-.17-.67.75.75 0 0 0-.52-.19c-.09 0-.17 0-.21.05.15-.49.61-.84 1.27-.84h1a.7.7 0 0 1 .7.7v2c0 .35 0 .76.19.92a.37.37 0 0 0 .33.05c.31-.07.72-.64 1-1.1a14.8 14.8 0 0 0 1.1-2.42.75.75 0 0 1 .74-.46H18a.71.71 0 0 1 .68.48c.09.47-.79 1.95-.79 1.95s-.54 1-.54 1.34c0 .31.3.56.57.77a5.55 5.55 0 0 0 1.63 1c.54.24.73.49.77.72.04.14 0 .39-.18.57z"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">VK</span>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://www.youtube.com/@sofmotion" target="_blank" rel="noopener noreferrer" class="social-icon-wrap" aria-label="YouTube">
+            <span class="social-icon social-icon--youtube">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </span>
+            <span class="social-icon-label">YouTube</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Правая колонка: CTA -->
+      <div class="contact-cinematic-cta">
+        <a href="https://t.me/DariaEvst" target="_blank" rel="noopener noreferrer" class="btn-magnet contact-cinematic-btn">
+          <span data-i18n="contact_cta_btn">Написать в Telegram</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
     </div>
@@ -395,5 +464,8 @@
 
   <!-- Скрипты -->
   <script type="module" src="./src/js/main.js"></script>
+
+  <!-- Toast для копирования -->
+  <div id="copy-toast" class="copy-toast" aria-live="polite"></div>
 </body>
 </html>

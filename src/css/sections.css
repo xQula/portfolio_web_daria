@@ -17,11 +17,27 @@
   margin-bottom: 14px;
 }
 
+/* Стационарный «вьюпорт»: мягкий фейд по краям, чтобы имена клиентов
+   плавно появлялись и растворялись, а не обрывались о границу секции. */
+.trust-viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
 .trust-track {
   display: flex;
-  gap: 60px;
   width: max-content;
-  animation: trust-scroll 28s linear infinite;
+  animation: trust-scroll 55s linear infinite;
+}
+
+/* Две идентичные группы едут встык. Внутренний gap и trailing padding-right
+   равны, поэтому translateX(-50%) сдвигает ровно на ширину одной группы —
+   стык бесшовный, без рывка на пол-гэпа. */
+.trust-group {
+  display: flex;
+  gap: 60px;
+  padding-right: 60px;
 }
 
 .trust-track span {
@@ -41,7 +57,11 @@
 @media (prefers-reduced-motion: reduce) {
   .trust-track {
     animation: none;
+  }
+  .trust-viewport {
     overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
@@ -49,7 +69,12 @@
    STATS
    ---------------------------------------------------- */
 .stats-section {
-  padding: clamp(3.5rem, 7vw, 5.6rem) 2rem;
+  --stats-pad-y: clamp(1.6rem, 3vw, 2.8rem);
+  padding: var(--stats-pad-y) 2rem;
+  /* Дополнительный запас снизу — под плавающую подсказку "Листайте вниз"
+     (.scroll-cue, ~65px + 32px отступ от края), чтобы она не перекрывала
+     сами карточки, а зависала над пустым полем */
+  padding-bottom: calc(var(--stats-pad-y) + 76px);
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -61,18 +86,61 @@
 }
 
 .stat-card {
+  position: relative;
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
   padding: 1.9rem 1.5rem;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  transition:
+    transform 0.4s var(--ease-premium),
+    opacity 0.4s var(--ease-premium),
+    filter 0.4s var(--ease-premium),
+    border-color var(--transition-speed) ease,
+    background-color var(--transition-speed) ease;
 }
 
-.stat-card:hover {
-  transform: translateY(-6px);
+/* Та же лаймовая метка «в фокусе», что и в Services */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--color-accent);
+  border-radius: 2px 2px 0 0;
+  transition: width 0.4s var(--ease-premium);
+}
+
+/* ПРОЖЕКТОР (как в Services C): наведение на сетку притухляет все плитки… */
+.stats-grid:hover .stat-card {
+  opacity: 0.4;
+  filter: blur(1.5px) saturate(0.6);
+}
+
+/* …кроме активной — она в фокусе и выходит вперёд */
+.stats-grid .stat-card:hover {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.05);
-  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
+}
+
+.stats-grid .stat-card:hover::after {
+  width: 42%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-grid:hover .stat-card {
+    opacity: 1;
+    filter: none;
+  }
+  .stats-grid .stat-card:hover {
+    transform: none;
+  }
 }
 
 .stat-num {
@@ -94,6 +162,33 @@
 @media (max-width: 760px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Тот же компактный режим по высоте, что и в hero.css — trust marquee
+   и статистика тоже подтягивают отступы, чтобы весь стартовый блок
+   помещался на невысоких окнах. */
+@media (max-height: 1300px) {
+  .trust-section {
+    padding: 10px 0;
+  }
+
+  .trust-label {
+    margin-bottom: 8px;
+  }
+
+  .stats-section {
+    --stats-pad-y: clamp(0.8rem, 1.5vw, 1.4rem);
+    padding: var(--stats-pad-y) 2rem;
+    padding-bottom: calc(var(--stats-pad-y) + 76px);
+  }
+
+  .stat-card {
+    padding: 1rem 1.2rem;
+  }
+
+  .stat-num {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
   }
 }
 
@@ -136,32 +231,58 @@
 }
 
 .service-card {
+  position: relative;
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
   padding: 1.7rem 1.4rem;
-  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+  transition:
+    transform 0.4s var(--ease-premium),
+    opacity 0.4s var(--ease-premium),
+    filter 0.4s var(--ease-premium),
+    border-color var(--transition-speed) ease,
+    background-color var(--transition-speed) ease;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
+/* Тонкая лаймовая метка «в фокусе» — вырастает слева сверху на активной карточке */
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--color-accent);
+  border-radius: 2px 2px 0 0;
+  transition: width 0.4s var(--ease-premium);
+}
+
+/* ПРОЖЕКТОР: при наведении на сетку все карточки притухают и слегка блюрятся… */
+.service-grid:hover .service-card {
+  opacity: 0.4;
+  filter: blur(1.5px) saturate(0.6);
+}
+
+/* …кроме той, что под курсором — она в фокусе и выходит вперёд */
+.service-grid .service-card:hover {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.05);
-  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.6), 0 0 20px var(--shadow-accent);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
 }
 
-.service-num {
-  font-family: var(--font-serif);
-  font-style: italic;
-  color: var(--color-accent);
-  font-size: 1.5rem;
+.service-grid .service-card:hover::after {
+  width: 42%;
 }
 
 .service-title {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1.25rem;
-  margin-top: 0.9rem;
+  margin-top: 0;
   text-transform: none;
 }
 
@@ -170,6 +291,17 @@
   font-size: 0.92rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+/* Reduced motion: без блюра/сдвига/масштаба — фокус только по рамке */
+@media (prefers-reduced-motion: reduce) {
+  .service-grid:hover .service-card {
+    opacity: 1;
+    filter: none;
+  }
+  .service-grid .service-card:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 960px) {
@@ -234,7 +366,56 @@
   color: var(--color-text-secondary);
 }
 
-.contact-chips span {
+.contact-chips .chip {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.25s ease;
+}
+
+.contact-chips .chip:hover {
+  opacity: 0.7;
+}
+
+.contact-chips .chip:active {
+  opacity: 0.5;
+}
+
+.contact-chips .chip-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  display: block;
+}
+
+.contact-chips .chip-value {
   color: var(--color-text-primary);
   font-weight: 600;
+}
+
+/* ----------------------------------------------------
+   COPY-TOAST
+   ---------------------------------------------------- */
+.copy-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 0.7rem 1.6rem;
+  background: var(--color-accent);
+  color: #0a0b0d;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 6px;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s var(--ease-premium);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.copy-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
