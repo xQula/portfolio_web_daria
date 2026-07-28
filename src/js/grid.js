@@ -244,7 +244,13 @@ export function renderTrust() {
 // Пересчёт числа повторов при ресайзе — чтобы копия оставалась шире экрана
 // и на широких мониторах не появлялось пустое место.
 let trustResizeTimer;
+let lastTrustWidth = window.innerWidth;
 window.addEventListener("resize", () => {
+  // iOS Safari шлёт resize при скрытии/появлении тулбара — там меняется
+  // только высота, ширина остаётся прежней; пересчёт в этом случае не нужен
+  // и может прервать анимацию.
+  if (window.innerWidth === lastTrustWidth) return;
+  lastTrustWidth = window.innerWidth;
   clearTimeout(trustResizeTimer);
   trustResizeTimer = setTimeout(renderTrust, 200);
 });

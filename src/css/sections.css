@@ -29,6 +29,13 @@
   display: flex;
   width: max-content;
   animation: trust-scroll 55s linear infinite;
+  /* iOS Safari не перерисовывает transform-анимацию внутри вложенных
+     overflow:hidden + mask-image без явного промоута в отдельный GPU-слой —
+     без этого бегущая строка визуально замирает. */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Две идентичные группы едут встык. Внутренний gap и trailing padding-right
