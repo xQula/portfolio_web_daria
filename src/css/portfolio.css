@@ -286,6 +286,32 @@
   margin-top: 3rem;
 }
 
+/* Мобильные/планшеты: без hover/spotlight-эффектов (тап на тач-экранах "залипает") */
+@media (max-width: 1024px) {
+  .project-grid:has(.card-glow-wrap:hover) .card-glow-wrap {
+    opacity: 1;
+  }
+  .card-glow-wrap:hover {
+    transform: none;
+  }
+  .card-glow-wrap:hover .project-card:not(.active-scroll) {
+    border-color: var(--color-glass-border);
+    box-shadow: none;
+  }
+  .project-card:hover .card-thumbnail-img {
+    transform: none;
+    filter: grayscale(0.3) contrast(1.05);
+  }
+  .project-card:hover .play-btn-small {
+    border-color: rgba(247, 246, 242, 0.5);
+    background-color: rgba(10, 11, 13, 0.3);
+    transform: translate(-50%, -50%);
+  }
+  .project-card:hover .play-btn-small svg {
+    fill: var(--color-text-primary);
+  }
+}
+
 /* Планшет — 2 колонки */
 @media (max-width: 960px) {
   .project-grid {
@@ -314,13 +340,14 @@
   .card-glow-wrap--tall { aspect-ratio: 9 / 16; max-height: 76vh; }
 }
 
-/* Active Scroll Highlight (Mobile) */
-.card-glow-wrap.active-scroll .project-card {
+/* Active Scroll Highlight (Mobile) — класс вешается на .project-card
+   (см. getCards() в main.js), не на обёртку .card-glow-wrap. */
+.project-card.active-scroll {
   transform: translateY(-4px);
   box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.75), 0 0 20px var(--shadow-accent);
   border-color: var(--color-border-hover);
 }
 
-.card-glow-wrap.active-scroll .card-thumbnail-img {
+.project-card.active-scroll .card-thumbnail-img {
   transform: scale(1.04);
 }

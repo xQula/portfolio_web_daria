@@ -90,6 +90,7 @@
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
+  overflow: hidden;
   padding: 1.9rem 1.5rem;
   transition:
     transform 0.4s var(--ease-premium),
@@ -141,6 +142,40 @@
   .stats-grid .stat-card:hover {
     transform: none;
   }
+}
+
+/* Мобильные/планшеты: без hover-эффектов (тап на тач-экранах "залипает") */
+@media (max-width: 1024px) {
+  .stats-grid:hover .stat-card:not(.active-scroll) {
+    opacity: 1;
+    filter: none;
+  }
+  .stats-grid .stat-card:hover:not(.active-scroll) {
+    transform: none;
+    border-color: var(--color-glass-border);
+    background-color: var(--color-glass-bg);
+    box-shadow: none;
+  }
+  .stats-grid .stat-card:hover:not(.active-scroll)::after {
+    width: 0;
+  }
+}
+
+/* Active Scroll Highlight (Mobile) — та же подсветка "в фокусе", что и по
+   hover на десктопе, но триггерится приближением карточки к центру экрана
+   при скролле (см. initScrollHighlight в main.js), а не курсором. */
+.stat-card.active-scroll {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
+  border-color: var(--color-accent);
+  background-color: rgba(204, 255, 0, 0.05);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
+}
+
+.stat-card.active-scroll::after {
+  width: 42%;
 }
 
 .stat-num {
@@ -235,6 +270,7 @@
   background: var(--color-glass-bg);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--border-radius-md);
+  overflow: hidden;
   padding: 1.7rem 1.4rem;
   transition:
     transform 0.4s var(--ease-premium),
@@ -302,6 +338,38 @@
   .service-grid .service-card:hover {
     transform: none;
   }
+}
+
+/* Мобильные/планшеты: без hover-эффектов (тап на тач-экранах "залипает") */
+@media (max-width: 1024px) {
+  .service-grid:hover .service-card:not(.active-scroll) {
+    opacity: 1;
+    filter: none;
+  }
+  .service-grid .service-card:hover:not(.active-scroll) {
+    transform: none;
+    border-color: var(--color-glass-border);
+    background-color: var(--color-glass-bg);
+    box-shadow: none;
+  }
+  .service-grid .service-card:hover:not(.active-scroll)::after {
+    width: 0;
+  }
+}
+
+/* Active Scroll Highlight (Mobile) — аналог .stat-card.active-scroll выше */
+.service-card.active-scroll {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-6px) scale(1.03);
+  z-index: 2;
+  border-color: var(--color-accent);
+  background-color: rgba(204, 255, 0, 0.05);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7), 0 0 26px var(--shadow-accent);
+}
+
+.service-card.active-scroll::after {
+  width: 42%;
 }
 
 @media (max-width: 960px) {
