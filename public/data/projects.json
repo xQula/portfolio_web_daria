@@ -18,7 +18,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/TiMdGOTa48s",
-      "preview": "/img/previews/showreel.webp",
+      "preview": "/img/previews/showreel.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition",
       "desc": {
@@ -43,7 +43,7 @@
       },
       "client": "Tricolor",
       "videoUrl": "https://www.youtube.com/embed/mXtoXjrKfSg",
-      "preview": "/img/previews/2.webp",
+      "preview": "/img/previews/2.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · Ultimate Vocal Remover",
       "desc": {
@@ -66,7 +66,7 @@
       },
       "client": "Tricolor кампания",
       "videoUrl": "https://www.youtube.com/embed/Mk2RezSFEwY",
-      "preview": "/img/previews/3.webp",
+      "preview": "/img/previews/3.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · Ultimate Vocal Remover",
       "desc": {
@@ -89,7 +89,7 @@
       },
       "client": "SOF studio",
       "videoUrl": "https://www.youtube.com/embed/qX6RYcAX6mI",
-      "preview": "/img/previews/11.webp",
+      "preview": "/img/previews/11.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -112,7 +112,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/750hWGn9eP4",
-      "preview": "/img/previews/21.webp",
+      "preview": "/img/previews/21.jpg",
       "aspect": "vertical",
       "soft": "CapCut · Nanabanana · Kling 3",
       "desc": {
@@ -135,7 +135,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/lGaCgimaE8s",
-      "preview": "/img/previews/20.webp",
+      "preview": "/img/previews/20.jpg",
       "aspect": "vertical",
       "soft": "CapCut · Midjourney · Veo 3 · Suno",
       "desc": {
@@ -158,7 +158,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/HekCAxKWiLE",
-      "preview": "/img/previews/14.webp",
+      "preview": "/img/previews/14.jpg",
       "aspect": "vertical",
       "soft": "CapCut",
       "desc": {
@@ -181,7 +181,7 @@
       },
       "client": "DoaFlip Dance Fest",
       "videoUrl": "https://www.youtube.com/embed/J_EPtEpwLek",
-      "preview": "/img/previews/23.webp",
+      "preview": "/img/previews/23.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -204,7 +204,7 @@
       },
       "client": "Триколор НСК",
       "videoUrl": "https://www.youtube.com/embed/QFWRxJpSGl8",
-      "preview": "/img/previews/7.webp",
+      "preview": "/img/previews/7.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · Ultimate Vocal Remover",
       "desc": {
@@ -227,7 +227,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/QgLQslvy9H0",
-      "preview": "/img/previews/15.webp",
+      "preview": "/img/previews/15.jpg",
       "aspect": "vertical",
       "soft": "CapCut · DaVinci Resolve",
       "desc": {
@@ -250,7 +250,7 @@
       },
       "client": "CapsulaHair",
       "videoUrl": "https://www.youtube.com/embed/Md6Q1_9-1FU",
-      "preview": "/img/previews/13.webp",
+      "preview": "/img/previews/13.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut",
       "desc": {
@@ -273,7 +273,7 @@
       },
       "client": "Триколор НСК",
       "videoUrl": "https://www.youtube.com/embed/hpCy0WjycqM",
-      "preview": "/img/previews/5.webp",
+      "preview": "/img/previews/5.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition",
       "desc": {
@@ -296,7 +296,7 @@
       },
       "client": "DoaFlip Dance Fest",
       "videoUrl": "https://www.youtube.com/embed/A7cmLMEC1VQ",
-      "preview": "/img/previews/22.webp",
+      "preview": "/img/previews/22.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro",
       "desc": {
@@ -319,7 +319,7 @@
       },
       "client": "SOF studio",
       "videoUrl": "https://www.youtube.com/embed/UYNWRqBxZ9E",
-      "preview": "/img/previews/10.webp",
+      "preview": "/img/previews/10.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -342,7 +342,7 @@
       },
       "client": "Jenny's English School",
       "videoUrl": "https://www.youtube.com/embed/CwNMVbTyxtA",
-      "preview": "/img/previews/18.webp",
+      "preview": "/img/previews/18.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · After Effects",
       "desc": {
@@ -365,7 +365,7 @@
       },
       "client": "ИП Дарья Елисеева",
       "videoUrl": "https://www.youtube.com/embed/diyWBmFJJ7o",
-      "preview": "/img/previews/19.webp",
+      "preview": "/img/previews/19.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · CapCut",
       "desc": {
@@ -388,7 +388,7 @@
       },
       "client": "SOF studio",
       "videoUrl": "https://www.youtube.com/embed/1ZS5Zp6A7BY",
-      "preview": "/img/previews/9.webp",
+      "preview": "/img/previews/9.jpg",
       "aspect": "vertical",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {
@@ -411,7 +411,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/oqVffPelHug",
-      "preview": "/img/previews/17.webp",
+      "preview": "/img/previews/17.jpg",
       "aspect": "vertical",
       "soft": "CapCut",
       "desc": {
@@ -434,7 +434,7 @@
       },
       "client": "Триколор кампания НСК",
       "videoUrl": "https://www.youtube.com/embed/5tQ5TY1_y3U",
-      "preview": "/img/previews/4.webp",
+      "preview": "/img/previews/4.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · Ultimate Vocal Remover",
       "desc": {
@@ -457,7 +457,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/TV00akxs8oc",
-      "preview": "/img/previews/8.webp",
+      "preview": "/img/previews/8.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · After Effects · DaVinci Resolve",
       "desc": {
@@ -480,7 +480,7 @@
       },
       "client": "Триколор НСК",
       "videoUrl": "https://www.youtube.com/embed/n8y4NSxHH3I",
-      "preview": "/img/previews/6.webp",
+      "preview": "/img/previews/6.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · Audition · Ultimate Vocal Remover",
       "desc": {
@@ -503,7 +503,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/vXwDJbe1Gu8",
-      "preview": "/img/previews/16.webp",
+      "preview": "/img/previews/16.jpg",
       "aspect": "vertical",
       "soft": "CapCut · Midjourney · Veo 3",
       "desc": {
@@ -526,7 +526,7 @@
       },
       "client": "Личный блог",
       "videoUrl": "https://www.youtube.com/embed/Zzx4k_bP7PY",
-      "preview": "/img/previews/12.webp",
+      "preview": "/img/previews/12.jpg",
       "aspect": "vertical",
       "soft": "CapCut · VN",
       "desc": {
@@ -549,7 +549,7 @@
       },
       "client": "Личный проект",
       "videoUrl": "https://www.youtube.com/embed/NXXqP3Xj72w",
-      "preview": "/img/previews/1.webp",
+      "preview": "/img/previews/1.jpg",
       "aspect": "horizontal",
       "soft": "Premiere Pro · DaVinci Resolve",
       "desc": {

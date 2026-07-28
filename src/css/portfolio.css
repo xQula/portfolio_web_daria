@@ -82,6 +82,16 @@
   transition: opacity 0.4s ease;
 }
 
+/* Компаундный селектор нужен, т.к. .reveal (base.css) и .card-glow-wrap
+   (этот файл, загружается позже) задают transition с одинаковой
+   специфичностью — побеждает последний по порядку импорта и полностью
+   стирает чужой transform, а не сливается с ним. Без этого правила
+   всплывание карточек (translateY) проскакивает мгновенно, остаётся
+   только fade через opacity. */
+.card-glow-wrap.reveal {
+  transition: opacity 0.4s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 .card-glow-wrap--wide { grid-column: span 2; grid-row: span 2; }
 .card-glow-wrap--tall { grid-column: span 1; grid-row: span 3; }
 
@@ -337,7 +347,16 @@
     grid-row: auto;
   }
   .card-glow-wrap--wide { aspect-ratio: 16 / 9; }
-  .card-glow-wrap--tall { aspect-ratio: 9 / 16; max-height: 76vh; }
+  .card-glow-wrap--tall {
+    aspect-ratio: 9 / 16;
+    max-height: 60vh;
+    /* Явная width вместо auto/stretch: на невысоких экранах max-height обрезает
+       высоту раньше, чем ширину колонки, а без definite-width aspect-ratio
+       не может её посчитать (карточка схлопывается почти до нуля) —
+       считаем ширину напрямую от той же высоты и центрируем остаток. */
+    width: min(100%, calc(60vh * 9 / 16));
+    margin-inline: auto;
+  }
 }
 
 /* Active Scroll Highlight (Mobile) — класс вешается на .project-card
