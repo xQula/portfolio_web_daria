@@ -52,7 +52,7 @@
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 160;
   background-color: transparent;
   border-bottom: 1px solid transparent;
   transition: background-color 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
@@ -197,6 +197,19 @@
 
 .mobile-menu-btn.active span:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Мобильные/планшеты: без hover-эффекта (тап на тач-экранах "залипает",
+   подсветка остаётся висеть после закрытия меню) */
+@media (max-width: 1024px) {
+  .mobile-menu-btn:hover:not(.active) {
+    border-color: var(--color-glass-border);
+    box-shadow: none;
+  }
+
+  .mobile-menu-btn:hover:not(.active) span {
+    background-color: var(--color-text-primary);
+  }
 }
 
 /* ----------------------------------------------------
