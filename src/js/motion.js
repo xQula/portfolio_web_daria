@@ -81,7 +81,7 @@ function initMagneticButtons() {
 // чтение/запись стилей и не провоцировать лишние reflow.
 // ----------------------------------------------------
 function initCardSpotlight() {
-  if (prefersReducedMotion() || !hasHover()) return;
+  if (prefersReducedMotion() || !hasHover() || window.matchMedia("(max-width: 1024px)").matches) return;
 
   const grid = document.getElementById("project-grid");
   if (!grid) return;

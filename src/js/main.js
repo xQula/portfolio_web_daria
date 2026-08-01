@@ -127,43 +127,100 @@ function initScrollHighlight() {
   // Запускаем только на мобильных/планшетах
   if (!window.matchMedia("(max-width: 1024px)").matches) return;
 
-  const getCards = () => document.querySelectorAll(".project-card, .featured-card");
+  // Допуск по вертикали для карточек в одной строке грида: у настоящих
+  // соседей по строке rect.top идентичен, эпсилон лишь страхует от
+  // суб-пиксельных округлений.
+  const ROW_EPSILON = 2; // px
+
+  const getCards = () => document.querySelectorAll(".project-card, .featured-card, .stat-card, .service-card");
+
+  // .active-scroll триггерит CSS transform (translateY/scale). getBoundingClientRect()
+  // отражает этот transform в реальном времени, включая промежуточные кадры transition —
+  // если мерить позицию им, включение подсветки само сдвигает измеряемые координаты и
+  // получается обратная связь: карточка включается → её rect смещается → на следующем
+  // скролл-кадре она "выходит" из победителей → выключается → rect возвращается →
+  // снова "выигрывает" → и так по кругу (видно как моргание). offsetTop/offsetHeight
+  // задают позицию в потоке документа и transform на них не влияет, поэтому меряем ими.
+  function getLayoutTop(el) {
+    let top = 0;
+    let node = el;
+    while (node) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top - window.scrollY;
+  }
+
+  // Группируем карточки в "строки": сначала по общему родителю (чтобы
+  // карточки из разных сеток/секций никогда не попадали в одну группу),
+  // затем внутри родителя — по близости top.
+  function groupIntoRows(visibleCards) {
+    const byParent = new Map();
+    visibleCards.forEach(entry => {
+      const parent = entry.card.parentElement;
+      if (!byParent.has(parent)) byParent.set(parent, []);
+      byParent.get(parent).push(entry);
+    });
+
+    const rows = [];
+    byParent.forEach(siblings => {
+      const sorted = siblings.slice().sort((a, b) => a.top - b.top);
+
+      let currentRow = null;
+      sorted.forEach(({ card, top, height }) => {
+        if (currentRow && Math.abs(top - currentRow.top) <= ROW_EPSILON) {
+          currentRow.cards.push(card);
+        } else {
+          currentRow = { top, height, cards: [card] };
+          rows.push(currentRow);
+        }
+      });
+    });
+
+    return rows;
+  }
 
   function updateScrollHighlight() {
     const cards = getCards();
     if (cards.length === 0) return;
 
+    // Игнорируем карточки, которые полностью вне экрана
+    const visibleCards = [];
+    cards.forEach(card => {
+      const top = getLayoutTop(card);
+      const height = card.offsetHeight;
+      if (top + height < 0 || top > window.innerHeight) {
+        card.classList.remove("active-scroll");
+      } else {
+        visibleCards.push({ card, top, height });
+      }
+    });
+    if (visibleCards.length === 0) return;
+
+    // Подсвечиваем ближайшую к центру экрана строку целиком, а не
+    // отдельную карточку — иначе соседи по строке "отбирают" фокус друг
+    // у друга на каждом мелком скролле.
+    const rows = groupIntoRows(visibleCards);
+
     const viewportCenter = window.innerHeight / 2;
-    let closestCard = null;
+    let closestRow = null;
     let minDistance = Infinity;
 
-    cards.forEach(card => {
-      const rect = card.getBoundingClientRect();
-
-      // Игнорируем карточки, которые полностью вне экрана
-      if (rect.bottom < 0 || rect.top > window.innerHeight) {
-        card.classList.remove("active-scroll");
-        return;
-      }
-
-      const cardCenter = rect.top + rect.height / 2;
-      const distance = Math.abs(cardCenter - viewportCenter);
-
+    rows.forEach(row => {
+      const rowCenter = row.top + row.height / 2;
+      const distance = Math.abs(rowCenter - viewportCenter);
       if (distance < minDistance) {
         minDistance = distance;
-        closestCard = card;
+        closestRow = row;
       }
     });
 
-    // Порог: центр карточки должен быть в пределах 35% от центра экрана
+    // Порог: центр строки должен быть в пределах 35% от центра экрана
     const threshold = window.innerHeight * 0.35;
+    const winningCards = closestRow && minDistance < threshold ? closestRow.cards : [];
 
-    cards.forEach(card => {
-      if (card === closestCard && minDistance < threshold) {
-        card.classList.add("active-scroll");
-      } else {
-        card.classList.remove("active-scroll");
-      }
+    visibleCards.forEach(({ card }) => {
+      card.classList.toggle("active-scroll", winningCards.includes(card));
     });
   }
 
