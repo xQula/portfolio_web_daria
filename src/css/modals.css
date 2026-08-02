@@ -81,6 +81,30 @@
   border: none;
 }
 
+.lightbox-video-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.lightbox-video-fallback svg {
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+
+.lightbox-video-fallback p {
+  max-width: 32ch;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
 .lightbox-video-wrapper.vertical {
   /* Для вертикального видео сам бокс должен стать высоким и узким,
      а не оставаться широким 16:9 с маленьким роликом внутри */

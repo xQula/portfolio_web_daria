@@ -1,4 +1,5 @@
 import { setupFocusTrap } from "./focus-trap.js";
+import { pauseMotion, resumeMotion } from "./motion.js";
 
 let contactModal, contactClose, lastActiveElement;
 
@@ -62,7 +63,8 @@ export function openContactModal() {
   contactModal.classList.add("active");
   contactModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
-  
+  pauseMotion(); // Lenis иначе перехватывает колесо и скроллит страницу позади модалки
+
   // Сохраняем активный элемент и переносим фокус на кнопку закрытия
   lastActiveElement = document.activeElement;
   setTimeout(() => {
@@ -75,7 +77,8 @@ export function closeContactModal() {
   contactModal.classList.remove("active");
   contactModal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  
+  resumeMotion();
+
   // Возвращаем фокус на прежнее место
   if (lastActiveElement) {
     lastActiveElement.focus();
