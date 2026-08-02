@@ -1,6 +1,6 @@
 import { projects, siteMeta, getYoutubeId } from "./api.js";
 import { openLightbox } from "./lightbox.js";
-import { INITIAL_ITEMS_COUNT } from "./config.js";
+import { MOBILE_INITIAL_ITEMS_COUNT } from "./config.js";
 import { getLocalized, t } from "./i18n.js";
 
 let projectGrid, filterButtons, showMoreBtn;
@@ -32,6 +32,38 @@ export function initGrid() {
 // Проекты, которые реально показываются в портфолио (без служебного шоурила и т.п.)
 function getGridProjects() {
   return projects.filter(p => !p.hideFromGrid);
+}
+
+// Число колонок сетки на текущем брейкпоинте — ДОЛЖНО совпадать с
+// .project-grid в portfolio.css (grid-template-columns на max-width: 960px / 560px).
+function getColumnCount() {
+  if (window.matchMedia("(max-width: 560px)").matches) return 1;
+  if (window.matchMedia("(max-width: 960px)").matches) return 2;
+  return 4;
+}
+
+// Сколько колонок занимает карточка — соответствует --wide/--tall в portfolio.css
+function getProjectSpan(project) {
+  return project.aspect === "vertical" ? 1 : 2;
+}
+
+// Сколько карточек нужно показать, чтобы полностью заполнить первую строку
+// сетки, а не фиксированное число (которое при vertical-карточках оставляет
+// строку наполовину пустой).
+function computeInitialCount(filteredProjects) {
+  const columns = getColumnCount();
+  if (columns <= 1) {
+    return Math.min(MOBILE_INITIAL_ITEMS_COUNT, filteredProjects.length);
+  }
+
+  let spanSum = 0;
+  let count = 0;
+  for (const project of filteredProjects) {
+    if (spanSum >= columns) break;
+    spanSum += getProjectSpan(project);
+    count++;
+  }
+  return count;
 }
 
 // Вспомогательная функция создания карточки проекта
@@ -96,13 +128,14 @@ export function renderGrid() {
     });
   }
 
-  const projectsToShow = showingAll ? filteredProjects : filteredProjects.slice(0, INITIAL_ITEMS_COUNT);
+  const initialCount = computeInitialCount(filteredProjects);
+  const projectsToShow = showingAll ? filteredProjects : filteredProjects.slice(0, initialCount);
   projectsToShow.forEach(project => {
     projectGrid.appendChild(createCard(project));
   });
 
   // Скрытие/показ кнопки Show More
-  if (filteredProjects.length <= INITIAL_ITEMS_COUNT || showingAll) {
+  if (filteredProjects.length <= initialCount || showingAll) {
     showMoreBtn.style.display = "none";
   } else {
     showMoreBtn.style.display = "inline-flex";
@@ -240,6 +273,22 @@ export function renderTrust() {
     `<div class="trust-group">${groupSpans}</div>` +
     `<div class="trust-group" aria-hidden="true">${groupSpans}</div>`;
 }
+
+// Пересчёт первой строки сетки при пересечении брейкпоинтов — иначе после
+// поворота устройства/ресайза окна первая строка может остаться заполненной
+// не полностью (см. computeInitialCount).
+let gridResizeTimer;
+let lastGridColumns = getColumnCount();
+window.addEventListener("resize", () => {
+  clearTimeout(gridResizeTimer);
+  gridResizeTimer = setTimeout(() => {
+    if (showingAll) return;
+    const cols = getColumnCount();
+    if (cols === lastGridColumns) return;
+    lastGridColumns = cols;
+    renderGrid();
+  }, 200);
+});
 
 // Пересчёт числа повторов при ресайзе — чтобы копия оставалась шире экрана
 // и на широких мониторах не появлялось пустое место.

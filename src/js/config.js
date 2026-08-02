@@ -1,1 +1,4 @@
-export const INITIAL_ITEMS_COUNT = 2;
+// Мобильный брейкпоинт (≤560px, см. portfolio.css) — каждая карточка сама по
+// себе целая строка (span-математика для заполнения ряда неприменима),
+// поэтому здесь просто фиксированное число вместо расчёта по span.
+export const MOBILE_INITIAL_ITEMS_COUNT = 2;
