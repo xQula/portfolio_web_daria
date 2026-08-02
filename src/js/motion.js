@@ -6,10 +6,11 @@ import { prefersReducedMotion, hasHover } from "./device.js";
 gsap.registerPlugin(ScrollTrigger);
 
 let projectGridTriggers = [];
+let lenis = null;
 
 export function initMotion() {
   if (!prefersReducedMotion()) {
-    const lenis = new Lenis({
+    lenis = new Lenis({
       duration: 0.9,
       easing: (t) => 1 - Math.pow(1 - t, 3),
     });
@@ -24,6 +25,19 @@ export function initMotion() {
   initScrollReveal();
   refreshProjectGridReveal();
   document.addEventListener("gridrendered", refreshProjectGridReveal);
+}
+
+// ----------------------------------------------------
+// Пауза/возобновление Lenis для модалок (лайтбокс): без этого Lenis
+// продолжает перехватывать колесо мыши глобально и скроллит страницу
+// позади модалки вместо внутреннего overflow-y: auto панели.
+// ----------------------------------------------------
+export function pauseMotion() {
+  lenis?.stop();
+}
+
+export function resumeMotion() {
+  lenis?.start();
 }
 
 // ----------------------------------------------------

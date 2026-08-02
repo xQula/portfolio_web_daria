@@ -1,6 +1,7 @@
 import { t, getLocalized } from "./i18n.js";
 import { getYoutubeId } from "./api.js";
 import { setupFocusTrap } from "./focus-trap.js";
+import { pauseMotion, resumeMotion } from "./motion.js";
 
 let lightbox, lightboxClose, lightboxContent, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription, lastActiveElement;
 let currentOpenProject = null;
@@ -272,6 +273,7 @@ export function openLightbox(project) {
   lightbox.classList.add("active");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden"; // Блокировка скролла сайта
+  pauseMotion(); // Lenis иначе перехватывает колесо и скроллит страницу позади модалки
 
   // Сохраняем элемент, вызвавший модалку, и переносим фокус на кнопку закрытия
   lastActiveElement = document.activeElement;
@@ -290,6 +292,7 @@ export function closeLightbox() {
   lightbox.classList.remove("active");
   lightbox.setAttribute("aria-hidden", "true");
   document.body.style.overflow = ""; // Разблокировка скролла
+  resumeMotion();
 
   // Останавливаем и удаляем плеер
   destroyYtPlayer();
