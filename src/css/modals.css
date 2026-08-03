@@ -59,6 +59,13 @@
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
   max-height: 90vh;
   max-height: 90dvh;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Акцентная подсветка рамки при открытии лайтбокса */
+.lightbox.active .lightbox-content {
+  border-color: var(--color-accent);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px var(--shadow-accent);
 }
 
 .lightbox-video-wrapper {
