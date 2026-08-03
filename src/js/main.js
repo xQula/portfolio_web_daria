@@ -12,29 +12,16 @@ const burgerBtn = document.getElementById("mobile-menu-trigger");
 const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerLinks = document.querySelectorAll(".drawer-link");
 
-async function init() {
+function init() {
   // Настройка языка
   initLanguage();
   renderHeroWords();
   document.addEventListener("languagechanged", renderHeroWords);
 
-  // Загружаем проекты из файлов
-  try {
-    await loadProjects();
-  } catch (err) {
-    console.error("Ошибка при загрузке проектов:", err);
-  }
-
-  // Инициализация компонентов
+  // Инициализация компонентов, не зависящих от данных проектов
   initGrid();
   initLightbox();
   initContactModal();
-
-  // Рендеринг сетки, главного видео и блоков, посчитанных из данных
-  renderGrid();
-  setupFeaturedVideo();
-  renderTrust();
-  renderStats();
 
   // Слой моушна премиального лендинга
   initStickyHeader();
@@ -76,6 +63,19 @@ async function init() {
       });
     });
   }
+
+  // Загрузка проектов идёт параллельно с остальной инициализацией — рендер
+  // сетки/шоурила/трастов/статистики не должен блокировать хедер, моушн и курсор.
+  loadProjects()
+    .then(() => {
+      renderGrid();
+      setupFeaturedVideo();
+      renderTrust();
+      renderStats();
+    })
+    .catch((err) => {
+      console.error("Ошибка при загрузке проектов:", err);
+    });
 }
 
 // ----------------------------------------------------

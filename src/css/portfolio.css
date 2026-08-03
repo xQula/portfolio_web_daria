@@ -182,6 +182,13 @@
   background-color: var(--color-bg-secondary);
 }
 
+/* <picture> оборачивает .card-thumbnail-img (webp source + jpg fallback) —
+   display:contents убирает обёртку из layout-дерева, чтобы img вёл себя
+   как прямой child .card-thumbnail-container, без изменений в вёрстке. */
+.card-thumbnail-container picture {
+  display: contents;
+}
+
 .card-thumbnail-img {
   width: 100%;
   height: 100%;

@@ -25,6 +25,8 @@
     "lenis": "^1.1.14"
   },
   "devDependencies": {
+    "esbuild": "^0.28.1",
+    "sharp": "^0.35.3",
     "vite": "^8.0.16"
   }
 }

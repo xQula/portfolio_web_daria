@@ -82,9 +82,22 @@ export function createCard(project) {
   const ytId = getYoutubeId(project.videoUrl);
   const onerrorAttr = ytId ? `onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';"` : '';
 
+  // Локальные превью (/img/previews/*.jpg) уже сконвертированы в .webp
+  // скриптом scratch/convert-previews-webp.mjs — отдаём его как source,
+  // с исходным .jpg как фолбэком. Удалённые превью (YouTube thumbnail
+  // без локального файла) отдаются как есть, без <picture>.
+  const isLocalJpg = /^\/img\/previews\/.+\.jpe?g$/i.test(project.preview);
+  const webpSrc = isLocalJpg ? project.preview.replace(/\.jpe?g$/i, '.webp') : null;
+  const thumbnailMarkup = webpSrc
+    ? `<picture>
+        <source srcset="${webpSrc}" type="image/webp">
+        <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+      </picture>`
+    : `<img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>`;
+
   card.innerHTML = `
     <div class="card-thumbnail-container">
-      <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+      ${thumbnailMarkup}
       <button class="play-btn-small" aria-label="${t("aria_play_video")}" data-i18n-aria="aria_play_video">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
