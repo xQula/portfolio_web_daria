@@ -30,6 +30,8 @@
 }
 
 .filter-btn {
+  position: relative;
+  isolation: isolate;
   background-color: transparent;
   border: 1px solid var(--color-glass-border);
   color: var(--color-text-secondary);
@@ -45,10 +47,26 @@
 
 .filter-btn:hover,
 .filter-btn.active {
-  background-color: var(--color-accent);
   color: var(--color-btn-accent-text);
-  border-color: var(--color-accent);
+  border-color: transparent;
+}
+
+/* Заливка вынесена в ::before с z-index:-1 и лёгким blur, чтобы скруглённый
+   край (border-radius: 999px) не показывал лесенку пикселей — у clip-маски
+   border-radius только один сэмпл сглаживания на пиксель, а на контрасте
+   тёмный фон/неоновый лайм это видно невооружённым глазом. Blur размывает
+   именно эту границу, текст кнопки остаётся резким, т.к. лежит выше в
+   стекинг-контексте. */
+.filter-btn:hover::before,
+.filter-btn.active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--color-accent);
   box-shadow: 0 0 16px var(--shadow-accent);
+  filter: blur(1px);
+  z-index: -1;
 }
 
 /* ----------------------------------------------------
@@ -95,9 +113,15 @@
 .card-glow-wrap--wide { grid-column: span 2; grid-row: span 2; }
 .card-glow-wrap--tall { grid-column: span 1; grid-row: span 3; }
 
-/* ПРОЖЕКТОР: затемнение только когда курсор над карточкой, не над промежутком */
-.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap        { opacity: 0.4; }
-.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap:hover  { opacity: 1; }
+/* ПРОЖЕКТОР: затемнение когда курсор или клавиатурный фокус на карточке,
+   не над промежутком. hover и focus-within — один и тот же триггер подсветки. */
+.project-grid:has(.card-glow-wrap:hover, .card-glow-wrap:focus-within) .card-glow-wrap {
+  opacity: 0.4;
+}
+.project-grid:has(.card-glow-wrap:hover, .card-glow-wrap:focus-within) .card-glow-wrap:hover,
+.project-grid:has(.card-glow-wrap:hover, .card-glow-wrap:focus-within) .card-glow-wrap:focus-within {
+  opacity: 1;
+}
 
 /* --- СЛОИ СВЕЧЕНИЯ (на обёртке, z-index:0 — под карточкой) --- */
 /* Толщина кольца = inset. Большой радиус градиента → равномерное
@@ -112,7 +136,10 @@
   z-index: 0;
 }
 
-/* Лайм-контур: 300px — реагирует только когда курсор близко */
+/* Лайм-контур: 300px — реагирует только когда курсор близко.
+   blur(0.75px) сглаживает border-radius-обрезку кольца: у clip-маски
+   всего один сэмпл сглаживания на пиксель, а на контрасте тёмный фон/
+   неоновый лайм резкий шаг читается как лесенка пикселей. */
 .card-glow-wrap::before {
   background-image: radial-gradient(
     300px at var(--mx, -500px) var(--my, -500px),
@@ -121,7 +148,7 @@
     rgba(204, 255, 0, 0.15) 60%,
     transparent             80%
   );
-  filter: brightness(1.5);
+  filter: brightness(1.5) blur(0.75px);
 }
 
 /* Белый блик у ближней грани */
@@ -132,6 +159,7 @@
     rgba(255, 255, 255, 0.1) 50%,
     transparent              70%
   );
+  filter: blur(0.75px);
 }
 
 /* --- КАРТОЧКА (заполняет обёртку, закрывает гло изнутри) --- */
@@ -152,24 +180,57 @@
               box-shadow var(--transition-speed) ease;
 }
 
-.card-glow-wrap:hover {
+/* Единый эффект подсветки: hover мышью и клавиатурный фокус карточки
+   дают одинаковый визуал (подъём, рамка, тень, прожекторный блик —
+   см. --mx/--my). Так при переключении между мышью и клавиатурой на
+   одной и той же карточке эффект не задваивается — он один и тот же. */
+.card-glow-wrap:hover,
+.card-glow-wrap:focus-within {
   transform: translateY(-4px);
 }
 
-.card-glow-wrap:hover .project-card {
-  border-color: rgba(204, 255, 0, 0.45);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+/* Акцентная рамка на hover/focus идёт через box-shadow, а не border-color:
+   у border-color на скруглённом углу композитного слоя (transform выше)
+   Chromium иногда рисует контур без сглаживания — та же "лесенка", что
+   и на glow-кольцах (см. комментарий у .card-glow-wrap::before). Кольцо
+   намеренно с blur-радиусом (3px), а не чистым spread: мягкий градиентный
+   край не даёт чёткой кромки, которую нечему сглаживать — в отличие от
+   spread-only варианта, который на скруглении всё равно алиасится.
+   Исходный border остаётся прозрачным, чтобы не задваивать контур. */
+.card-glow-wrap:hover .project-card,
+.card-glow-wrap:focus-within .project-card {
+  border-color: transparent;
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7),
+              var(--highlight-ring) rgba(204, 255, 0, 0.55);
 }
 
-/* Клавиатурный фокус */
+/* Клавиатурный фокус карточки не получает отдельную outline-рамку поверх
+   общего эффекта выше (base.css даёт её всем [tabindex="0"] по умолчанию) —
+   на одной и той же карточке outline + подъём/рамка/тень одновременно
+   читались как два разных стиля подсветки. Подъём + яркая рамка + тень уже
+   сами по себе достаточно заметный фокус-индикатор, отдельная рамка не нужна. */
 .project-card:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: none;
+}
+
+/* Мышь наведена на другую карточку сетки — декоративная подсветка уступает
+   ей у карточки, которая лишь удерживает клавиатурный фокус (Tab ушёл на
+   неё раньше, курсор сейчас в другом месте). Без этого правила :hover и
+   :focus-within могут быть активны одновременно на РАЗНЫХ карточках —
+   визуально это читается как две подсвеченные карточки сразу. Обводка
+   :focus-visible выше от мыши не зависит и остаётся видимой в любом случае. */
+.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap:focus-within:not(:hover) {
+  opacity: 0.4;
+  transform: none;
+}
+.project-grid:has(.card-glow-wrap:hover) .card-glow-wrap:focus-within:not(:hover) .project-card {
+  border-color: var(--color-glass-border);
+  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-grid:hover .card-glow-wrap { opacity: 1; }
-  .card-glow-wrap:hover               { transform: none; }
+  .project-grid:hover .card-glow-wrap                        { opacity: 1; }
+  .card-glow-wrap:hover, .card-glow-wrap:focus-within         { transform: none; }
 }
 
 .card-thumbnail-container {
@@ -370,8 +431,9 @@
    (см. getCards() в main.js), не на обёртку .card-glow-wrap. */
 .project-card.active-scroll {
   transform: translateY(-4px);
-  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.75), 0 0 20px var(--shadow-accent);
-  border-color: var(--color-border-hover);
+  border-color: transparent;
+  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.75), 0 0 20px var(--shadow-accent),
+              var(--highlight-ring) var(--color-border-hover);
 }
 
 .project-card.active-scroll .card-thumbnail-img {

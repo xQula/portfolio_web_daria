@@ -88,12 +88,14 @@ export function createCard(project) {
   // без локального файла) отдаются как есть, без <picture>.
   const isLocalJpg = /^\/img\/previews\/.+\.jpe?g$/i.test(project.preview);
   const webpSrc = isLocalJpg ? project.preview.replace(/\.jpe?g$/i, '.webp') : null;
+  // alt="" — карточка уже озвучена целиком через role="button"/aria-label
+  // ниже, повторный alt на превью даёт скринридеру дублирующее объявление.
   const thumbnailMarkup = webpSrc
     ? `<picture>
         <source srcset="${webpSrc}" type="image/webp">
-        <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+        <img src="${project.preview}" alt="" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
       </picture>`
-    : `<img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>`;
+    : `<img src="${project.preview}" alt="" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>`;
 
   card.innerHTML = `
     <div class="card-thumbnail-container">
@@ -113,6 +115,8 @@ export function createCard(project) {
   `;
 
   card.setAttribute("tabindex", "0");
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `${t("aria_play_video")}: ${getLocalized(project.title)}`);
   card.addEventListener("click", () => openLightbox(project));
   card.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -222,7 +226,6 @@ export function setupFeaturedVideo() {
     }
 
     img.src = featuredProject.preview || (ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : img.src);
-    img.alt = getLocalized(featuredProject.title);
   }
   if (titleSpan) {
     titleSpan.textContent = getLocalized(featuredProject.title);

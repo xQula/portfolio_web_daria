@@ -22,6 +22,7 @@ export function initMotion() {
   initMagneticButtons();
   initTiltCard();
   initCardSpotlight();
+  initCardFocusGlow();
   initScrollReveal();
   refreshProjectGridReveal();
   document.addEventListener("gridrendered", refreshProjectGridReveal);
@@ -117,6 +118,12 @@ function initCardSpotlight() {
     cards.forEach((card, i) => {
       const rect = rects[i];
       if (rect.bottom < -400 || rect.top > window.innerHeight + 400) return;
+      // Карточка держит клавиатурный фокус, а курсор реально не над ней —
+      // не трогаем --mx/--my: это её собственный центрированный блик из
+      // initCardFocusGlow(), иначе движение мыши в любой точке страницы
+      // сбивает его в случайную позицию, даже не приближаясь к карточке.
+      const pointerInside = px >= rect.left && px <= rect.right && py >= rect.top && py <= rect.bottom;
+      if (!pointerInside && card.matches(":focus-within")) return;
       card.style.setProperty("--mx", `${(px - rect.left).toFixed(1)}px`);
       card.style.setProperty("--my", `${(py - rect.top).toFixed(1)}px`);
     });
@@ -134,13 +141,44 @@ function initCardSpotlight() {
     { passive: true }
   );
 
-  // Сброс при уходе курсора с сетки
+  // Сброс при уходе курсора с сетки — карточку с клавиатурным фокусом не
+  // трогаем по той же причине, что и в update() выше: её блик держит
+  // initCardFocusGlow(), а не курсор.
   grid.addEventListener("pointerleave", () => {
     grid.querySelectorAll(".card-glow-wrap").forEach((wrap) => {
+      if (wrap.matches(":focus-within")) return;
       wrap.style.setProperty("--mx", "-500px");
       wrap.style.setProperty("--my", "-500px");
     });
   }, { passive: true });
+}
+
+// ----------------------------------------------------
+// ФОКУС-ГЛО: делает прожекторный блик частью клавиатурного фокуса, а не
+// только hover'а — иначе Tab-навигация даёт подъём/рамку/тень (см. CSS
+// :focus-within), но без блика, который держат --mx/--my. Центрируем блик
+// на карточке при фокусе так же, как курсор двигает его при hover — один
+// и тот же эффект для обоих способов ввода, без гейта по hasHover(),
+// т.к. клавиатурная навигация не зависит от наличия мыши.
+// ----------------------------------------------------
+function initCardFocusGlow() {
+  const grid = document.getElementById("project-grid");
+  if (!grid) return;
+
+  grid.addEventListener("focusin", (e) => {
+    const card = e.target.closest(".card-glow-wrap");
+    if (!card || !e.target.matches(":focus-visible")) return;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${(rect.width / 2).toFixed(1)}px`);
+    card.style.setProperty("--my", `${(rect.height / 2).toFixed(1)}px`);
+  });
+
+  grid.addEventListener("focusout", (e) => {
+    const card = e.target.closest(".card-glow-wrap");
+    if (!card || card.matches(":hover")) return;
+    card.style.setProperty("--mx", "-500px");
+    card.style.setProperty("--my", "-500px");
+  });
 }
 
 // ----------------------------------------------------
