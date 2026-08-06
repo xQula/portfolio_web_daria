@@ -12,3 +12,7 @@ graphify-out/
 
 # Черновики, скрипты, временные утилиты (не часть проекта)
 scratch/
+
+# Локальный кэш/память Serena MCP и служебные маркеры плагинов
+.serena/
+.claude/.headroom_wrap_marker.json
