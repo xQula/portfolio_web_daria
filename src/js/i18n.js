@@ -7,6 +7,9 @@ export const translations = {
     // Доступность
     skip_link: "Перейти к содержимому",
 
+    // Экран загрузки
+    preloader_label: "ЗАГРУЗКА",
+
     // Навигация
     nav_home: "ГЛАВНАЯ",
     nav_services: "НАПРАВЛЕНИЯ",
@@ -72,7 +75,9 @@ export const translations = {
     lightbox_default_title: "Название проекта",
     lightbox_default_category: "Категория",
     lightbox_default_desc: "Описание процесса монтажа...",
-    
+    lightbox_fallback_message: "Не удалось загрузить видео. Похоже, YouTube недоступен в вашей сети.",
+    lightbox_fallback_cta: "Смотреть на YouTube",
+
     // Вспомогательные
     aria_close_player: "Закрыть плеер",
     aria_close_contacts: "Закрыть контакты",
@@ -93,6 +98,9 @@ export const translations = {
     
     // Accessibility
     skip_link: "Skip to content",
+
+    // Loading screen
+    preloader_label: "LOADING",
 
     // Navigation
     nav_home: "HOME",
@@ -159,7 +167,9 @@ export const translations = {
     lightbox_default_title: "Project Title",
     lightbox_default_category: "Category",
     lightbox_default_desc: "Editing process description...",
-    
+    lightbox_fallback_message: "The video couldn't load. YouTube may be unreachable on your network.",
+    lightbox_fallback_cta: "Watch on YouTube",
+
     // Accessibility & labels
     aria_close_player: "Close player",
     aria_close_contacts: "Close contacts",

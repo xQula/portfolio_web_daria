@@ -1,11 +1,22 @@
 import { t, getLocalized } from "./i18n.js";
 import { getYoutubeId } from "./api.js";
 import { setupFocusTrap } from "./focus-trap.js";
+import { pauseMotion, resumeMotion } from "./motion.js";
 
 let lightbox, lightboxClose, lightboxContent, videoWrapper, lbTitle, lbCategory, lbDetails, lbDescription, lastActiveElement;
 let currentOpenProject = null;
 let ytPlayer = null;
 let ytApiPromise = null;
+let playbackWatchdogTimer = null;
+let activeFallbackVideoId = null;
+let openGeneration = 0;
+
+// Сколько ждём после playVideo(), пока плеер не подтвердит реальное начало
+// воспроизведения (PLAYING/PAUSED). Если YouTube API script загрузился, но
+// сам видео-стрим не доходит (например, googlevideo.com заблокирован сетью),
+// плеер зависает без единого события — по этому таймауту показываем
+// пользователю ссылку "смотреть на YouTube" напрямую.
+const PLAYBACK_WATCHDOG_MS = 8000;
 
 export function initLightbox() {
   lightbox = document.getElementById("video-lightbox");
@@ -42,6 +53,9 @@ export function initLightbox() {
   document.addEventListener("languagechanged", () => {
     if (lightbox.classList.contains("active") && currentOpenProject) {
       updateLightboxContent(currentOpenProject);
+      if (activeFallbackVideoId) {
+        renderVideoFallback(activeFallbackVideoId);
+      }
     }
   });
 }
@@ -90,6 +104,38 @@ function loadYoutubeIframeApi() {
   return ytApiPromise;
 }
 
+// Ссылка "смотреть на YouTube" — крайний случай, когда для проекта нет
+// RuTube-зеркала (см. handlePlaybackTimeout). Вынесена отдельно, чтобы
+// её можно было повторно вызвать при смене языка (см. слушатель
+// "languagechanged" в initLightbox), не трогая плеер/таймер.
+function renderVideoFallback(videoId) {
+  if (!videoWrapper) return;
+  activeFallbackVideoId = videoId;
+
+  videoWrapper.innerHTML = "";
+  const fallback = document.createElement("div");
+  fallback.className = "lightbox-video-fallback";
+  fallback.innerHTML = `
+    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor" aria-hidden="true">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    </svg>
+    <p>${t("lightbox_fallback_message")}</p>
+    <a class="btn btn-accent" href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer">${t("lightbox_fallback_cta")}</a>
+  `;
+  videoWrapper.appendChild(fallback);
+}
+
+function clearPlaybackWatchdog() {
+  if (playbackWatchdogTimer) {
+    clearTimeout(playbackWatchdogTimer);
+    playbackWatchdogTimer = null;
+  }
+}
+
+function withAutoplay(rutubeUrl) {
+  return `${rutubeUrl}?autoplay=1`;
+}
+
 // Обычный sandboxed iframe — для RuTube и как фолбэк, если YouTube API недоступен
 function mountPlainIframe(url) {
   const iframe = document.createElement("iframe");
@@ -101,24 +147,47 @@ function mountPlainIframe(url) {
   videoWrapper.appendChild(iframe);
 }
 
+// Когда плеер создан, но видео так и не начало проигрываться — вероятно,
+// YouTube-стрим недоступен в сети пользователя. Если для проекта есть
+// зеркало на RuTube, тихо подменяем плеер на него на том же месте; если
+// зеркала нет — показываем ссылку на прямой просмотр на youtube.com.
+function handlePlaybackTimeout(videoId, rutubeUrl) {
+  clearPlaybackWatchdog();
+  destroyYtPlayer();
+  if (rutubeUrl) {
+    videoWrapper.innerHTML = "";
+    mountPlainIframe(withAutoplay(rutubeUrl));
+  } else {
+    renderVideoFallback(videoId);
+  }
+}
+
 // YouTube-видео через IFrame Player API — по готовности плеера запрашиваем
 // максимальное доступное качество. Если API не загрузился (блокировщик,
-// сеть) в разумное время — откатываемся на обычный iframe.
-function mountYoutubePlayer(videoId) {
+// сеть) в разумное время — откатываемся на RuTube-зеркало (если есть) или
+// на обычный YouTube iframe.
+function mountYoutubePlayer(videoId, rutubeUrl) {
+  const myGeneration = openGeneration;
   const mount = document.createElement("div");
   videoWrapper.appendChild(mount);
 
   let settled = false;
   const fallback = () => {
+    if (myGeneration !== openGeneration) return;
     if (settled || !mount.isConnected) return;
     settled = true;
     mount.remove();
-    mountPlainIframe(`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+    if (rutubeUrl) {
+      mountPlainIframe(withAutoplay(rutubeUrl));
+    } else {
+      renderVideoFallback(videoId);
+    }
   };
   const fallbackTimer = setTimeout(fallback, 4000);
 
   loadYoutubeIframeApi()
     .then((YT) => {
+      if (myGeneration !== openGeneration) return;
       if (settled || !mount.isConnected) return;
       settled = true;
       clearTimeout(fallbackTimer);
@@ -127,6 +196,7 @@ function mountYoutubePlayer(videoId) {
         playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1 },
         events: {
           onReady: (e) => {
+            if (myGeneration !== openGeneration) return;
             try {
               const levels = e.target.getAvailableQualityLevels?.() || [];
               e.target.setPlaybackQuality(levels[0] || "hd1080");
@@ -134,6 +204,18 @@ function mountYoutubePlayer(videoId) {
               // Лучшее качество — best effort, YouTube может проигнорировать запрос
             }
             e.target.playVideo();
+            clearPlaybackWatchdog();
+            playbackWatchdogTimer = setTimeout(() => {
+              if (myGeneration !== openGeneration) return;
+              handlePlaybackTimeout(videoId, rutubeUrl);
+            }, PLAYBACK_WATCHDOG_MS);
+          },
+          onStateChange: (e) => {
+            if (myGeneration !== openGeneration) return;
+            // PLAYING (1) или PAUSED (2) — стрим реально дошёл до плеера
+            if (e.data === window.YT.PlayerState.PLAYING || e.data === window.YT.PlayerState.PAUSED) {
+              clearPlaybackWatchdog();
+            }
           },
         },
       });
@@ -145,6 +227,7 @@ function mountYoutubePlayer(videoId) {
 }
 
 function destroyYtPlayer() {
+  clearPlaybackWatchdog();
   if (ytPlayer && typeof ytPlayer.destroy === "function") {
     ytPlayer.destroy();
   }
@@ -153,6 +236,10 @@ function destroyYtPlayer() {
 
 export function openLightbox(project) {
   if (!lbTitle || !lbCategory || !lbDescription || !lbDetails || !videoWrapper || !lightbox) return;
+
+  // Инвалидируем колбэки предыдущего плеера (onReady/onStateChange/watchdog
+  // могут ещё сработать асинхронно после закрытия/смены проекта)
+  openGeneration++;
 
   // Сохраняем ссылку на текущий открытый проект в глобальной переменной для смены языка на лету
   currentOpenProject = project;
@@ -163,6 +250,7 @@ export function openLightbox(project) {
   // Очистка предыдущего плеера
   destroyYtPlayer();
   videoWrapper.innerHTML = "";
+  activeFallbackVideoId = null;
 
   // Определение классов адаптивности для плеера
   const isVertical = project.aspect === "vertical";
@@ -176,7 +264,7 @@ export function openLightbox(project) {
   // всё остальное (RuTube и т.д.) — обычным iframe
   const ytId = getYoutubeId(project.videoUrl);
   if (ytId) {
-    mountYoutubePlayer(ytId);
+    mountYoutubePlayer(ytId, project.rutubeUrl || null);
   } else {
     mountPlainIframe(project.videoUrl);
   }
@@ -185,6 +273,7 @@ export function openLightbox(project) {
   lightbox.classList.add("active");
   lightbox.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden"; // Блокировка скролла сайта
+  pauseMotion(); // Lenis иначе перехватывает колесо и скроллит страницу позади модалки
 
   // Сохраняем элемент, вызвавший модалку, и переносим фокус на кнопку закрытия
   lastActiveElement = document.activeElement;
@@ -196,13 +285,19 @@ export function openLightbox(project) {
 export function closeLightbox() {
   if (!lightbox || !videoWrapper) return;
 
+  // Инвалидируем колбэки текущего плеера — иначе onReady/watchdog,
+  // сработавшие уже после закрытия, могут запуститься вхолостую
+  openGeneration++;
+
   lightbox.classList.remove("active");
   lightbox.setAttribute("aria-hidden", "true");
   document.body.style.overflow = ""; // Разблокировка скролла
+  resumeMotion();
 
   // Останавливаем и удаляем плеер
   destroyYtPlayer();
   videoWrapper.innerHTML = "";
+  activeFallbackVideoId = null;
   if (lightboxContent) {
     lightboxContent.classList.remove("is-vertical");
   }

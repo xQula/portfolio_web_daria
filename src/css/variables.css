@@ -2,6 +2,46 @@
    LOCAL BRAND FONTS
    ---------------------------------------------------- */
 @font-face {
+  font-family: 'Inter';
+  src: url('/font/inter/inter-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/inter/inter-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/inter/inter-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/inter/inter-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/font/inter/inter-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'MAK';
   src: url('/font/Mak/Mak-font/Web/MAK.woff') format('woff'),
        url('/font/Mak/Mak-font/MAK.otf') format('opentype');
@@ -49,6 +89,11 @@
   --color-border-hover: var(--color-accent);
   --shadow-accent: rgba(204, 255, 0, 0.22);
   --shadow-general: rgba(0, 0, 0, 0.6);
+  /* Кольцо-компенсатор для border-radius aliasing в Chromium (см. .project-card,
+     .featured-card, .stat-card, .service-card) — box-shadow вместо border-color,
+     т.к. border-color на скруглённом углу композитного слоя иногда рисуется
+     без сглаживания. Единая точка настройки радиуса/толщины кольца. */
+  --highlight-ring: 0 0 3px 2px;
 
   /* Токены кнопок */
   --color-btn-accent-bg: #CCFF00;

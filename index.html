@@ -7,34 +7,31 @@
   <meta name="keywords" content="режиссер монтажа, видеомонтаж, клипмейкер, трейлеры, тизеры, реклама, Reels, Shorts, Дарья Евстигнеева, SOF Sense of Form">
   <title>SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио</title>
 
-  <!-- Предзагрузка локальных бренд-шрифтов -->
+  <!-- Предзагрузка hero-изображения (LCP), локальных бренд-шрифтов и Inter (самостоятельный хостинг вместо Google Fonts) -->
+  <link rel="preload" href="/img/hero-showreel.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="/font/inter/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/font/Mak/Mak-font/Web/MAK.woff" as="font" type="font/woff" crossorigin>
   <link rel="preload" href="/font/dirtyline36daysoftype2022/woff/Dirtyline-36daysoftype-2022.woff2" as="font" type="font/woff2" crossorigin>
-
-  <!-- Подключение Google Fonts: Inter (Sans-serif) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Стили сайта -->
   <link rel="stylesheet" href="./src/css/main.css">
 
-  <!-- SVG Favicon (Emoji-based) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+  <!-- SVG Favicon (векторный плей-треугольник в стиле остальной иконографики сайта) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%230A0B0D%22/><polygon points=%2233,22 78,50 33,78%22 fill=%22%23CCFF00%22/></svg>">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://daria-evstigneeva.ru/">
   <meta property="og:title" content="SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио">
   <meta property="og:description" content="Портфолио Евстигнеевой Дарьи — профессионального режиссера монтажа и контент-мейкера. Кинопродвижение, реклама, музыкальные клипы и трендовый вертикальный контент.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop">
+  <meta property="og:image" content="https://daria-evstigneeva.ru/img/hero-showreel.jpg">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://daria-evstigneeva.ru/">
   <meta property="twitter:title" content="SOF — Режиссер монтажа Дарья Евстигнеева | Портфолио">
   <meta property="twitter:description" content="Портфолио Евстигнеевой Дарьи — профессионального режиссера монтажа и контент-мейкера. Кинопродвижение, реклама, музыкальные клипы и трендовый вертикальный контент.">
-  <meta property="twitter:image" content="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop">
+  <meta property="twitter:image" content="https://daria-evstigneeva.ru/img/hero-showreel.jpg">
 
   <!-- SEO structured data (Schema.org Person JSON-LD) -->
   <script type="application/ld+json">
@@ -59,6 +56,23 @@
 </head>
 <body>
 
+  <!-- Экран загрузки: киношный обратный отсчёт, перекрывает страницу до готовности
+       критичных ресурсов (шрифты + hero-изображение). Декоративный, aria-hidden —
+       не блокирует доступ к реальному контенту для скринридеров. Скрывается через
+       src/js/preloader.js, показывается один раз за сессию вкладки. -->
+  <div id="page-preloader" class="page-preloader" aria-hidden="true">
+    <div class="preloader-content">
+      <div class="preloader-ring">
+        <svg class="preloader-ring-svg" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="preloader-ring-track" cx="60" cy="60" r="52"></circle>
+          <circle class="preloader-ring-progress" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <span class="preloader-digit" id="preloader-digit">3</span>
+      </div>
+      <div class="preloader-label">SOF <span class="preloader-label-dot">·</span> <span data-i18n="preloader_label">ЗАГРУЗКА</span></div>
+    </div>
+  </div>
+
   <!-- Skip-link: скрыт визуально, появляется по клавиатурному фокусу -->
   <a href="#main-content" class="skip-link" data-i18n="skip_link">Перейти к содержимому</a>
 
@@ -76,7 +90,7 @@
         <ul>
           <li><a href="#services" class="nav-link" data-i18n="nav_services">НАПРАВЛЕНИЯ</a></li>
           <li><a href="#portfolio" class="nav-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
-          <li><a href="#" class="nav-link" id="contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
+          <li><a href="#contact-modal" class="nav-link" id="contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
       </nav>
 
@@ -107,7 +121,7 @@
           <li><a href="#hero" class="drawer-link" data-i18n="nav_home">ГЛАВНАЯ</a></li>
           <li><a href="#services" class="drawer-link" data-i18n="nav_services">НАПРАВЛЕНИЯ</a></li>
           <li><a href="#portfolio" class="drawer-link" data-i18n="nav_portfolio">ПОРТФОЛИО</a></li>
-          <li><a href="#" class="drawer-link" id="mobile-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
+          <li><a href="#contact-modal" class="drawer-link" id="mobile-contact-link" data-i18n="nav_contact">КОНТАКТЫ</a></li>
         </ul>
       </nav>
 
@@ -133,10 +147,10 @@
 
         <!-- Кинематографичная сцена: широкий кадр шоурила -->
         <div class="hero-stage">
-          <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0">
+          <div class="featured-card" id="featured-card-element" data-project-id="featured" tabindex="0" role="button" aria-label="Смотреть шоурил" data-i18n-aria="aria_play_showreel">
             <div class="featured-thumbnail-container">
               <div class="featured-noise-overlay"></div>
-              <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600&auto=format&fit=crop" alt="Главный проект" class="featured-thumbnail-img" fetchpriority="high">
+              <img src="/img/hero-showreel.webp" alt="" class="featured-thumbnail-img" fetchpriority="high">
 
               <!-- Верхние углы кадра -->
               <div class="hero-eyebrow">
@@ -145,7 +159,7 @@
               </div>
 
               <!-- Центр: play -->
-              <button class="play-btn-large" aria-label="Смотреть шоурил" data-i18n-aria="aria_play_showreel">
+              <button class="play-btn-large" tabindex="-1" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                   <polygon points="5 3 19 12 5 21 5 3"></polygon>
                 </svg>
@@ -308,7 +322,7 @@
           <li><a href="#hero" class="footer-link" data-i18n="nav_home">Главная</a></li>
           <li><a href="#services" class="footer-link" data-i18n="nav_services">Направления</a></li>
           <li><a href="#portfolio" class="footer-link" data-i18n="nav_portfolio">Портфолио</a></li>
-          <li><a href="#" class="footer-link" id="footer-contact-link" data-i18n="nav_contact">Контакты</a></li>
+          <li><a href="#contact-modal" class="footer-link" id="footer-contact-link" data-i18n="nav_contact">Контакты</a></li>
         </ul>
       </div>
 
@@ -383,7 +397,7 @@
       </div>
 
       <!-- Боковая/Нижняя панель информации проекта -->
-      <div class="lightbox-info-panel" id="lightbox-info-panel">
+      <div class="lightbox-info-panel" id="lightbox-info-panel" data-lenis-prevent>
         <h3 class="lightbox-title" id="lightbox-title" data-i18n="lightbox_default_title">Название проекта</h3>
         <p class="lightbox-category" id="lightbox-category" data-i18n="lightbox_default_category">Категория</p>
         <div class="lightbox-details" id="lightbox-details">

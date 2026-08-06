@@ -59,6 +59,13 @@
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
   max-height: 90vh;
   max-height: 90dvh;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Акцентная подсветка рамки при открытии лайтбокса */
+.lightbox.active .lightbox-content {
+  border-color: var(--color-accent);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px var(--shadow-accent);
 }
 
 .lightbox-video-wrapper {
@@ -79,6 +86,30 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.lightbox-video-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.lightbox-video-fallback svg {
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+
+.lightbox-video-fallback p {
+  max-width: 32ch;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .lightbox-video-wrapper.vertical {

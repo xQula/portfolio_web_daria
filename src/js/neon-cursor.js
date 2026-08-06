@@ -36,10 +36,13 @@ export function initNeonCursor() {
 
   const ctx = canvas.getContext("2d");
 
-  /* Сброс размера при ресайзе окна */
+  /* Сброс размера при ресайзе окна (canvas.width/height всегда очищает
+     битмап, поэтому будим цикл, если он был на idle-паузе — иначе холст
+     останется пустым до следующего движения мыши) */
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    startLoop();
   }
   window.addEventListener("resize", resize, { passive: true });
 
@@ -51,7 +54,7 @@ export function initNeonCursor() {
   const GLOW_BLUR = 30;         // px — радиус внешнего свечения
   const CORE_WIDTH = 3;         // px — толщина сердцевины
   const GLOW_WIDTH = 18;        // px — толщина ореола
-  const ACCENT = "#CCFF00";     // акцентный цвет
+  const ACCENT = getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() || "#CCFF00";
   const HEAD_RADIUS = 4;        // px — радиус точки-головы
 
   /* --------------------------------------------------
@@ -66,6 +69,31 @@ export function initNeonCursor() {
   let isVisible = false;
   let isInWindow = false;
 
+  /* Над видео-плеером эффект полностью скрываем: iframe YouTube/RuTube —
+     отдельный browsing context (почти всегда чужой домен, OOPIF), mousemove
+     внутри него до document не долетает, и mouseenter/mouseleave на обёртке
+     для этой границы ненадёжны (не гарантированно долетают — подтверждено
+     живым дебагом). Вместо событий — геометрическая проверка последней
+     известной позиции курсора каждый кадр. */
+  let wasOverVideo = false;
+  let fadeAlpha = 1;
+  let lastFrameTs = null;
+  const FADE_DURATION = 220; // мс — плавное угасание/появление при входе/выходе с видео
+  const videoWrapper = document.getElementById("lightbox-video-wrapper");
+  const lightboxEl = document.getElementById("video-lightbox");
+
+  /* getBoundingClientRect() форсирует синхронный layout-read. Лайтбокс закрыт
+     почти всё время работы страницы, а aria-hidden — обычный атрибут, его
+     чтение layout не затрагивает. Проверяем сначала его и только если
+     лайтбокс реально открыт — трогаем геометрию. */
+  function isOverVideo() {
+    if (!videoWrapper || !lightboxEl) return false;
+    if (lightboxEl.getAttribute("aria-hidden") === "true") return false;
+    const rect = videoWrapper.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return false;
+    return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
+  }
+
   /* --------------------------------------------------
      Показываем/скрываем при входе/выходе мыши из окна
      -------------------------------------------------- */
@@ -75,9 +103,14 @@ export function initNeonCursor() {
     /* Сброс: начинаем шлейф с текущих координат,
        чтобы не было скачка из предыдущей позиции */
     hasPrev = false;
+    startLoop();
   });
 
   document.addEventListener("mouseleave", () => {
+    /* Переход на iframe видео тоже может породить mouseleave на document —
+       это не реальный уход курсора за пределы окна, а тот же квирк границы
+       OOPIF. Не сбрасываем видимость, если курсор всё ещё над видео. */
+    if (isOverVideo()) return;
     isInWindow = false;
     isVisible = false;
   });
@@ -96,6 +129,10 @@ export function initNeonCursor() {
       prevY = mouseY;
       hasPrev = true;
     }
+
+    /* Цикл мог быть остановлен из-за простоя (см. idle-пауза в tick) —
+       движение мыши его будит */
+    startLoop();
   }, { passive: true });
 
   /* --------------------------------------------------
@@ -108,10 +145,29 @@ export function initNeonCursor() {
     /* Очищаем canvas */
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    const overVideo = isOverVideo();
+
+    /* Только что вышли с видео — начинаем шлейф заново с текущей позиции,
+       без соединительной линии от точки входа через всё видео */
+    if (wasOverVideo && !overVideo) {
+      points.length = 0;
+      hasPrev = false;
+    }
+    wasOverVideo = overVideo;
+
+    /* Плавное угасание/появление вместо мгновенного вкл/выкл при пересечении
+       границы видео */
+    const dt = lastFrameTs === null ? 0 : now - lastFrameTs;
+    lastFrameTs = now;
+    const fadeTarget = overVideo ? 0 : 1;
+    const fadeStep = dt / FADE_DURATION;
+    if (fadeAlpha < fadeTarget) fadeAlpha = Math.min(fadeTarget, fadeAlpha + fadeStep);
+    else if (fadeAlpha > fadeTarget) fadeAlpha = Math.max(fadeTarget, fadeAlpha - fadeStep);
+
     /* ------------------------------
        Добавляем новые точки вдоль пути мыши
        ------------------------------ */
-    if (isVisible && isInWindow) {
+    if (isVisible && isInWindow && !overVideo) {
       const dx = mouseX - prevX;
       const dy = mouseY - prevY;
       const dist = Math.sqrt(dx * dx + dy * dy);
@@ -153,66 +209,84 @@ export function initNeonCursor() {
       points.splice(0, points.length - MAX_POINTS);
     }
 
-    /* ------------------------------
-       Отрисовка шлейфа (нужно минимум 2 точки)
-       ------------------------------ */
-    if (points.length >= 2) {
-      /* ---- Проход 1: внешнее свечение (glow) ---- */
+    /* Над видео эффект плавно гаснет (fadeAlpha) вместо мгновенного скрытия
+       (см. isOverVideo выше) */
+    if (fadeAlpha > 0) {
       ctx.save();
-      ctx.shadowBlur = GLOW_BLUR;
-      ctx.shadowColor = ACCENT;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
+      ctx.globalAlpha = fadeAlpha;
 
-      for (let i = 1; i < points.length; i++) {
-        const age = now - points[i].time;
-        const alpha = Math.max(0, 1 - age / TRAIL_DURATION);
-        const widthFactor = 0.15 + 0.85 * alpha;
+      /* ------------------------------
+         Отрисовка шлейфа (нужно минимум 2 точки)
+         ------------------------------ */
+      if (points.length >= 2) {
+        /* ---- Проход 1: внешнее свечение (glow) ---- */
+        ctx.save();
+        ctx.shadowBlur = GLOW_BLUR;
+        ctx.shadowColor = ACCENT;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-        ctx.beginPath();
-        ctx.moveTo(points[i - 1].x, points[i - 1].y);
-        ctx.lineTo(points[i].x, points[i].y);
-        ctx.strokeStyle = `rgba(204, 255, 0, ${(alpha * 0.12).toFixed(4)})`;
-        ctx.lineWidth = GLOW_WIDTH * widthFactor;
-        ctx.stroke();
+        for (let i = 1; i < points.length; i++) {
+          const age = now - points[i].time;
+          const alpha = Math.max(0, 1 - age / TRAIL_DURATION);
+          const widthFactor = 0.15 + 0.85 * alpha;
+
+          ctx.beginPath();
+          ctx.moveTo(points[i - 1].x, points[i - 1].y);
+          ctx.lineTo(points[i].x, points[i].y);
+          ctx.strokeStyle = `rgba(204, 255, 0, ${(alpha * 0.12).toFixed(4)})`;
+          ctx.lineWidth = GLOW_WIDTH * widthFactor;
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        /* ---- Проход 2: яркая сердцевина ---- */
+        for (let i = 1; i < points.length; i++) {
+          const age = now - points[i].time;
+          const alpha = Math.max(0, 1 - age / TRAIL_DURATION);
+          const widthFactor = 0.15 + 0.85 * alpha;
+
+          ctx.beginPath();
+          ctx.moveTo(points[i - 1].x, points[i - 1].y);
+          ctx.lineTo(points[i].x, points[i].y);
+          ctx.strokeStyle = `rgba(204, 255, 0, ${alpha.toFixed(4)})`;
+          ctx.lineWidth = CORE_WIDTH * widthFactor;
+          ctx.stroke();
+        }
       }
+
+      /* ------------------------------
+         Голова шлейфа — яркая точка на острие курсора
+         (только если курсор в окне)
+         ------------------------------ */
+      if (isVisible && isInWindow && hasPrev) {
+        /* Внешнее свечение головы */
+        ctx.save();
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = ACCENT;
+        ctx.beginPath();
+        ctx.arc(mouseX, mouseY, HEAD_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = ACCENT;
+        ctx.fill();
+        ctx.restore();
+
+        /* Сердцевина точки (ещё один слой для яркости) */
+        ctx.beginPath();
+        ctx.arc(mouseX, mouseY, HEAD_RADIUS * 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+      }
+
       ctx.restore();
-
-      /* ---- Проход 2: яркая сердцевина ---- */
-      for (let i = 1; i < points.length; i++) {
-        const age = now - points[i].time;
-        const alpha = Math.max(0, 1 - age / TRAIL_DURATION);
-        const widthFactor = 0.15 + 0.85 * alpha;
-
-        ctx.beginPath();
-        ctx.moveTo(points[i - 1].x, points[i - 1].y);
-        ctx.lineTo(points[i].x, points[i].y);
-        ctx.strokeStyle = `rgba(204, 255, 0, ${alpha.toFixed(4)})`;
-        ctx.lineWidth = CORE_WIDTH * widthFactor;
-        ctx.stroke();
-      }
     }
 
-    /* ------------------------------
-       Голова шлейфа — яркая точка на острие курсора
-       (только если курсор в окне)
-       ------------------------------ */
-    if (isVisible && isInWindow && hasPrev) {
-      /* Внешнее свечение головы */
-      ctx.save();
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = ACCENT;
-      ctx.beginPath();
-      ctx.arc(mouseX, mouseY, HEAD_RADIUS, 0, Math.PI * 2);
-      ctx.fillStyle = ACCENT;
-      ctx.fill();
-      ctx.restore();
-
-      /* Сердцевина точки (ещё один слой для яркости) */
-      ctx.beginPath();
-      ctx.arc(mouseX, mouseY, HEAD_RADIUS * 0.6, 0, Math.PI * 2);
-      ctx.fillStyle = "#ffffff";
-      ctx.fill();
+    /* Рисовать больше нечего: шлейф погас, угасание/появление устаканилось —
+       следующий кадр выглядел бы идентично текущему. Останавливаем цикл,
+       чтобы не жечь кадровый бюджет впустую (например во время скролла без
+       движения мыши); mousemove/mouseenter разбудят его заново. */
+    if (points.length === 0 && fadeAlpha === fadeTarget) {
+      rafId = null;
+      return;
     }
 
     /* Следующий кадр */

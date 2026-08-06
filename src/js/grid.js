@@ -1,6 +1,6 @@
 import { projects, siteMeta, getYoutubeId } from "./api.js";
 import { openLightbox } from "./lightbox.js";
-import { INITIAL_ITEMS_COUNT } from "./config.js";
+import { MOBILE_INITIAL_ITEMS_COUNT } from "./config.js";
 import { getLocalized, t } from "./i18n.js";
 
 let projectGrid, filterButtons, showMoreBtn;
@@ -34,6 +34,38 @@ function getGridProjects() {
   return projects.filter(p => !p.hideFromGrid);
 }
 
+// Число колонок сетки на текущем брейкпоинте — ДОЛЖНО совпадать с
+// .project-grid в portfolio.css (grid-template-columns на max-width: 960px / 560px).
+function getColumnCount() {
+  if (window.matchMedia("(max-width: 560px)").matches) return 1;
+  if (window.matchMedia("(max-width: 960px)").matches) return 2;
+  return 4;
+}
+
+// Сколько колонок занимает карточка — соответствует --wide/--tall в portfolio.css
+function getProjectSpan(project) {
+  return project.aspect === "vertical" ? 1 : 2;
+}
+
+// Сколько карточек нужно показать, чтобы полностью заполнить первую строку
+// сетки, а не фиксированное число (которое при vertical-карточках оставляет
+// строку наполовину пустой).
+function computeInitialCount(filteredProjects) {
+  const columns = getColumnCount();
+  if (columns <= 1) {
+    return Math.min(MOBILE_INITIAL_ITEMS_COUNT, filteredProjects.length);
+  }
+
+  let spanSum = 0;
+  let count = 0;
+  for (const project of filteredProjects) {
+    if (spanSum >= columns) break;
+    spanSum += getProjectSpan(project);
+    count++;
+  }
+  return count;
+}
+
 // Вспомогательная функция создания карточки проекта
 export function createCard(project) {
   // Обёртка — grid-item + носитель glow-эффекта (::before/::after в CSS).
@@ -50,10 +82,25 @@ export function createCard(project) {
   const ytId = getYoutubeId(project.videoUrl);
   const onerrorAttr = ytId ? `onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';"` : '';
 
+  // Локальные превью (/img/previews/*.jpg) уже сконвертированы в .webp
+  // скриптом scratch/convert-previews-webp.mjs — отдаём его как source,
+  // с исходным .jpg как фолбэком. Удалённые превью (YouTube thumbnail
+  // без локального файла) отдаются как есть, без <picture>.
+  const isLocalJpg = /^\/img\/previews\/.+\.jpe?g$/i.test(project.preview);
+  const webpSrc = isLocalJpg ? project.preview.replace(/\.jpe?g$/i, '.webp') : null;
+  // alt="" — карточка уже озвучена целиком через role="button"/aria-label
+  // ниже, повторный alt на превью даёт скринридеру дублирующее объявление.
+  const thumbnailMarkup = webpSrc
+    ? `<picture>
+        <source srcset="${webpSrc}" type="image/webp">
+        <img src="${project.preview}" alt="" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
+      </picture>`
+    : `<img src="${project.preview}" alt="" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>`;
+
   card.innerHTML = `
     <div class="card-thumbnail-container">
-      <img src="${project.preview}" alt="${getLocalized(project.title)}" class="card-thumbnail-img" loading="lazy" ${onerrorAttr}>
-      <button class="play-btn-small" aria-label="${t("aria_play_video")}" data-i18n-aria="aria_play_video">
+      ${thumbnailMarkup}
+      <button class="play-btn-small" tabindex="-1" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
@@ -68,6 +115,8 @@ export function createCard(project) {
   `;
 
   card.setAttribute("tabindex", "0");
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `${t("aria_play_video")}: ${getLocalized(project.title)}`);
   card.addEventListener("click", () => openLightbox(project));
   card.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -96,13 +145,14 @@ export function renderGrid() {
     });
   }
 
-  const projectsToShow = showingAll ? filteredProjects : filteredProjects.slice(0, INITIAL_ITEMS_COUNT);
+  const initialCount = computeInitialCount(filteredProjects);
+  const projectsToShow = showingAll ? filteredProjects : filteredProjects.slice(0, initialCount);
   projectsToShow.forEach(project => {
     projectGrid.appendChild(createCard(project));
   });
 
   // Скрытие/показ кнопки Show More
-  if (filteredProjects.length <= INITIAL_ITEMS_COUNT || showingAll) {
+  if (filteredProjects.length <= initialCount || showingAll) {
     showMoreBtn.style.display = "none";
   } else {
     showMoreBtn.style.display = "inline-flex";
@@ -176,7 +226,6 @@ export function setupFeaturedVideo() {
     }
 
     img.src = featuredProject.preview || (ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : img.src);
-    img.alt = getLocalized(featuredProject.title);
   }
   if (titleSpan) {
     titleSpan.textContent = getLocalized(featuredProject.title);
@@ -240,6 +289,22 @@ export function renderTrust() {
     `<div class="trust-group">${groupSpans}</div>` +
     `<div class="trust-group" aria-hidden="true">${groupSpans}</div>`;
 }
+
+// Пересчёт первой строки сетки при пересечении брейкпоинтов — иначе после
+// поворота устройства/ресайза окна первая строка может остаться заполненной
+// не полностью (см. computeInitialCount).
+let gridResizeTimer;
+let lastGridColumns = getColumnCount();
+window.addEventListener("resize", () => {
+  clearTimeout(gridResizeTimer);
+  gridResizeTimer = setTimeout(() => {
+    if (showingAll) return;
+    const cols = getColumnCount();
+    if (cols === lastGridColumns) return;
+    lastGridColumns = cols;
+    renderGrid();
+  }, 200);
+});
 
 // Пересчёт числа повторов при ресайзе — чтобы копия оставалась шире экрана
 // и на широких мониторах не появлялось пустое место.

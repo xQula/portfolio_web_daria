@@ -1,0 +1,104 @@
+/* ----------------------------------------------------
+   ЭКРАН ЗАГРУЗКИ — киношный обратный отсчёт (film leader)
+   ---------------------------------------------------- */
+.page-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000; /* выше neon-cursor (9999, см. neon-cursor.css) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary);
+  opacity: 1;
+  transition: opacity 0.5s var(--ease-premium);
+}
+
+.page-preloader--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preloader-ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* дуга прогресса растёт от 12 часов */
+}
+
+.preloader-ring-track {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 3;
+}
+
+.preloader-ring-progress {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+.preloader-digit {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.preloader-label {
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.preloader-label-dot {
+  color: var(--color-accent);
+}
+
+/* Короткая вспышка в момент готовности — перед fade-out всего оверлея */
+.page-preloader.is-ready .preloader-digit,
+.page-preloader.is-ready .preloader-ring-progress {
+  animation: preloader-flash 0.15s ease-out;
+}
+
+@keyframes preloader-flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .preloader-ring {
+    width: 76px;
+    height: 76px;
+  }
+
+  .preloader-digit {
+    font-size: 1.5rem;
+  }
+}

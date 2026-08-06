@@ -5,6 +5,7 @@ import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 import { initMotion, animateHeroTitle } from "./motion.js";
 import { initNeonCursor } from "./neon-cursor.js";
+import { initPreloader } from "./preloader.js";
 
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
@@ -12,29 +13,20 @@ const burgerBtn = document.getElementById("mobile-menu-trigger");
 const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerLinks = document.querySelectorAll(".drawer-link");
 
-async function init() {
+function init() {
+  // Экран загрузки — перекрывает страницу до готовности критичных ресурсов,
+  // не блокирует остальную инициализацию (см. src/js/preloader.js)
+  initPreloader();
+
   // Настройка языка
   initLanguage();
   renderHeroWords();
   document.addEventListener("languagechanged", renderHeroWords);
 
-  // Загружаем проекты из файлов
-  try {
-    await loadProjects();
-  } catch (err) {
-    console.error("Ошибка при загрузке проектов:", err);
-  }
-
-  // Инициализация компонентов
+  // Инициализация компонентов, не зависящих от данных проектов
   initGrid();
   initLightbox();
   initContactModal();
-
-  // Рендеринг сетки, главного видео и блоков, посчитанных из данных
-  renderGrid();
-  setupFeaturedVideo();
-  renderTrust();
-  renderStats();
 
   // Слой моушна премиального лендинга
   initStickyHeader();
@@ -76,6 +68,19 @@ async function init() {
       });
     });
   }
+
+  // Загрузка проектов идёт параллельно с остальной инициализацией — рендер
+  // сетки/шоурила/трастов/статистики не должен блокировать хедер, моушн и курсор.
+  loadProjects()
+    .then(() => {
+      renderGrid();
+      setupFeaturedVideo();
+      renderTrust();
+      renderStats();
+    })
+    .catch((err) => {
+      console.error("Ошибка при загрузке проектов:", err);
+    });
 }
 
 // ----------------------------------------------------
@@ -184,17 +189,21 @@ function initScrollHighlight() {
     const cards = getCards();
     if (cards.length === 0) return;
 
-    // Игнорируем карточки, которые полностью вне экрана
-    const visibleCards = [];
-    cards.forEach(card => {
+    // Сначала все чтения layout (offsetTop/offsetHeight), без единой записи
+    // стилей между ними — иначе браузер форсирует синхронный reflow на
+    // каждой итерации (read → write → read у следующей карточки).
+    const measured = Array.from(cards).map(card => {
       const top = getLayoutTop(card);
       const height = card.offsetHeight;
-      if (top + height < 0 || top > window.innerHeight) {
-        card.classList.remove("active-scroll");
-      } else {
-        visibleCards.push({ card, top, height });
-      }
+      return { card, top, height, outOfView: top + height < 0 || top > window.innerHeight };
     });
+
+    // Теперь отдельным проходом — только записи.
+    measured.forEach(({ card, outOfView }) => {
+      if (outOfView) card.classList.remove("active-scroll");
+    });
+
+    const visibleCards = measured.filter(entry => !entry.outOfView);
     if (visibleCards.length === 0) return;
 
     // Подсвечиваем ближайшую к центру экрана строку целиком, а не

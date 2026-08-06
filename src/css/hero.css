@@ -84,9 +84,20 @@
   transition: border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
 }
 
-.featured-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8), 0 0 30px var(--shadow-accent);
+/* Акцент через box-shadow с blur-радиусом, а не border-color: на скруглённом
+   углу (border-radius-lg) чёткая border-color-линия алиасится в Chromium —
+   см. тот же фикс у .project-card в portfolio.css. */
+.featured-card:hover,
+.featured-card:focus-within {
+  border-color: transparent;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8), 0 0 30px var(--shadow-accent),
+              var(--highlight-ring) var(--color-accent);
+}
+
+/* Клавиатурный фокус карточки не получает отдельную outline-рамку —
+   :focus-within выше уже даёт тот же визуал, что и hover (единый эффект). */
+.featured-card:focus-visible {
+  outline: none;
 }
 
 .featured-thumbnail-container {
@@ -116,7 +127,8 @@
   transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
 }
 
-.featured-card:hover .featured-thumbnail-img {
+.featured-card:hover .featured-thumbnail-img,
+.featured-card:focus-within .featured-thumbnail-img {
   transform: scale(1.04);
   filter: grayscale(0) contrast(1.05);
 }
@@ -190,7 +202,8 @@
   transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.featured-card:hover .play-btn-large {
+.featured-card:hover .play-btn-large,
+.featured-card:focus-within .play-btn-large {
   border-color: var(--color-accent);
   background-color: rgba(204, 255, 0, 0.14);
   transform: translate(-50%, -50%) scale(1.08);
@@ -201,7 +214,8 @@
   fill: var(--color-text-primary);
 }
 
-.featured-card:hover .play-btn-large svg {
+.featured-card:hover .play-btn-large svg,
+.featured-card:focus-within .play-btn-large svg {
   fill: var(--color-accent);
 }
 
@@ -389,8 +403,9 @@
 /* Active Scroll Highlight (Mobile) — переиспользует ту же логику, что и карточки портфолио */
 .featured-card.active-scroll {
   transform: translateY(-4px);
-  box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.8);
-  border-color: var(--color-border-hover);
+  border-color: transparent;
+  box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.8),
+              var(--highlight-ring) var(--color-border-hover);
 }
 
 .featured-card.active-scroll .featured-thumbnail-img {
