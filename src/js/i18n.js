@@ -7,6 +7,9 @@ export const translations = {
     // Доступность
     skip_link: "Перейти к содержимому",
 
+    // Экран загрузки
+    preloader_label: "ЗАГРУЗКА",
+
     // Навигация
     nav_home: "ГЛАВНАЯ",
     nav_services: "НАПРАВЛЕНИЯ",
@@ -95,6 +98,9 @@ export const translations = {
     
     // Accessibility
     skip_link: "Skip to content",
+
+    // Loading screen
+    preloader_label: "LOADING",
 
     // Navigation
     nav_home: "HOME",

@@ -5,6 +5,7 @@ import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
 import { initMotion, animateHeroTitle } from "./motion.js";
 import { initNeonCursor } from "./neon-cursor.js";
+import { initPreloader } from "./preloader.js";
 
 const langToggleBtn = document.getElementById("lang-toggle");
 const mobileLangToggleBtn = document.getElementById("mobile-lang-toggle");
@@ -13,6 +14,10 @@ const mobileDrawer = document.getElementById("mobile-drawer");
 const drawerLinks = document.querySelectorAll(".drawer-link");
 
 function init() {
+  // Экран загрузки — перекрывает страницу до готовности критичных ресурсов,
+  // не блокирует остальную инициализацию (см. src/js/preloader.js)
+  initPreloader();
+
   // Настройка языка
   initLanguage();
   renderHeroWords();

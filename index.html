@@ -56,6 +56,23 @@
 </head>
 <body>
 
+  <!-- Экран загрузки: киношный обратный отсчёт, перекрывает страницу до готовности
+       критичных ресурсов (шрифты + hero-изображение). Декоративный, aria-hidden —
+       не блокирует доступ к реальному контенту для скринридеров. Скрывается через
+       src/js/preloader.js, показывается один раз за сессию вкладки. -->
+  <div id="page-preloader" class="page-preloader" aria-hidden="true">
+    <div class="preloader-content">
+      <div class="preloader-ring">
+        <svg class="preloader-ring-svg" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="preloader-ring-track" cx="60" cy="60" r="52"></circle>
+          <circle class="preloader-ring-progress" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <span class="preloader-digit" id="preloader-digit">3</span>
+      </div>
+      <div class="preloader-label">SOF <span class="preloader-label-dot">·</span> <span data-i18n="preloader_label">ЗАГРУЗКА</span></div>
+    </div>
+  </div>
+
   <!-- Skip-link: скрыт визуально, появляется по клавиатурному фокусу -->
   <a href="#main-content" class="skip-link" data-i18n="skip_link">Перейти к содержимому</a>
 
