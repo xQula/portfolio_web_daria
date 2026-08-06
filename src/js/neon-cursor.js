@@ -36,10 +36,13 @@ export function initNeonCursor() {
 
   const ctx = canvas.getContext("2d");
 
-  /* Сброс размера при ресайзе окна */
+  /* Сброс размера при ресайзе окна (canvas.width/height всегда очищает
+     битмап, поэтому будим цикл, если он был на idle-паузе — иначе холст
+     останется пустым до следующего движения мыши) */
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    startLoop();
   }
   window.addEventListener("resize", resize, { passive: true });
 
@@ -77,9 +80,15 @@ export function initNeonCursor() {
   let lastFrameTs = null;
   const FADE_DURATION = 220; // мс — плавное угасание/появление при входе/выходе с видео
   const videoWrapper = document.getElementById("lightbox-video-wrapper");
+  const lightboxEl = document.getElementById("video-lightbox");
 
+  /* getBoundingClientRect() форсирует синхронный layout-read. Лайтбокс закрыт
+     почти всё время работы страницы, а aria-hidden — обычный атрибут, его
+     чтение layout не затрагивает. Проверяем сначала его и только если
+     лайтбокс реально открыт — трогаем геометрию. */
   function isOverVideo() {
-    if (!videoWrapper) return false;
+    if (!videoWrapper || !lightboxEl) return false;
+    if (lightboxEl.getAttribute("aria-hidden") === "true") return false;
     const rect = videoWrapper.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return false;
     return mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
@@ -94,6 +103,7 @@ export function initNeonCursor() {
     /* Сброс: начинаем шлейф с текущих координат,
        чтобы не было скачка из предыдущей позиции */
     hasPrev = false;
+    startLoop();
   });
 
   document.addEventListener("mouseleave", () => {
@@ -119,6 +129,10 @@ export function initNeonCursor() {
       prevY = mouseY;
       hasPrev = true;
     }
+
+    /* Цикл мог быть остановлен из-за простоя (см. idle-пауза в tick) —
+       движение мыши его будит */
+    startLoop();
   }, { passive: true });
 
   /* --------------------------------------------------
@@ -264,6 +278,15 @@ export function initNeonCursor() {
       }
 
       ctx.restore();
+    }
+
+    /* Рисовать больше нечего: шлейф погас, угасание/появление устаканилось —
+       следующий кадр выглядел бы идентично текущему. Останавливаем цикл,
+       чтобы не жечь кадровый бюджет впустую (например во время скролла без
+       движения мыши); mousemove/mouseenter разбудят его заново. */
+    if (points.length === 0 && fadeAlpha === fadeTarget) {
+      rafId = null;
+      return;
     }
 
     /* Следующий кадр */

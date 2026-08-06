@@ -184,17 +184,21 @@ function initScrollHighlight() {
     const cards = getCards();
     if (cards.length === 0) return;
 
-    // Игнорируем карточки, которые полностью вне экрана
-    const visibleCards = [];
-    cards.forEach(card => {
+    // Сначала все чтения layout (offsetTop/offsetHeight), без единой записи
+    // стилей между ними — иначе браузер форсирует синхронный reflow на
+    // каждой итерации (read → write → read у следующей карточки).
+    const measured = Array.from(cards).map(card => {
       const top = getLayoutTop(card);
       const height = card.offsetHeight;
-      if (top + height < 0 || top > window.innerHeight) {
-        card.classList.remove("active-scroll");
-      } else {
-        visibleCards.push({ card, top, height });
-      }
+      return { card, top, height, outOfView: top + height < 0 || top > window.innerHeight };
     });
+
+    // Теперь отдельным проходом — только записи.
+    measured.forEach(({ card, outOfView }) => {
+      if (outOfView) card.classList.remove("active-scroll");
+    });
+
+    const visibleCards = measured.filter(entry => !entry.outOfView);
     if (visibleCards.length === 0) return;
 
     // Подсвечиваем ближайшую к центру экрана строку целиком, а не
