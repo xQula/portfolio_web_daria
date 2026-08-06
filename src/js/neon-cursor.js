@@ -54,7 +54,7 @@ export function initNeonCursor() {
   const GLOW_BLUR = 30;         // px — радиус внешнего свечения
   const CORE_WIDTH = 3;         // px — толщина сердцевины
   const GLOW_WIDTH = 18;        // px — толщина ореола
-  const ACCENT = "#CCFF00";     // акцентный цвет
+  const ACCENT = getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() || "#CCFF00";
   const HEAD_RADIUS = 4;        // px — радиус точки-головы
 
   /* --------------------------------------------------

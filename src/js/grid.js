@@ -100,7 +100,7 @@ export function createCard(project) {
   card.innerHTML = `
     <div class="card-thumbnail-container">
       ${thumbnailMarkup}
-      <button class="play-btn-small" aria-label="${t("aria_play_video")}" data-i18n-aria="aria_play_video">
+      <button class="play-btn-small" tabindex="-1" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
