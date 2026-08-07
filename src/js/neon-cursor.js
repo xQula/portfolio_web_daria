@@ -122,6 +122,13 @@ export function initNeonCursor() {
     mouseX = e.clientX;
     mouseY = e.clientY;
 
+    /* Safari не шлёт синтетический mouseenter на document, если курсор
+       оказался внутри viewport без реального пересечения границы окна
+       (например, страница просто загрузилась под курсором) — тогда
+       isInWindow никогда не станет true через mouseenter. Раз mousemove
+       вообще случился, курсор точно в окне. */
+    isInWindow = true;
+
     if (!isVisible) {
       /* При первом движении после mouseenter — просыпаемся */
       isVisible = true;
