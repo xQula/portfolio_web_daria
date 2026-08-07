@@ -107,14 +107,18 @@
     background-color var(--transition-speed) ease;
 }
 
-/* ПРОЖЕКТОР (как в Services C): наведение на сетку притухляет все плитки… */
-.stats-grid:hover .stat-card {
+/* ПРОЖЕКТОР (как в Services C): наведение на сетку притухляет все плитки…
+   .active-scroll исключена уже здесь, в базовом правиле, а не только в
+   мобильном отключении ниже — иначе тап по ЛЮБОЙ карточке ставит :hover на
+   сетку, и это правило (специфичность 0,3,0, выше чем у .stat-card.active-scroll
+   само по себе — 0,2,0) гасило уже подсвеченную скроллом карточку до 0.4. */
+.stats-grid:hover .stat-card:not(.active-scroll) {
   opacity: 0.4;
   filter: blur(1.5px) saturate(0.6);
 }
 
 /* …кроме активной — она в фокусе и выходит вперёд */
-.stats-grid .stat-card:hover {
+.stats-grid .stat-card:hover:not(.active-scroll) {
   opacity: 1;
   filter: none;
   transform: translateY(-6px) scale(1.03);
@@ -138,8 +142,12 @@
   }
 }
 
-/* Мобильные/планшеты: без hover-эффектов (тап на тач-экранах "залипает") */
-@media (max-width: 1024px) {
+/* Мобильная версия: без hover-эффектов (тап "залипает"). И по ширине
+   экрана (совпадает с остальными мобильными брейкпоинтами сайта — так
+   срабатывает и при обычном сужении окна на десктопе без тач-эмуляции),
+   и по реальной способности к hover — иначе планшеты/фолдаблы шире
+   1024px с тач-вводом получали бы полный десктопный spotlight по тапу. */
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
   .stats-grid:hover .stat-card:not(.active-scroll) {
     opacity: 1;
     filter: none;
@@ -154,7 +162,7 @@
 
 /* Active Scroll Highlight (Mobile) — та же подсветка "в фокусе", что и по
    hover на десктопе, но триггерится приближением карточки к центру экрана
-   при скролле (см. initScrollHighlight в main.js), а не курсором. */
+   при скролле (см. initScrollHighlight в main.js), а не курсором/тапом. */
 .stat-card.active-scroll {
   opacity: 1;
   filter: none;
@@ -268,14 +276,15 @@
     background-color var(--transition-speed) ease;
 }
 
-/* ПРОЖЕКТОР: при наведении на сетку все карточки притухают и слегка блюрятся… */
-.service-grid:hover .service-card {
+/* ПРОЖЕКТОР: при наведении на сетку все карточки притухают и слегка блюрятся…
+   .active-scroll исключена и в базовом правиле — см. комментарий у .stat-card выше. */
+.service-grid:hover .service-card:not(.active-scroll) {
   opacity: 0.4;
   filter: blur(1.5px) saturate(0.6);
 }
 
 /* …кроме той, что под курсором — она в фокусе и выходит вперёд */
-.service-grid .service-card:hover {
+.service-grid .service-card:hover:not(.active-scroll) {
   opacity: 1;
   filter: none;
   transform: translateY(-6px) scale(1.03);
@@ -312,8 +321,12 @@
   }
 }
 
-/* Мобильные/планшеты: без hover-эффектов (тап на тач-экранах "залипает") */
-@media (max-width: 1024px) {
+/* Мобильная версия: без hover-эффектов (тап "залипает"). И по ширине
+   экрана (совпадает с остальными мобильными брейкпоинтами сайта — так
+   срабатывает и при обычном сужении окна на десктопе без тач-эмуляции),
+   и по реальной способности к hover — иначе планшеты/фолдаблы шире
+   1024px с тач-вводом получали бы полный десктопный spotlight по тапу. */
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
   .service-grid:hover .service-card:not(.active-scroll) {
     opacity: 1;
     filter: none;
