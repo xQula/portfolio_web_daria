@@ -241,11 +241,7 @@ button:focus-visible,
   .film-grain {
     animation: none;
   }
-  .preloader-ring-progress {
+  .preloader-iris {
     transition: none;
-  }
-  .page-preloader.is-ready .preloader-digit,
-  .page-preloader.is-ready .preloader-ring-progress {
-    animation: none;
   }
 }
