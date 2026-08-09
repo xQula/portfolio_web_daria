@@ -16,7 +16,6 @@ export const translations = {
 
     // Главный экран (Hero)
     hero_eyebrow: "Доступна для новых проектов",
-    hero_title: "Управляю вниманием зрителя от первого до последнего кадра",
     hero_desc: "Кинопродвижение, реклама, музыкальные видео и вертикальный контент — от идеи до релиза.",
     hero_cta_secondary: "Смотреть шоурил",
     hero_showreel_badge: "Showreel 2025",
@@ -37,7 +36,7 @@ export const translations = {
     services_title: "Направления работы",
     services_subtitle: "От киноиндустрии до соцсетей — единый монтажный почерк под формат площадки.",
     service_desc_cinema: "Трейлеры и тизеры с точной драматургией и атмосферным саунд-дизайном.",
-    service_desc_brands: "Коммерческие ролики с монтажом под брендбук и точными акцентами.",
+    service_desc_brands: "Коммерческие ролики с монтажом под брендбук и узнаваемость ДНК компании.",
     service_desc_music: "Ритмичный монтаж, speed ramp и синхронизация под саундтрек.",
     service_desc_digital: "Shorts и Reels под трендовые форматы вертикальных площадок.",
 
@@ -105,7 +104,6 @@ export const translations = {
 
     // Hero
     hero_eyebrow: "Available for new projects",
-    hero_title: "Guiding the viewer's attention from the first frame to the last",
     hero_desc: "Film promotion, commercials, music videos, and vertical content — from concept to release.",
     hero_cta_secondary: "Watch showreel",
     hero_showreel_badge: "Showreel 2025",

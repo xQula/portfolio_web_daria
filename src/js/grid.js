@@ -257,6 +257,13 @@ export function setupFeaturedVideo() {
 const NON_CLIENT_LABELS = new Set(["Личный проект", "Личный блог", "SOF studio", "Daria Evstigneeva Portfolio"]);
 const isRealClient = (client) => Boolean(client) && !NON_CLIENT_LABELS.has(client);
 
+// Клиенты, дублирующие уже показанное имя бренда в бегущей строке (не в счётчике
+// "Клиентов и брендов" — там они по-прежнему учитываются как отдельные проекты)
+const TRUST_HIDDEN_LABELS = new Set(["Tricolor кампания", "Триколор кампания НСК"]);
+// Переименования только для бегущей строки — карточки портфолио показывают
+// исходное имя клиента как было в проекте
+const TRUST_LABEL_OVERRIDES = { "ИП Дарья Елисеева": "EliseevaRealty" };
+
 // Бегущая строка клиентов — список собирается из projects.json.
 // Одна «группа» повторяет список столько раз, чтобы быть не уже вьюпорта
 // (иначе на широких экранах после ухода копии появляется пустота), и таких
@@ -265,7 +272,13 @@ export function renderTrust() {
   const track = document.getElementById("trust-track");
   if (!track) return;
 
-  const clients = [...new Set(getGridProjects().map(p => p.client).filter(isRealClient))];
+  const clients = [...new Set(
+    getGridProjects()
+      .map(p => p.client)
+      .filter(isRealClient)
+      .filter(c => !TRUST_HIDDEN_LABELS.has(c))
+      .map(c => TRUST_LABEL_OVERRIDES[c] || c)
+  )];
   if (clients.length === 0) {
     const section = track.closest(".trust-section");
     if (section) section.style.display = "none";

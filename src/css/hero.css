@@ -219,38 +219,7 @@
   fill: var(--color-accent);
 }
 
-/* Заголовок-титр — нижний левый угол, поверх кадра. Клики проходят
-   сквозь него к карточке (pointer-events:none). Разметку на .word/.ch
-   строит main.js (renderHeroWords), анимацию — motion.js (GSAP). */
-.hero-title {
-  position: absolute;
-  left: clamp(16px, 2.6vw, 34px);
-  bottom: clamp(16px, 2.4vw, 30px);
-  z-index: 4;
-  margin: 0;
-  max-width: 20ch;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.5rem, 3.4vw, 3rem);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  text-transform: none;
-  color: var(--color-text-primary);
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.7);
-  pointer-events: none;
-}
-
-.hero-title .word {
-  white-space: nowrap;
-}
-
-.hero-title .ch {
-  display: inline-block;
-}
-
-/* Подпись шоурила — верхний правый угол, мелко, выключка вправо
-   (разведена с заголовком-титром, который занимает низ кадра) */
+/* Подпись шоурила — верхний правый угол, мелко, выключка вправо */
 .featured-meta {
   position: absolute;
   right: clamp(16px, 2.2vw, 26px);
@@ -337,11 +306,6 @@
     display: none;
   }
 
-  .hero-title {
-    font-size: clamp(1.4rem, 6vw, 2rem);
-    max-width: 88%;
-  }
-
   .hero-cta-row {
     width: 100%;
   }
@@ -368,10 +332,6 @@
 
   .hero-footer {
     max-width: min(100%, calc(46dvh * 2.39));
-  }
-
-  .hero-title {
-    font-size: clamp(1.4rem, 3vw, 2.4rem);
   }
 
   .hero-desc {
