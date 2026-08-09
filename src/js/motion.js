@@ -42,21 +42,6 @@ export function resumeMotion() {
 }
 
 // ----------------------------------------------------
-// КИНЕТИЧЕСКИЙ ЗАГОЛОВОК HERO: посимвольное проявление.
-// Вызывается из main.js (renderHeroWords) после того как разметка
-// уже разбита на span.ch — начальное состояние ставит сам GSAP,
-// поэтому без анимации (reduced motion) символы просто видны сразу.
-// ----------------------------------------------------
-export function animateHeroTitle(chars) {
-  if (prefersReducedMotion() || !chars || chars.length === 0) return;
-  gsap.fromTo(
-    chars,
-    { opacity: 0, y: 16, rotateX: -40 },
-    { opacity: 1, y: 0, rotateX: 0, duration: 0.5, stagger: 0.02, ease: "expo.out" }
-  );
-}
-
-// ----------------------------------------------------
 // МАГНИТНЫЕ КНОПКИ (.btn-magnet): плавное притяжение к курсору через
 // gsap.quickTo — интерполяция вместо мгновенной установки transform.
 // ----------------------------------------------------

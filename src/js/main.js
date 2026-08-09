@@ -3,7 +3,7 @@ import { loadProjects } from "./api.js";
 import { initGrid, renderGrid, setupFeaturedVideo, renderTrust, renderStats } from "./grid.js";
 import { initLightbox } from "./lightbox.js";
 import { initContactModal } from "./contact.js";
-import { initMotion, animateHeroTitle } from "./motion.js";
+import { initMotion } from "./motion.js";
 import { initNeonCursor } from "./neon-cursor.js";
 import { initPreloader } from "./preloader.js";
 
@@ -20,8 +20,6 @@ function init() {
 
   // Настройка языка
   initLanguage();
-  renderHeroWords();
-  document.addEventListener("languagechanged", renderHeroWords);
 
   // Инициализация компонентов, не зависящих от данных проектов
   initGrid();
@@ -81,34 +79,6 @@ function init() {
     .catch((err) => {
       console.error("Ошибка при загрузке проектов:", err);
     });
-}
-
-// ----------------------------------------------------
-// КИНЕТИЧЕСКИЙ ЗАГОЛОВОК HERO: символы проявляются по очереди при загрузке
-// (анимацию делает motion.js через GSAP). При смене языка текст
-// переустанавливается без повторного проигрывания анимации.
-// ----------------------------------------------------
-let heroTitleAnimated = false;
-
-function renderHeroWords() {
-  const el = document.querySelector(".hero-title");
-  if (!el) return;
-
-  // Символы группируются по словам (.word, white-space: nowrap в CSS),
-  // иначе перенос строки мог бы разорвать слово посередине —
-  // GSAP всё равно анимирует все .ch разом, независимо от вложенности.
-  const words = el.textContent.trim().split(/\s+/);
-  el.innerHTML = words
-    .map((word) => {
-      const chars = [...word].map((c) => `<span class="ch">${c}</span>`).join("");
-      return `<span class="word">${chars}</span>`;
-    })
-    .join(" ");
-
-  if (!heroTitleAnimated) {
-    animateHeroTitle(el.querySelectorAll(".ch"));
-    heroTitleAnimated = true;
-  }
 }
 
 // ----------------------------------------------------
